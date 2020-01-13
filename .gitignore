@@ -1,0 +1,2 @@
+# Ignore generated files by WebStorm IDE
+**/server/.idea
