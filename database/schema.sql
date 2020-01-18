@@ -8,7 +8,7 @@ CREATE TABLE weather (
     lighting REAL,
     airQuality INT,
     PRIMARY KEY (time)
-);
+) ENGINE = INNODB;
 
 CREATE TABLE user (
     forename VARCHAR(255),
@@ -19,14 +19,15 @@ CREATE TABLE user (
     type VARCHAR(255),
     confirmationCode VARCHAR(255),
     PRIMARY KEY (emailAddress)
-);
+) ENGINE = INNODB;
 
 CREATE TABLE device (
     id VARCHAR(255),
     name VARCHAR(255),
-    description VARCHAR(255),
-    PRIMARY KEY (id)
-);
+    owner VARCHAR(255),
+    PRIMARY KEY (id),
+    FOREIGN KEY (owner) REFERENCES user(emailAddress)
+) ENGINE = INNODB;
 
 CREATE TABLE smartPlug (
     id VARCHAR(255),
@@ -34,7 +35,7 @@ CREATE TABLE smartPlug (
     pluggedDevice VARCHAR(255),
     PRIMARY KEY (id),
     FOREIGN KEY (pluggedDevice) REFERENCES device(id)
-);
+) ENGINE = INNODB;
 
 CREATE TABLE deviceActivity (
     startTime DATE,
@@ -44,7 +45,7 @@ CREATE TABLE deviceActivity (
     user VARCHAR(255),
     FOREIGN KEY (device) REFERENCES device(id),
     FOREIGN KEY (user) references user(emailAddress)
-);
+) ENGINE = INNODB;
 
 CREATE TABLE deviceRestriction (
     device VARCHAR(255),
@@ -52,4 +53,4 @@ CREATE TABLE deviceRestriction (
     restricted VARCHAR(255),
     restrictor VARCHAR(255),
     hoursUsed INT
-)
+) ENGINE = INNODB; 
