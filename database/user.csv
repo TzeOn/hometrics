@@ -1,8 +1,8 @@
-#forename,surname,dob,emailAddress,password,type,confirmationCode
-Yaseen,Jamal,1980-01-01,yaseen@hooli.com,yaseen_password,admin,null
-Lee,Donovan,1980-01-01,lee@hooli.com,lee_password,admin,null
-Vincent,Chung,1980-01-01,vincent@hooli.com,vincent_password,dweller,null
-Eoghann,Gibson,1980-01-01,eoghann@hooli.com,eoghann_password,dweller,null
-Ram,Attra,1980-01-01,ram@hooli.com,ram_password,dweller,null
-Troy,Greenaway,2012-01-01,troy@hooli.com,troy_password,child,null
-Mike,Chantler,1980-01-01,mike@hooli.com,mike_password,admin,null
+#forename,surname,dob,emailAddress,password,type,confirmationCode,hub
+Yaseen,Jamal,1980-01-01,yaseen@hooli.com,yaseen_password,admin,null,HOMEF3DA
+Lee,Donovan,1980-01-01,lee@hooli.com,lee_password,admin,null,HOMEF3DA
+Vincent,Chung,1980-01-01,vincent@hooli.com,vincent_password,dweller,null,HOMEF3DA
+Eoghann,Gibson,1980-01-01,eoghann@hooli.com,eoghann_password,dweller,null,HOMEF3DA
+Ram,Attra,1980-01-01,ram@hooli.com,ram_password,dweller,null,HOMEF3DA
+Troy,Greenaway,2012-01-01,troy@hooli.com,troy_password,child,null,HOMEF3DA
+Mike,Chantler,1980-01-01,mike@hooli.com,mike_password,admin,null,HOMEF3DA

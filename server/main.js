@@ -10,10 +10,5 @@ app.listen(port, () => console.log(`Server up and running - listening for reques
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-// Test MySQL database connection.
-database.getConnection((error, connection) => {
-    if (error)
-        throw error;
-    console.log("MySQL database reachable.");
-    connection.release();
-});
+const user = require("./user");
+app.use("/user", user);
