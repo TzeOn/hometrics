@@ -1,6 +1,6 @@
-var MySql = require('sync-mysql');
+const MySql = require('sync-mysql');
 
-var connection = new MySql({
+const connection = new MySql({
     host: 'localhost',
     user: 'hometrics',
     password: 'hometrics',

@@ -76,4 +76,47 @@ router.post("/signup", (request, response) => {
     }
 });
 
+router.post("/login", (request, response) => {
+   let emailAddress = request.body.emailAddress, password = request.body.password,
+       sql = `SELECT * FROM user WHERE emailAddress="${emailAddress}" AND password="${password}"`,
+       user = database.query(sql);
+   if (user.length > 0) {
+       request.session.loggedIn = true;
+       request.session.emailAddress = emailAddress;
+       console.log(request.session.loggedIn);
+       if (user[0].confirmationCode != null)
+           response.end("confirmationCode");
+       else
+           response.end("ok");
+   } else
+       response.json({
+           "emailAddress": false,
+           "password": false
+       });
+});
+
+router.post("/confirmationCode", (request, response) => {
+   let sql = `SELECT * FROM user WHERE emailAddress="${request.session.emailAddress}" AND confirmationCode="${request.body.confirmationCode}"`,
+       user = database.query(sql);
+   if (user.length > 0) {
+       // Calculate user type.
+       let dob = new Date(user[0].dob),
+           ageDifMs = Date.now() - dob,
+           ageDate = new Date(ageDifMs),
+           age = Math.abs(ageDate.getUTCFullYear() - 1970),
+           type;
+       if (age <= 13)
+           type = "child";
+       else
+           type = "dweller";
+
+       sql = `UPDATE user SET type="${type}", confirmationCode="NULL" WHERE emailAddress="${request.session.emailAddress}"`;
+       database.query(sql);
+       response.end("ok");
+   } else
+       response.json({
+          "confirmationCode": false
+       });
+});
+
 module.exports = router;

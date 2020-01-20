@@ -1,4 +1,5 @@
-CREATE DATABASE hometrics;
+DROP DATABASE IF EXISTS hometrics; 
+CREATE DATABASE hometrics; 
 USE hometrics;
 
 CREATE TABLE weather (
@@ -61,4 +62,11 @@ CREATE TABLE deviceRestriction (
     restricted VARCHAR(255),
     restrictor VARCHAR(255),
     hoursUsed INT
+) ENGINE = INNODB; 
+
+CREATE TABLE comfort (
+    thermostat REAL,
+    hub VARCHAR(255), 
+    PRIMARY KEY (hub), 
+    FOREIGN KEY (hub) REFERENCES hub(id)
 ) ENGINE = INNODB; 

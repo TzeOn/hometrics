@@ -60,5 +60,18 @@ for user in user_data:
     cursor.execute(sql, values)
 user_data.close()
 
+# Populate comfort data. 
+comfort_data = open("comfort.csv", "r")
+for entry in comfort_data:
+    if "#" in entry:
+        continue
+    entry = entry.rstrip("\n").split(",")
+    thermostat = int(entry[0])
+    hub = entry[1]
+    sql = "INSERT INTO comfort (thermostat, hub) VALUES (%s, %s)"
+    values = (thermostat, hub)
+    cursor.execute(sql, values)
+comfort_data.close()
+
 # Commit to MySQL database. 
 database.commit()
