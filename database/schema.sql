@@ -1,3 +1,5 @@
+DROP DATABASE hometrics;
+
 CREATE DATABASE hometrics;
 USE hometrics;
 
