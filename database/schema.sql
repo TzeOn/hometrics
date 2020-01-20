@@ -1,5 +1,3 @@
-DROP database hometrics;
-
 CREATE DATABASE hometrics;
 USE hometrics;
 
@@ -12,6 +10,12 @@ CREATE TABLE weather (
     PRIMARY KEY (time)
 ) ENGINE = INNODB;
 
+CREATE TABLE hub (
+    id VARCHAR(255),  
+    password VARCHAR(255), 
+    PRIMARY KEY(id)
+) ENGINE = INNODB; 
+
 CREATE TABLE user (
     forename VARCHAR(255),
     surname VARCHAR(255),
@@ -20,7 +24,9 @@ CREATE TABLE user (
     password VARCHAR(255),
     type VARCHAR(255),
     confirmationCode VARCHAR(255),
-    PRIMARY KEY (emailAddress)
+    hub VARCHAR(255),
+    PRIMARY KEY (emailAddress),
+    FOREIGN KEY (hub) REFERENCES hub(id)
 ) ENGINE = INNODB;
 
 CREATE TABLE device (
