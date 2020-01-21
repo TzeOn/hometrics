@@ -63,13 +63,10 @@ CREATE TABLE deviceRestriction (
     restrictor VARCHAR(255),
     hoursUsed INT
 ) ENGINE = INNODB; 
-<<<<<<< HEAD
 
 CREATE TABLE comfort (
     thermostat REAL,
     hub VARCHAR(255), 
     PRIMARY KEY (hub), 
     FOREIGN KEY (hub) REFERENCES hub(id)
-) ENGINE = INNODB; 
-=======
->>>>>>> b9df4aa3d117b366497dd452214ccc2c39775559
+) ENGINE = INNODB;
