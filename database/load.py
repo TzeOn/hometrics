@@ -1,5 +1,7 @@
 from datetime import datetime
 import mysql.connector
+import os
+import sys
 
 # Connect to database. 
 database = mysql.connector.connect(
@@ -11,7 +13,7 @@ database = mysql.connector.connect(
 cursor = database.cursor()
 
 # Populate hub data.
-hub_data = open("hub.csv", "r")
+hub_data = open(os.path.join(sys.path[0], "hub.csv"), "r")
 for hub in hub_data: 
     if "#" in hub:
         continue
@@ -24,7 +26,7 @@ for hub in hub_data:
 hub_data.close()
 
 # Populate weather data. 
-weather_data = open("weather.csv", "r")
+weather_data = open(os.path.join(sys.path[0],"weather.csv"), "r")
 for entry in weather_data:
     if "#" in entry:
         continue
@@ -40,7 +42,7 @@ for entry in weather_data:
 weather_data.close()
 
 # Populate user data. 
-user_data = open("user.csv", "r")
+user_data = open(os.path.join(sys.path[0],"user.csv"), "r")
 for user in user_data:
     if "#" in user:
         continue
@@ -61,7 +63,7 @@ for user in user_data:
 user_data.close()
 
 # Populate comfort data. 
-comfort_data = open("comfort.csv", "r")
+comfort_data = open(os.path.join(sys.path[0],"comfort.csv"), "r")
 for entry in comfort_data:
     if "#" in entry:
         continue
