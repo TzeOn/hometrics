@@ -25,6 +25,6 @@ app.use("/weather", weather);
 const homeSetup = require("./homeSetup");
 app.use("/homeSetup", homeSetup);
 
-app.get("/ping", (request, response) => {
-    response.end("Server pings back to you.");
+app.get("/", (request, response) => {
+    response.end("Server is responding");
 });
