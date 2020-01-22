@@ -1,19 +1,25 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import Register from './RegisterScreen';
 
 const HomeScreen = (props) => {
     return (
         <View style={styles.container}>
+            <View>
+                <Image 
+                source={require('../../assets/splash.png')}
+                style={styles.imageStyle}/>
+            </View>
             <View style={styles.buttonsLayout}>
             <TouchableOpacity 
             style={styles.buttons1}
-            onPress={() => props.navigation.navigate('Register')}
-            >
+            onPress={() => props.navigation.navigate('Register')}>
                 <Text style={styles.textStyle}>Sign Up</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.buttons2}>
+            <TouchableOpacity 
+            style={styles.buttons2}
+            onPress={() => props.navigation.navigate('Login')}>
                 <Text style={styles.textStyle}>Log In</Text>
             </TouchableOpacity>
             </View>
@@ -25,17 +31,19 @@ const HomeScreen = (props) => {
 const styles = StyleSheet.create({
     container: {
         backgroundColor: 'black',
-        flex: 1
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+      
+        
     },
     textStyle: {
         color: '#FF9800',
         fontSize: 25
     },
     buttonsLayout: {
-        flex: 1,
         flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center'
+       
     },
     buttons1: {
         right:10
@@ -44,6 +52,11 @@ const styles = StyleSheet.create({
     buttons2: {
         left:10
 
+    },
+    imageStyle: {
+        height: 300,
+        width: 300,
+        
     }
 });
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Button, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Image, TextInput, TouchableOpacity } from 'react-native';
 
 
 const RegisterScreen = (props) => {
@@ -12,8 +12,11 @@ const RegisterScreen = (props) => {
     
     return (
         <View style={styles.container}>
-        <View>
-            <Text style={styles.titleStyle}> Name </Text>
+            <Image
+            source={require('../../assets/splash.png')}
+            style={styles.imageStyle}></Image>
+        <View>          
+            <Text style={styles.textStyle}> Name </Text>
             <TextInput 
             placeholder='Enter your full name'
             style={styles.placeStyle}
@@ -23,7 +26,7 @@ const RegisterScreen = (props) => {
             onChangeText={(newValue) => setName(newValue)}
             ></TextInput>
 
-            <Text style={styles.titleStyle}> Date of Birth </Text>
+            <Text style={styles.textStyle}> Date of Birth </Text>
             <TextInput 
             placeholder='Enter your date of birth (YYYY-MM-DD)'
             style={styles.placeStyle}
@@ -33,7 +36,7 @@ const RegisterScreen = (props) => {
             onChangeText={(newValue) => setDob(newValue)}
             ></TextInput>
 
-            <Text style={styles.titleStyle}> Email Address </Text>
+            <Text style={styles.textStyle}> Email Address </Text>
             <TextInput 
             placeholder='Enter your Email Address'
             style={styles.placeStyle}
@@ -43,7 +46,7 @@ const RegisterScreen = (props) => {
             onChangeText={(newValue) => setEmail(newValue)}
             ></TextInput>
 
-            <Text style={styles.titleStyle}> Password </Text>
+            <Text style={styles.textStyle}> Password </Text>
             <TextInput 
             placeholder='Enter your password'
             style={styles.placeStyle}
@@ -54,7 +57,7 @@ const RegisterScreen = (props) => {
             onChangeText={(newValue) => setPassword(newValue)}
             ></TextInput>
 
-            <Text style={styles.titleStyle}> Hub Name </Text>
+            <Text style={styles.textStyle}> Hub Name </Text>
             <TextInput 
             placeholder='Enter your Hub name'
             style={styles.placeStyle}
@@ -66,7 +69,7 @@ const RegisterScreen = (props) => {
 
             <TouchableOpacity
             style={styles.button}
-            onPress ={ () => props.navigation.navigate('LoginScreen')}>
+            onPress ={ () => props.navigation.navigate('Login')}>
                 <Text style={styles.submit}>Submit</Text>
             </TouchableOpacity>
         </View>
@@ -75,19 +78,21 @@ const RegisterScreen = (props) => {
 };
 
 const styles = StyleSheet.create({
-    titleStyle: {
+    textStyle: {
         color: 'white',
-        marginTop: 20,
-        marginLeft:10
+        fontSize: 20
     },
     placeStyle: {
         color: 'gray',
-        marginLeft: 15,
-        
+        borderBottomWidth:2,
+        borderBottomColor: 'white',
+        height:40, 
+        bottom:5
     },
     container: {
         backgroundColor: 'black',
-        flex: 1
+        flex: 1,
+        alignItems: 'center'
     },
     button: {
         backgroundColor: '#FF9800',
@@ -95,7 +100,7 @@ const styles = StyleSheet.create({
         width:75,
         alignSelf: 'center',
         alignContent: 'center',
-        marginTop: 30
+        marginTop: 20
     },
     submit: {
         color: 'white',
@@ -103,8 +108,11 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         justifyContent: 'center',
         fontSize: 20,
-        flex: 1
-    
+        flex: 1   
+    },
+    imageStyle: {
+        height:175,
+        width:175
     }
 });
 
