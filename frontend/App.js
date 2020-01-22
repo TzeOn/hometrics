@@ -1,19 +1,29 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { createStackNavigator } from 'react-navigation-stack';
+import { createAppContainer } from 'react-navigation';
+import HomeScreen from './src/screens/HomeScreen';
+import RegisterScreen from './src/screens/RegisterScreen';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+const navigator = createStackNavigator({
+  Home: HomeScreen,
+  Register: RegisterScreen
   },
-});
+  {
+    initialRouteName: 'Home',
+    defaultNavigationOptions: {
+      title: 'Hometrics',
+      headerStyle: {
+        backgroundColor: 'black',
+
+      },
+      headerTitleStyle: {
+        color: '#FF9800',
+        textAlign: 'center',
+        flex: 1,
+        fontSize: 30,
+        alignSelf: 'center'
+      },
+      headerLeft: null
+    }
+  });
+
+  export default createAppContainer(navigator);
