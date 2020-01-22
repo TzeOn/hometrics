@@ -12,6 +12,20 @@ const RegisterScreen = (props) => {
     
     return (
         <View style={styles.container}>
+            <View style={styles.buttonsLayout}>
+            <TouchableOpacity 
+            style={styles.buttons1}
+            onPress={() => props.navigation.navigate('Register')}>
+                <Text style={styles.textStyle}>Sign Up</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity 
+            style={styles.buttons2}
+            onPress={() => props.navigation.navigate('Login')}>
+                <Text style={styles.textStyle}>Log In</Text>
+            </TouchableOpacity>
+            </View>
+            
             <Image
             source={require('../../assets/splash.png')}
             style={styles.imageStyle}></Image>
@@ -113,6 +127,18 @@ const styles = StyleSheet.create({
     imageStyle: {
         height:175,
         width:175
+    },
+    buttonsLayout: {
+        flexDirection: 'row'
+    },
+    buttons1: {
+        right:10,
+        borderBottomWidth:1,
+        borderBottomColor: '#FF9800'
+    },
+    buttons2: {
+        left:10,
+       
     }
 });
 

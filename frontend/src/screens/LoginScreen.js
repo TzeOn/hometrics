@@ -7,6 +7,21 @@ const LoginScreen = (props) => {
     
     return (
         <View style={styles.container}>
+             
+            <View style={styles.buttonsLayout}>
+            <TouchableOpacity 
+            style={styles.buttons1}
+            onPress={() => props.navigation.navigate('Register')}>
+                <Text style={styles.textStyle}>Sign Up</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity 
+            style={styles.buttons2}
+            onPress={() => props.navigation.navigate('Login')}>
+                <Text style={styles.textStyle}>Log In</Text>
+            </TouchableOpacity>
+            </View>
+            
             <Image 
             style={styles.imageStyle}
             source={require('../../assets/splash.png')}></Image>
@@ -78,6 +93,17 @@ const styles=StyleSheet.create({
         justifyContent: 'center',
         fontSize: 20,
         flex:1
+    },
+    buttonsLayout: {
+        flexDirection: 'row'
+    },
+    buttons1: {
+        right:10
+    },
+    buttons2: {
+        left:10,
+        borderBottomWidth:1,
+        borderBottomColor: '#FF9800'
     }
 });
 
