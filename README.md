@@ -8,3 +8,6 @@
 * go to localhost:PORTNUM on your browser
 
 ### Front end
+* Make sure you've got expo cli installed
+* Run npm start -web
+* Type w in terminal
