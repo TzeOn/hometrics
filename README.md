@@ -10,7 +10,7 @@
 * expo-cli
 * mysql
 
-### Back end
+### Backend
 * Set up mysql user hometrics with password hometrics
 * make sure they have permissions to create and edit the hometrics table
 
@@ -24,6 +24,6 @@ Or
 
 * ./schema.sql
 
-### Front end
-* npm start -web in front end directory
+### Frontend
+* npm start -web in frontend directory
 * Type w in terminal
