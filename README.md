@@ -25,7 +25,6 @@ Or
 * ./schema.sql
 
 ### Front end
-* Make sure you've got expo cli installed
 * npm start -web in front end directory
 * Type w in terminal
 
