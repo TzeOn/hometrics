@@ -27,7 +27,3 @@ Or
 ### Front end
 * npm start -web in front end directory
 * Type w in terminal
-
-### Sharing
-
-* ngrok http 19006 to generate a URL to share with other machines
