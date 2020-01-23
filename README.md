@@ -5,7 +5,8 @@
 ### Dependancies
 * python3
 * npm
-* nodepip3
+* node
+* pip3
 * expo-cli
 * mysql
 
