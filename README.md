@@ -2,14 +2,20 @@
 
 ## Set up
 
+### Dependancies
+* python3
+* npm
+* nodepip3
+* expo-cli
+* mysql
+
 ### Back end
-* Make sure you have python3, npm, node, pip3, and mysql installed.
 * Set up mysql user hometrics with password hometrics
 * make sure they have permissions to create and edit the hometrics table
 
 Then either
 
-* mysql -u hometrics -p < schema.sql
+* mysql -u hometrics -p < database/schema.sql
 * python3 database/load.py
 * node server/main.js
 
@@ -19,5 +25,9 @@ Or
 
 ### Front end
 * Make sure you've got expo cli installed
-* npm start -web
+* npm start -web in front end directory
 * Type w in terminal
+
+### Sharing
+
+* ngrok http 19006 to generate a URL to share with other machines
