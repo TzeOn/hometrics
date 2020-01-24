@@ -3,11 +3,15 @@ import { createAppContainer } from 'react-navigation';
 import HomeScreen from './src/screens/HomeScreen';
 import RegisterScreen from './src/screens/RegisterScreen';
 import LoginScreen from './src/screens/LoginScreen';
+import ConfirmationScreen from './src/screens/ConfirmationScreen';
+import LandingScreen from './src/screens/LandingScreen';
 
 const navigator = createStackNavigator({
   Home: HomeScreen,
   Register: RegisterScreen,
-  Login: LoginScreen
+  Login: LoginScreen,
+  Confirmation: ConfirmationScreen,
+  Landing: LandingScreen
   },
   {
     initialRouteName: 'Home',

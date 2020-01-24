@@ -83,7 +83,7 @@ const RegisterScreen = (props) => {
 
             <TouchableOpacity
             style={styles.button}
-            onPress ={ () => props.navigation.navigate('Login')}>
+            onPress ={ () => props.navigation.navigate('Confirmation')}>
                 <Text style={styles.submit}>Submit</Text>
             </TouchableOpacity>
         </View>

@@ -48,7 +48,7 @@ const LoginScreen = (props) => {
 
             <TouchableOpacity
             style={styles.button}
-            onPress={() => console.log('Login button pressed')}>
+            onPress={() => props.navigation.navigate('Landing')}>
                 <Text style={styles.submit}>Submit</Text>
             </TouchableOpacity>
         </View>
