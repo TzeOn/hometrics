@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
-import Register from './RegisterScreen';
+import React from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView } from 'react-native';
 
 const HomeScreen = (props) => {
     return (
-        <View style={styles.container}>
+        <ScrollView contentContainerStyle={{flex:1}}
+        >
+        <View style={styles.container} >
             <View>
                 <Image 
                 source={require('../../assets/splash.png')}
@@ -24,7 +25,7 @@ const HomeScreen = (props) => {
             </TouchableOpacity>
             </View>
         </View>
-
+        </ScrollView>
     );
 };  
 
@@ -33,9 +34,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'black',
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'center',
-      
-        
+        justifyContent: 'center'
     },
     textStyle: {
         color: '#FF9800',
