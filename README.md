@@ -22,7 +22,7 @@ Then either
 
 Or
 
-* ./schema.sql
+* ./script.sh
 
 ### Frontend
 * npm start -web in frontend directory
