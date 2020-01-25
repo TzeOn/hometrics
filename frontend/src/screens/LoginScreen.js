@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Image, TouchableOpacity, Text, StyleSheet, TextInput } from 'react-native';
+import { View, Image, TouchableOpacity, Text, StyleSheet, TextInput, AsyncStorage } from 'react-native';
 
 const LoginScreen = (props) => {
     function login(emailAddress, password) { 
@@ -16,8 +16,27 @@ const LoginScreen = (props) => {
         }).then(response => response.json()).then(response => {
             console.log(response)
             if (response.message === "ok") {
-                props.navigation.navigate("Landing")
+                let credentials = {
+                    emailAddress: emailAddress,
+                    password: password
+                }
+               
+                AsyncStorage.setItem('credentials', JSON.stringify(credentials));
+                props.navigation.navigate("Landing");
+            
+            
+            
+
+            
             } else if (response.message === "confirmationCode") {
+                let credentials = {
+                    emailAddress: emailAddress,
+                    password: password
+                }
+                AsyncStorage.setItem('credentials', JSON.stringify(credentials));
+                console.log("confimration go to")
+ 
+           
                 props.navigation.navigate("Confirmation"); 
             } else {
                 setErrorMessage("Invalid credentials");

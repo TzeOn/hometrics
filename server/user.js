@@ -3,6 +3,15 @@ const express = require("express"),
       database = require("./database"),
       nodemailer = require("nodemailer");
 
+router.get("/info", (request, response) => {
+    if (request.session.loggedIn) 
+        response.end(request.session.emailAddress); 
+        
+        //response.json({"emailAddress": request.session.emailAddress}); 
+    else 
+        response.end("ohno") 
+})
+
 router.post("/signup", (request, response) => {
     let user = request.body,
         reply = {
@@ -21,15 +30,20 @@ router.post("/signup", (request, response) => {
 
     // Validate surname.
     if (!(regex.test(user.surname)))
-        reply.forename = false;
+        reply.surname = false;
 
     // Validate email address.
     regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if (!(regex.test(user.emailAddress)))
-        reply.emailAddress = false;
+    //if (!(regex.test(user.emailAddress)))
+        //reply.emailAddress = false;
     let sql = `SELECT * FROM user WHERE emailAddress="${user.emailAddress}"`;
-    if (database.query(sql).length !== 0)
+    console.log(database.query(sql))
+    if (database.query(sql).length != 0)
         reply.emailAddress = false;
+
+    // Validate password.
+    if (user.password.length < 4) 
+        reply.password = false; 
     
     // Validate hub credentials.
     sql = `SELECT * FROM hub WHERE id="${user.hubName}" AND password="${user.hubPassword}"`;
@@ -68,10 +82,13 @@ router.post("/signup", (request, response) => {
             else 
               console.log(`Confirmation code emailed to ${user.emailAddress}.`);
         });
-        response.end("ok"); 
+        response.json({"ok": true}) 
+        request.session.loggedIn = true; 
+        request.session.emailAddress = user.emailAddress; 
         console.log(`Signed up ${user.emailAddress} as a user.`); 
     } else {
-        response.json(reply); 
+        if (!response.ok)
+            response.json(reply); 
         console.log("Rejected a sign-up request."); 
     }
 });
@@ -96,7 +113,7 @@ router.post("/login", (request, response) => {
 });
 
 router.post("/confirmationCode", (request, response) => {
-   let sql = `SELECT * FROM user WHERE emailAddress="${request.session.emailAddress}" AND confirmationCode="${request.body.confirmationCode}"`,
+   let sql = `SELECT * FROM user WHERE emailAddress="${request.body.emailAddress}" AND confirmationCode="${request.body.confirmationCode}"`,
        user = database.query(sql);
    if (user.length > 0) {
        // Calculate user type.
@@ -110,9 +127,10 @@ router.post("/confirmationCode", (request, response) => {
        else
            type = "dweller";
 
-       sql = `UPDATE user SET type="${type}", confirmationCode="NULL" WHERE emailAddress="${request.session.emailAddress}"`;
+       sql = `UPDATE user SET type="${type}", confirmationCode=NULL WHERE emailAddress="${request.body.emailAddress}"`;
        database.query(sql);
-       response.end("ok");
+       console.log(database.query(sql));
+       response.json({"ok": true});
    } else
        response.json({
           "confirmationCode": false

@@ -29,5 +29,6 @@ const homeSetup = require("./homeSetup");
 app.use("/homeSetup", homeSetup);
 
 app.get("/", (request, response) => {
+    console.log("Ping!"); 
     response.end("Server is responding.");
 });
