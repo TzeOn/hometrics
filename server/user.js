@@ -85,9 +85,9 @@ router.post("/login", (request, response) => {
        request.session.emailAddress = emailAddress;
        console.log(request.session.loggedIn);
        if (user[0].confirmationCode != null)
-           response.end("confirmationCode");
+            response.json({"message": "confirmationCode"});
        else
-           response.end("ok");
+           response.json({"message": "ok"});
    } else
        response.json({
            "emailAddress": false,

@@ -2,12 +2,35 @@ import React, { useState } from 'react';
 import { View, Image, TouchableOpacity, Text, StyleSheet, TextInput } from 'react-native';
 
 const LoginScreen = (props) => {
-    const [email, setEmail ] = useState('');
+    function login(emailAddress, password) { 
+        fetch("http://localhost:3000/user/login", {
+            method: "POST", 
+            "headers": {
+                Accept: "application/json", 
+                "Content-Type": "application/json"
+            }, 
+            body: JSON.stringify({
+                "emailAddress": emailAddress, 
+                "password": password
+            })
+        }).then(response => response.json()).then(response => {
+            console.log(response)
+            if (response.message === "ok") {
+                props.navigation.navigate("Landing")
+            } else if (response.message === "confirmationCode") {
+                props.navigation.navigate("Confirmation"); 
+            } else {
+                setErrorMessage("Invalid credentials");
+            }
+        }).catch(error => console.log(error))
+    }
+
+    const [emailAddress, setEmail ] = useState('');
     const [password, setPassword ] = useState('');
+    const [errorMessage, setErrorMessage] = useState("");
     
     return (
         <View style={styles.container}>
-             
             <View style={styles.buttonsLayout}>
             <TouchableOpacity 
             style={styles.buttons1}
@@ -25,19 +48,22 @@ const LoginScreen = (props) => {
             <Image 
             style={styles.imageStyle}
             source={require('../../assets/splash.png')}></Image>
+
+            <Text style={{color: "red"}}>{errorMessage}</Text>
+
             <Text style={styles.textStyle}>Email Address</Text>
             <TextInput
-            placeholder='Enter your Email Address'
+            placeholder='Email Address'
             style={styles.placeStyle}
             autoCapitalize='none'
             autoCorrect={false}
-            value={email}
+            value={emailAddress}
             onChangeText={(newValue) => setEmail(newValue)}
             ></TextInput>
 
             <Text style={styles.textStyle}>Password</Text>
             <TextInput
-            placeholder='Enter your password'
+            placeholder='Password'
             style={styles.placeStyle}
             autoCapitalize='none'
             autoCorrect={false}
@@ -45,12 +71,13 @@ const LoginScreen = (props) => {
             value={password}
             onChangeText={(newValue) => setPassword(newValue)}
             ></TextInput>
-
+            
             <TouchableOpacity
             style={styles.button}
-            onPress={() => props.navigation.navigate('Landing')}>
+            onPress={() => login(emailAddress, password)}>
                 <Text style={styles.submit}>Submit</Text>
             </TouchableOpacity>
+            
         </View>
     );
 };

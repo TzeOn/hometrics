@@ -1,6 +1,7 @@
 const express = require("express"),
     bodyParser = require("body-parser"),
-    session = require("express-session");
+    session = require("express-session"), 
+    cors = require("cors"); 
 
 const port = 3000 || process.env.PORT,
       app = express();
@@ -12,6 +13,8 @@ app.use(session({
     resave: true,
     saveUninitialized: true
 }));
+
+app.use(cors()); 
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -26,5 +29,5 @@ const homeSetup = require("./homeSetup");
 app.use("/homeSetup", homeSetup);
 
 app.get("/", (request, response) => {
-    response.end("Server is responding");
+    response.end("Server is responding.");
 });
