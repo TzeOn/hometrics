@@ -75,5 +75,35 @@ for entry in comfort_data:
     cursor.execute(sql, values)
 comfort_data.close()
 
+# Populate plug data. 
+plug_data = open(os.path.join(sys.path[0],"smartPlug.csv"), "r")
+for entry in plug_data:
+    if "#" in entry:
+        continue
+    entry = entry.rstrip("\n").split(",")
+    id = entry[0]
+    location = entry[1]
+    hub = entry[2]
+    sql = "INSERT INTO smartPlug (id, location, hub) VALUES (%s, %s, %s)"
+    values = (id, location, hub)
+    cursor.execute(sql, values)
+comfort_data.close()
+
+
+# Populate device data. 
+device_data = open(os.path.join(sys.path[0],"device.csv"), "r")
+for entry in device_data:
+    if "#" in entry:
+        continue
+    entry = entry.rstrip("\n").split(",")
+    id = entry[0]
+    name = entry[1]
+    owner = entry[2]
+    plug = entry[3]
+    sql = "INSERT INTO device (id, name, owner, plug) VALUES (%s, %s, %s, %s)"
+    values = (id, name, owner, plug)
+    cursor.execute(sql, values)
+comfort_data.close()
+
 # Commit to MySQL database. 
 database.commit()

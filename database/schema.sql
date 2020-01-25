@@ -30,21 +30,25 @@ CREATE TABLE user (
     FOREIGN KEY (hub) REFERENCES hub(id)
 ) ENGINE = INNODB;
 
+CREATE TABLE smartPlug (
+    id VARCHAR(255),
+    location VARCHAR(255),
+    hub VARCHAR(255),
+    PRIMARY KEY (id),
+    FOREIGN KEY (hub) REFERENCES hub(id)
+) ENGINE = INNODB;
+
 CREATE TABLE device (
     id VARCHAR(255),
     name VARCHAR(255),
     owner VARCHAR(255),
+    plug VARCHAR(255),
     PRIMARY KEY (id),
-    FOREIGN KEY (owner) REFERENCES user(emailAddress)
+    FOREIGN KEY (owner) REFERENCES user(emailAddress),
+    FOREIGN KEY (plug) REFERENCES smartPlug(id)
 ) ENGINE = INNODB;
 
-CREATE TABLE smartPlug (
-    id VARCHAR(255),
-    location VARCHAR(255),
-    pluggedDevice VARCHAR(255),
-    PRIMARY KEY (id),
-    FOREIGN KEY (pluggedDevice) REFERENCES device(id)
-) ENGINE = INNODB;
+
 
 CREATE TABLE deviceActivity (
     startTime DATE,
@@ -61,7 +65,10 @@ CREATE TABLE deviceRestriction (
     restriction INT,
     restricted VARCHAR(255),
     restrictor VARCHAR(255),
-    hoursUsed INT
+    hoursUsed INT,
+    FOREIGN KEY (device) REFERENCES device(id),
+    FOREIGN KEY (restrictor) REFERENCES user(emailAddress),
+    FOREIGN KEY (restricted) REFERENCES user(emailAddress)
 ) ENGINE = INNODB; 
 
 CREATE TABLE comfort (
