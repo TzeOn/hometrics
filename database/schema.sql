@@ -51,8 +51,8 @@ CREATE TABLE device (
 
 
 CREATE TABLE deviceActivity (
-    startTime DATE,
-    endTime DATE,
+    startTime DATETIME,
+    endTime DATETIME,
     energy REAL,
     device VARCHAR(255),
     user VARCHAR(255),

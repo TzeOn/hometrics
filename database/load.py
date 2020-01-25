@@ -87,7 +87,7 @@ for entry in plug_data:
     sql = "INSERT INTO smartPlug (id, location, hub) VALUES (%s, %s, %s)"
     values = (id, location, hub)
     cursor.execute(sql, values)
-comfort_data.close()
+plug_data.close()
 
 
 # Populate device data. 
@@ -103,7 +103,42 @@ for entry in device_data:
     sql = "INSERT INTO device (id, name, owner, plug) VALUES (%s, %s, %s, %s)"
     values = (id, name, owner, plug)
     cursor.execute(sql, values)
-comfort_data.close()
+device_data.close()
+
+# Populate deviceActivity data. 
+deviceActivity_data = open(os.path.join(sys.path[0],"deviceActivity.csv"), "r")
+for entry in deviceActivity_data:
+    if "#" in entry:
+        continue
+    entry = entry.rstrip("\n").split(",")
+    startTime = entry[0]
+    endTime = entry[1]
+    energy = entry[2]
+    device = entry[3]
+    user = entry[4]
+    sql = "INSERT INTO deviceActivity (startTime, endTime, energy, device, user) VALUES (%s, %s, %s, %s, %s)"
+    values = (startTime, endTime, energy, device, user)
+    cursor.execute(sql, values)
+deviceActivity_data.close()
+
+
+
+# Populate device restriction data. 
+deviceRestriction_data = open(os.path.join(sys.path[0],"deviceRestriction.csv"), "r")
+for entry in deviceRestriction_data:
+    if "#" in entry:
+        continue
+    entry = entry.rstrip("\n").split(",")
+    print(entry)
+    device = entry[0]
+    restriction = entry[1]
+    restricted = entry[2]
+    restrictor = entry[3]
+    hoursUsed = entry[4]
+    sql = "INSERT INTO deviceRestriction (device, restriction, restricted, restrictor, hoursUsed) VALUES (%s, %s, %s, %s, %s)"
+    values = (device, restriction, restricted, restrictor, hoursUsed)
+    cursor.execute(sql, values)
+deviceRestriction_data.close()
 
 # Commit to MySQL database. 
 database.commit()
