@@ -48,8 +48,6 @@ CREATE TABLE device (
     FOREIGN KEY (plug) REFERENCES smartPlug(id)
 ) ENGINE = INNODB;
 
-
-
 CREATE TABLE deviceActivity (
     startTime DATETIME,
     endTime DATETIME,

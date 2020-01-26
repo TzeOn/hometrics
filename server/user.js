@@ -3,15 +3,6 @@ const express = require("express"),
       database = require("./database"),
       nodemailer = require("nodemailer");
 
-router.get("/info", (request, response) => {
-    if (request.session.loggedIn) 
-        response.end(request.session.emailAddress); 
-        
-        //response.json({"emailAddress": request.session.emailAddress}); 
-    else 
-        response.end("ohno") 
-})
-
 router.post("/signup", (request, response) => {
     let user = request.body,
         reply = {
@@ -83,8 +74,6 @@ router.post("/signup", (request, response) => {
               console.log(`Confirmation code emailed to ${user.emailAddress}.`);
         });
         response.json({"ok": true}) 
-        request.session.loggedIn = true; 
-        request.session.emailAddress = user.emailAddress; 
         console.log(`Signed up ${user.emailAddress} as a user.`); 
     } else {
         if (!response.ok)
@@ -98,9 +87,6 @@ router.post("/login", (request, response) => {
        sql = `SELECT * FROM user WHERE emailAddress="${emailAddress}" AND password="${password}"`,
        user = database.query(sql);
    if (user.length > 0) {
-       request.session.loggedIn = true;
-       request.session.emailAddress = emailAddress;
-       console.log(request.session.loggedIn);
        if (user[0].confirmationCode != null)
             response.json({"message": "confirmationCode"});
        else
@@ -126,7 +112,6 @@ router.post("/confirmationCode", (request, response) => {
            type = "child";
        else
            type = "dweller";
-
        sql = `UPDATE user SET type="${type}", confirmationCode=NULL WHERE emailAddress="${request.body.emailAddress}"`;
        database.query(sql);
        console.log(database.query(sql));

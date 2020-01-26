@@ -1,3 +1,4 @@
-# Ignore generated files by WebStorm IDE
+**/server/node_modules
 **/server/.idea
+**
 .vscode/settings.json

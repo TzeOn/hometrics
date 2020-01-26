@@ -3,8 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView } from 'rea
 
 const HomeScreen = (props) => {
     return (
-        <ScrollView contentContainerStyle={{flex:1}}
-        >
+        <ScrollView contentContainerStyle={{flex:1}}>
         <View style={styles.container} >
             <View>
                 <Image 
@@ -12,17 +11,17 @@ const HomeScreen = (props) => {
                 style={styles.imageStyle}/>
             </View>
             <View style={styles.buttonsLayout}>
-            <TouchableOpacity 
-            style={styles.buttons1}
-            onPress={() => props.navigation.navigate('Register')}>
-                <Text style={styles.textStyle}>Sign Up</Text>
-            </TouchableOpacity>
+                <TouchableOpacity 
+                style={styles.buttons1}
+                onPress={() => props.navigation.navigate('Register')}>
+                    <Text style={styles.textStyle}>Register</Text>
+                </TouchableOpacity>
 
-            <TouchableOpacity 
-            style={styles.buttons2}
-            onPress={() => props.navigation.navigate('Login')}>
-                <Text style={styles.textStyle}>Log In</Text>
-            </TouchableOpacity>
+                <TouchableOpacity 
+                style={styles.buttons2}
+                onPress={() => props.navigation.navigate('Login')}>
+                    <Text style={styles.textStyle}>Login</Text>
+                </TouchableOpacity>
             </View>
         </View>
         </ScrollView>
@@ -42,20 +41,16 @@ const styles = StyleSheet.create({
     },
     buttonsLayout: {
         flexDirection: 'row',
-       
     },
     buttons1: {
         right:10
-     
     },
     buttons2: {
         left:10
-
     },
     imageStyle: {
         height: 300,
         width: 300,
-        
     }
 });
 

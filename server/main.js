@@ -1,6 +1,5 @@
 const express = require("express"),
     bodyParser = require("body-parser"),
-    session = require("express-session"), 
     cors = require("cors"); 
 
 const port = 3000 || process.env.PORT,
@@ -8,14 +7,7 @@ const port = 3000 || process.env.PORT,
 
 app.listen(port, () => console.log(`Server up and running - listening for requests on port ${port}.`));
 
-app.use(session({
-    secret: "secret",
-    resave: true,
-    saveUninitialized: true
-}));
-
 app.use(cors()); 
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 

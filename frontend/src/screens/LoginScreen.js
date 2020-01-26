@@ -14,54 +14,40 @@ const LoginScreen = (props) => {
                 "password": password
             })
         }).then(response => response.json()).then(response => {
-            console.log(response)
+            let credentials = {
+                "emailAddress": emailAddress, 
+                "password": password
+            }
             if (response.message === "ok") {
-                let credentials = {
-                    emailAddress: emailAddress,
-                    password: password
-                }
-               
-                AsyncStorage.setItem('credentials', JSON.stringify(credentials));
+                AsyncStorage.setItem("credentials", JSON.stringify(credentials));
                 props.navigation.navigate("Landing");
-            
-            
-            
-
-            
             } else if (response.message === "confirmationCode") {
-                let credentials = {
-                    emailAddress: emailAddress,
-                    password: password
-                }
                 AsyncStorage.setItem('credentials', JSON.stringify(credentials));
-                console.log("confimration go to")
- 
-           
                 props.navigation.navigate("Confirmation"); 
             } else {
                 setErrorMessage("Invalid credentials");
             }
-        }).catch(error => console.log(error))
+        }).catch(error => console.error(error))
     }
 
-    const [emailAddress, setEmail ] = useState('');
-    const [password, setPassword ] = useState('');
-    const [errorMessage, setErrorMessage] = useState("");
+    const [emailAddress, setEmail ] = useState(''),
+          [password, setPassword ] = useState(''),
+          [errorMessage, setErrorMessage] = useState("");
     
     return (
         <View style={styles.container}>
             <View style={styles.buttonsLayout}>
-            <TouchableOpacity 
-            style={styles.buttons1}
-            onPress={() => props.navigation.navigate('Register')}>
-                <Text style={styles.textStyle}>Sign Up</Text>
-            </TouchableOpacity>
+                <TouchableOpacity 
+                style={styles.buttons1}
+                onPress={() => props.navigation.navigate('Register')}>
+                    <Text style={styles.textStyle}>Register</Text>
+                </TouchableOpacity>
 
-            <TouchableOpacity 
-            style={styles.buttons2}
-            onPress={() => props.navigation.navigate('Login')}>
-                <Text style={styles.textStyle}>Log In</Text>
-            </TouchableOpacity>
+                <TouchableOpacity 
+                style={styles.buttons2}
+                onPress={() => props.navigation.navigate('Login')}>
+                    <Text style={styles.textStyle}>Login</Text>
+                </TouchableOpacity>
             </View>
             
             <Image 
@@ -96,7 +82,6 @@ const LoginScreen = (props) => {
             onPress={() => login(emailAddress, password)}>
                 <Text style={styles.submit}>Submit</Text>
             </TouchableOpacity>
-            
         </View>
     );
 };
@@ -106,12 +91,10 @@ const styles=StyleSheet.create({
         flex:1,
         backgroundColor: 'black',
         alignItems: 'center',
-        
     },
     textStyle: {
         color: 'white',
         fontSize: 20,
-        
     },
     placeStyle: {
         color:'gray',
