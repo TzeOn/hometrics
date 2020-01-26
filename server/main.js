@@ -14,6 +14,9 @@ app.use(bodyParser.urlencoded({extended: true}));
 const user = require("./user");
 app.use("/user", user);
 
+const device = require("./device");
+app.use("/device", device);
+
 const weather = require("./weather");
 app.use("/weather", weather);
 
