@@ -1,5 +1,5 @@
 import React, { useState, Component } from 'react';
-import { View, TouchableOpacity, Text, StyleSheet, Image } from 'react-native';
+import { View, TouchableOpacity, Text, StyleSheet, Image, Button } from 'react-native';
 
 export default class LandingScreen extends Component {
     constructor(props) { 
@@ -35,6 +35,7 @@ export default class LandingScreen extends Component {
         return (
             <View style={styles.container}>
                 <Text style={styles.textStyle}>This is the landing screen</Text>
+                <Button title="Energy Screen" onPress={() => this.props.navigation.navigate("Energy")}></Button>
             </View>
         );
     }

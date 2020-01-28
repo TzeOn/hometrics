@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Image, TextInput, TouchableOpacity, AsyncStorage } from 'react-native';
+import { View, Text, StyleSheet, Image, TextInput, TouchableOpacity, AsyncStorage, ScrollView } from 'react-native';
+const api = require("../api").url; 
 
 const RegisterScreen = props => {
     function signup() { 
-        fetch("http://localhost:3000/user/signup", {
+        fetch(`${api}/user/signup`, {
             method: "POST", 
             "headers": {
                 Accept: "application/json", 
@@ -65,7 +66,8 @@ const RegisterScreen = props => {
           [hubError, setHubError] = useState("");
 
     return (
-        <View style={styles.container}>
+        <ScrollView>
+            <View style={styles.container}>
             <View style={styles.buttonsLayout}>
                 <TouchableOpacity 
                 style={styles.buttons1}
@@ -158,6 +160,7 @@ const RegisterScreen = props => {
                 autoCapitalize='none'
                 autoCorrect={false}
                 value={hubPassword}
+                secureTextEntry={true}
                 onChangeText={(newValue) => setHubPassword(newValue)}
                 ></TextInput>
 
@@ -167,7 +170,8 @@ const RegisterScreen = props => {
                     <Text style={styles.submit}>Submit</Text>
                 </TouchableOpacity>
             </View>
-        </View>
+            </View>
+        </ScrollView>
     );
 };
 

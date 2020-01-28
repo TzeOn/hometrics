@@ -1,5 +1,6 @@
 import React from "react";
 import { View, Image, TouchableOpacity, StyleSheet, TextInput, Text, AsyncStorage } from "react-native";
+const api = require("../api").url; 
 
 export default class ConfirmationScreen extends React.Component  {
     constructor(props) {
@@ -12,7 +13,7 @@ export default class ConfirmationScreen extends React.Component  {
     }
 
     confirm() {
-        fetch("http://localhost:3000/user/confirmationCode", {
+        fetch(`${api}/user/confirmationCode`, {
             method: "POST", 
             "headers": {
                 Accept: "application/json", 

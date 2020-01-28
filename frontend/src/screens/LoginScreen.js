@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { View, Image, TouchableOpacity, Text, StyleSheet, TextInput, AsyncStorage } from 'react-native';
+const api = require("../api").url;
 
 const LoginScreen = (props) => {
     function login(emailAddress, password) { 
-        fetch("http://localhost:3000/user/login", {
+        fetch(`${api}/user/login`, {
             method: "POST", 
             "headers": {
                 Accept: "application/json", 

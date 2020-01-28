@@ -5,6 +5,7 @@ import RegisterScreen from './src/screens/RegisterScreen';
 import LoginScreen from './src/screens/LoginScreen';
 import ConfirmationScreen from './src/screens/ConfirmationScreen';
 import LandingScreen from './src/screens/LandingScreen';
+import EnergyScreen from './src/screens/EnergyScreen'; 
 import React from 'react';
 import { Image } from 'react-native';
 
@@ -14,6 +15,7 @@ const navigator = createStackNavigator({
     Login: LoginScreen,
     Confirmation: ConfirmationScreen,
     Landing: LandingScreen,
+    Energy: EnergyScreen,
   },
   {
     initialRouteName: 'Home',

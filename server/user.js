@@ -28,7 +28,6 @@ router.post("/signup", (request, response) => {
     //if (!(regex.test(user.emailAddress)))
         //reply.emailAddress = false;
     let sql = `SELECT * FROM user WHERE emailAddress="${user.emailAddress}"`;
-    console.log(database.query(sql))
     if (database.query(sql).length != 0)
         reply.emailAddress = false;
 
