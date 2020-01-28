@@ -25,10 +25,10 @@ router.post("/signup", (request, response) => {
 
     // Validate email address.
     regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    //if (!(regex.test(user.emailAddress)))
-        //reply.emailAddress = false;
+    if (!(regex.test(user.emailAddress)))
+        reply.emailAddress = false;
     let sql = `SELECT * FROM user WHERE emailAddress="${user.emailAddress}"`;
-    if (database.query(sql).length != 0)
+    if (database.query(sql).length !== 0)
         reply.emailAddress = false;
 
     // Validate password.
@@ -37,11 +37,9 @@ router.post("/signup", (request, response) => {
     
     // Validate hub credentials.
     sql = `SELECT * FROM hub WHERE id="${user.hubName}" AND password="${user.hubPassword}"`;
-    if (database.query(sql).length === 0) {
+    if (database.query(sql).length === 0)
         reply.hub = false;
-        console.log(database.query(sql));
-    }
-
+    
     if (reply.dob === true && reply.emailAddress === true && reply.forename === true && reply.surname === true && reply.hub === true && reply.password === true) {
         // Generate random user confirmation code. 
         let confirmationCode = Math.floor(Math.pow(10, 3) + Math.random() * 9 * Math.pow(10, 3)); 
@@ -95,6 +93,12 @@ router.post("/login", (request, response) => {
            "emailAddress": false,
            "password": false
        });
+});
+
+router.post("/authenticate", (request, response) => {
+    let emailAddress = request.body.emailAddress, password = request.body.password,
+        sql = `SELECT * FROM user WHERE emailAddress="${emailAddress}" AND password="${password}"`;
+    response.json({"authenticity": database.query(sql).length === 1})
 });
 
 router.post("/confirmationCode", (request, response) => {
