@@ -1,17 +1,13 @@
 const express = require("express"),
       router = express.Router(),
-      database = require("./database"),
-      nodemailer = require("nodemailer");
+      database = require("./database");
 
-router.post("/test", (request, response) => {
+router.post("/energyUsage", (request, response) => {
     let x = request.body.id;
-    let sql = `SELECT * FROM device WHERE id= "${x}"`;
-    let device = database.query(sql);
-    if(device.length > 0){
-        console.log("there is a device with this id");
-    }else{
-        console.log("there is not a device with this id");
-    }
+    let sql = `SELECT SUM(ENERGY) FROM deviceActivity WHERE id= "${x}"`;
+    let energy = database.query(sql);
+
+    console.log(energy);
 });
 
 module.exports = router;
