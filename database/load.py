@@ -129,14 +129,13 @@ for entry in deviceRestriction_data:
     if "#" in entry:
         continue
     entry = entry.rstrip("\n").split(",")
-    print(entry)
     device = entry[0]
-    restriction = entry[1]
+    restrictionTime = entry[1]
     restricted = entry[2]
     restrictor = entry[3]
     hoursUsed = entry[4]
-    sql = "INSERT INTO deviceRestriction (device, restriction, restricted, restrictor, hoursUsed) VALUES (%s, %s, %s, %s, %s)"
-    values = (device, restriction, restricted, restrictor, hoursUsed)
+    sql = "INSERT INTO deviceRestriction (device, restrictionTime, restricted, restrictor, hoursUsed) VALUES (%s, %s, %s, %s, %s)"
+    values = (device, restrictionTime, restricted, restrictor, hoursUsed)
     cursor.execute(sql, values)
 deviceRestriction_data.close()
 

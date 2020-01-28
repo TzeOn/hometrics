@@ -60,7 +60,7 @@ CREATE TABLE deviceActivity (
 
 CREATE TABLE deviceRestriction (
     device VARCHAR(255),
-    restriction INT,
+    restrictionTime INT,
     restricted VARCHAR(255),
     restrictor VARCHAR(255),
     hoursUsed INT,
