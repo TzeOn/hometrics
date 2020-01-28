@@ -25,5 +25,5 @@ app.use("/homeSetup", homeSetup);
 
 app.get("/", (request, response) => {
     console.log("Ping!"); 
-    response.end("Server is responding.");
+    response.end("Ping!");
 });
