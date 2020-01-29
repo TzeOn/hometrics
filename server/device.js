@@ -35,12 +35,12 @@ router.post("/totalUserEnergy", (request, response) => {
 
     let result = calculateEnergy(energyQuery, timeQuery);
 
-    if(result){
-        response.json({"user":user,"usage":result});
+    if(!result){
+        response.json({"message":"error"});
     }else if(result === 0){
         response.json({"user":user,"usage":"no usage"});
     }else{
-        response.json({"message":"error"});
+        response.json({"user":user,"usage":result});
     }
 });
 
