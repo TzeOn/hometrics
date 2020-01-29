@@ -55,15 +55,15 @@ CREATE TABLE device (
     id VARCHAR(255),
     name VARCHAR(255),
     plug VARCHAR(255),
-    onOff VARCHAR(255),
+    onOff BOOLEAN,
     energyPerHour INT,
     PRIMARY KEY (id),
     FOREIGN KEY (plug) REFERENCES smartPlug(id)
 );
 
 CREATE TABLE deviceActivity (
-    startTime DATETIME,
-    endTime DATETIME,
+    startTime INT,
+    endTime INT,
     device VARCHAR(255),
     user VARCHAR(255),
     FOREIGN KEY (device) REFERENCES device(id),
