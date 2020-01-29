@@ -32,7 +32,7 @@ for room in room_data:
         continue
     room = room.rstrip("\n")
     name = room
-    sql = "INSERT INTO room (name) VALUES ('"+name+"')"
+    sql = "INSERT INTO room (roomName) VALUES ('"+name+"')"
     values = name
     cursor.execute(sql, values)
 room_data.close()
@@ -96,7 +96,7 @@ for entry in plug_data:
     id = entry[0]
     location = entry[1]
     hub = entry[2]
-    sql = "INSERT INTO smartPlug (id, room, hub) VALUES (%s, %s, %s)"
+    sql = "INSERT INTO smartPlug (id, roomName, hub) VALUES (%s, %s, %s)"
     values = (id, location, hub)
     cursor.execute(sql, values)
 plug_data.close()
@@ -110,8 +110,14 @@ for entry in device_data:
     id_ = entry[0]
     name = entry[1]
     plug = entry[2]
-    sql = "INSERT INTO device (id, name, plug) VALUES (%s, %s, %s)"
-    values = (id_, name, plug)
+    onOff = entry[3]
+    energyPerHour = entry[4]
+    if onOff == "true": 
+        onOff = True 
+    else:
+        onOff = False
+    sql = "INSERT INTO device (id, name, plug, onOff, energyPerHour) VALUES (%s, %s, %s, %s, %s)"
+    values = (id_, name, plug,onOff,energyPerHour)
     cursor.execute(sql, values)
 device_data.close()
 
@@ -123,11 +129,10 @@ for entry in deviceActivity_data:
     entry = entry.rstrip("\n").split(",")
     startTime = entry[0]
     endTime = entry[1]
-    energy = entry[2]
-    device = entry[3]
-    user = entry[4]
-    sql = "INSERT INTO deviceActivity (startTime, endTime, energy, device, user) VALUES (%s, %s, %s, %s, %s)"
-    values = (startTime, endTime, energy, device, user)
+    device = entry[2]
+    user = entry[3]
+    sql = "INSERT INTO deviceActivity (startTime, endTime, device, user) VALUES (%s, %s, %s, %s)"
+    values = (startTime, endTime, device, user)
     cursor.execute(sql, values)
 deviceActivity_data.close()
 
@@ -138,12 +143,12 @@ for entry in deviceRestriction_data:
         continue
     entry = entry.rstrip("\n").split(",")
     device = entry[0]
-    restrictionTime = entry[1]
+    cap = entry[1]
     restricted = entry[2]
     restrictor = entry[3]
     hoursUsed = entry[4]
-    sql = "INSERT INTO deviceRestriction (device, restrictionTime, restricted, restrictor, hoursUsed) VALUES (%s, %s, %s, %s, %s)"
-    values = (device, restrictionTime, restricted, restrictor, hoursUsed)
+    sql = "INSERT INTO deviceRestriction (device, cap, restricted, restrictor, hoursUsed) VALUES (%s, %s, %s, %s, %s)"
+    values = (device, cap, restricted, restrictor, hoursUsed)
     cursor.execute(sql, values)
 deviceRestriction_data.close()
 

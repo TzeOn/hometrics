@@ -36,6 +36,8 @@ export default class LandingScreen extends Component {
             <View style={styles.container}>
                 <Text style={styles.textStyle}>This is the landing screen</Text>
                 <Button title="Energy Screen" onPress={() => this.props.navigation.navigate("Energy")}></Button>
+                <Button title="Device Activity Screen" onPress={() => this.props.navigation.navigate("DeviceActivity")}></Button>
+                <Button title="Device Management Screen" onPress={() => this.props.navigation.navigate("DeviceManagement")}></Button>
             </View>
         );
     }

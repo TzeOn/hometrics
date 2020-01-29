@@ -1,0 +1,38 @@
+-TESTING-
+
+Login page
+1. Hit submit with no text in either box
+2. Hit submit with no text in email box
+3. Hit submit with no text in password box
+4. Hit submit with correct email but incorrect password
+4. Hit submit with correct password but incorrect email
+
+Signup page
+1.
+2.
+3.
+
+Energy usage page
+1. Test with child
+	1a. Weekly
+	1b. Monthly
+	1c. Yearly
+2. Test with admin
+	2a. Weekly
+	2b. Monthly
+	2c. Yearly
+3. Test with normal user
+	3a. Weekly
+	3b. Monthly
+	3c. Yearly
+
+Device activity screen
+1.
+2.
+3.
+
+Device management screen
+1.
+2.
+3.
+
