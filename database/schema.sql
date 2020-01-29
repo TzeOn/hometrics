@@ -11,6 +11,18 @@ CREATE TABLE weather (
     PRIMARY KEY (time)
 ) ENGINE = INNODB;
 
+CREATE TABLE room ( 
+    name VARCHAR(255), 
+    PRIMARY KEY (name)
+) ENGINE = INNODB; 
+
+CREATE TABLE light ( 
+    id VARCHAR(255),  
+    room VARCHAR(255), 
+    PRIMARY KEY (id), 
+    FOREIGN KEY (room) REFERENCES room(name)
+) ENGINE = INNODB; 
+
 CREATE TABLE hub (
     id VARCHAR(255),  
     password VARCHAR(255), 
@@ -32,19 +44,18 @@ CREATE TABLE user (
 
 CREATE TABLE smartPlug (
     id VARCHAR(255),
-    location VARCHAR(255),
+    room VARCHAR(255),
     hub VARCHAR(255),
     PRIMARY KEY (id),
-    FOREIGN KEY (hub) REFERENCES hub(id)
+    FOREIGN KEY (hub) REFERENCES hub(id), 
+    FOREIGN KEY (room) references room(name)
 ) ENGINE = INNODB;
 
 CREATE TABLE device (
     id VARCHAR(255),
     name VARCHAR(255),
-    owner VARCHAR(255),
     plug VARCHAR(255),
     PRIMARY KEY (id),
-    FOREIGN KEY (owner) REFERENCES user(emailAddress),
     FOREIGN KEY (plug) REFERENCES smartPlug(id)
 ) ENGINE = INNODB;
 

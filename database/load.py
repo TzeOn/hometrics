@@ -25,6 +25,18 @@ for hub in hub_data:
     cursor.execute(sql, values)
 hub_data.close()
 
+# Populate room data. 
+room_data = open(os.path.join(sys.path[0], "room.csv"), "r")
+for room in room_data: 
+    if "#" in room:
+        continue
+    room = room.rstrip("\n")
+    name = room
+    sql = "INSERT INTO room (name) VALUES ('"+name+"')"
+    values = name
+    cursor.execute(sql, values)
+room_data.close()
+
 # Populate weather data. 
 weather_data = open(os.path.join(sys.path[0],"weather.csv"), "r")
 for entry in weather_data:
@@ -84,11 +96,10 @@ for entry in plug_data:
     id = entry[0]
     location = entry[1]
     hub = entry[2]
-    sql = "INSERT INTO smartPlug (id, location, hub) VALUES (%s, %s, %s)"
+    sql = "INSERT INTO smartPlug (id, room, hub) VALUES (%s, %s, %s)"
     values = (id, location, hub)
     cursor.execute(sql, values)
 plug_data.close()
-
 
 # Populate device data. 
 device_data = open(os.path.join(sys.path[0],"device.csv"), "r")
@@ -96,12 +107,11 @@ for entry in device_data:
     if "#" in entry:
         continue
     entry = entry.rstrip("\n").split(",")
-    id = entry[0]
+    id_ = entry[0]
     name = entry[1]
-    owner = entry[2]
-    plug = entry[3]
-    sql = "INSERT INTO device (id, name, owner, plug) VALUES (%s, %s, %s, %s)"
-    values = (id, name, owner, plug)
+    plug = entry[2]
+    sql = "INSERT INTO device (id, name, plug) VALUES (%s, %s, %s)"
+    values = (id_, name, plug)
     cursor.execute(sql, values)
 device_data.close()
 
@@ -120,8 +130,6 @@ for entry in deviceActivity_data:
     values = (startTime, endTime, energy, device, user)
     cursor.execute(sql, values)
 deviceActivity_data.close()
-
-
 
 # Populate device restriction data. 
 deviceRestriction_data = open(os.path.join(sys.path[0],"deviceRestriction.csv"), "r")

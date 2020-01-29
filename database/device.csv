@@ -1,9 +1,10 @@
-#id,name,owner,plug
-d1,light,vincent@hooli.com,sp1
-d2,light,vincent@hooli.com,sp2
-d3,washing machine,lee@hooli.com,sp1
-d4,kettle,lee@hooli.com,sp1
-d5,light,vincent@hooli.com,sp3
-d6,tv,eoghann@hooli.com,sp3
-d7,tv,ram@hooli.com,sp2
-d8,games console,ram@hooli.com,sp3
+#id,name,plug
+#
+# Living room
+#
+d1,Living room television,sp1
+d2,WiFi Hub,sp2
+d3,Nintendo Wii,sp3
+d4,Xbox One,sp4
+d5,Speakers,sp5
+d6,Telephone,sp6

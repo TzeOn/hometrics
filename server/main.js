@@ -23,6 +23,9 @@ app.use("/weather", weather);
 const homeSetup = require("./homeSetup");
 app.use("/homeSetup", homeSetup);
 
+const energy = require("./energy");
+app.use("/energy", energy);
+
 app.get("/", (request, response) => {
     console.log("Ping!"); 
     response.end("Ping!");

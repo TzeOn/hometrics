@@ -1,4 +1,27 @@
-#id,location,hub
-sp1,kitchen,HOMEF3DA
-sp2,bedroom,HOMEF3DA
-sp3,living room,HOMEF3DA
+#id,room,hub
+# Living room contains 8 plugs.
+sp1,livingRoom,HOMEF3DA
+sp2,livingRoom,HOMEF3DA
+sp3,livingRoom,HOMEF3DA
+sp4,livingRoom,HOMEF3DA
+sp5,livingRoom,HOMEF3DA
+sp6,livingRoom,HOMEF3DA
+sp7,livingRoom,HOMEF3DA
+sp8,livingRoom,HOMEF3DA
+sp9,livingRoom,HOMEF3DA
+sp10,kitchen,HOMEF3DA
+sp11,kitchen,HOMEF3DA
+sp12,kitchen,HOMEF3DA
+sp13,kitchen,HOMEF3DA
+sp14,kitchen,HOMEF3DA
+sp15,kitchen,HOMEF3DA
+sp16,kitchen,HOMEF3DA
+sp17,kitchen,HOMEF3DA
+sp18,bedroom,HOMEF3DA
+sp19,bedroom,HOMEF3DA
+sp20,bedroom,HOMEF3DA
+sp21,bedroom,HOMEF3DA
+sp22,otherBedroom,HOMEF3DA
+sp23,otherBedroom,HOMEF3DA
+sp24,otherBedroom,HOMEF3DA
+sp25,otherBedroom,HOMEF3DA
