@@ -112,6 +112,10 @@ for entry in device_data:
     plug = entry[2]
     onOff = entry[3]
     energyPerHour = entry[4]
+    if onOff == "true": 
+        onOff = True 
+    else:
+        onOff = False
     sql = "INSERT INTO device (id, name, plug, onOff, energyPerHour) VALUES (%s, %s, %s, %s, %s)"
     values = (id_, name, plug,onOff,energyPerHour)
     cursor.execute(sql, values)
