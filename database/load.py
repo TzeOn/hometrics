@@ -32,7 +32,7 @@ for room in room_data:
         continue
     room = room.rstrip("\n")
     name = room
-    sql = "INSERT INTO room (name) VALUES ('"+name+"')"
+    sql = "INSERT INTO room (roomName) VALUES ('"+name+"')"
     values = name
     cursor.execute(sql, values)
 room_data.close()
@@ -96,7 +96,7 @@ for entry in plug_data:
     id = entry[0]
     location = entry[1]
     hub = entry[2]
-    sql = "INSERT INTO smartPlug (id, room, hub) VALUES (%s, %s, %s)"
+    sql = "INSERT INTO smartPlug (id, roomName, hub) VALUES (%s, %s, %s)"
     values = (id, location, hub)
     cursor.execute(sql, values)
 plug_data.close()
@@ -138,12 +138,12 @@ for entry in deviceRestriction_data:
         continue
     entry = entry.rstrip("\n").split(",")
     device = entry[0]
-    restrictionTime = entry[1]
+    cap = entry[1]
     restricted = entry[2]
     restrictor = entry[3]
     hoursUsed = entry[4]
-    sql = "INSERT INTO deviceRestriction (device, restrictionTime, restricted, restrictor, hoursUsed) VALUES (%s, %s, %s, %s, %s)"
-    values = (device, restrictionTime, restricted, restrictor, hoursUsed)
+    sql = "INSERT INTO deviceRestriction (device, cap, restricted, restrictor, hoursUsed) VALUES (%s, %s, %s, %s, %s)"
+    values = (device, cap, restricted, restrictor, hoursUsed)
     cursor.execute(sql, values)
 deviceRestriction_data.close()
 
