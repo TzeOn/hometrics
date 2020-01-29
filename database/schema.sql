@@ -62,8 +62,8 @@ CREATE TABLE device (
 );
 
 CREATE TABLE deviceActivity (
-    startTime INT,
-    endTime INT,
+    startTime REAL,
+    endTime REAL,
     device VARCHAR(255),
     user VARCHAR(255),
     FOREIGN KEY (device) REFERENCES device(id),
