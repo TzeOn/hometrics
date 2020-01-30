@@ -2,6 +2,7 @@ const express = require("express"),
       router = express.Router(),
       database = require("./database");
 
+//constants in ms
 const HOUR = 3600000,
       DAY = 86400000, 
       WEEK = 604800000,
@@ -9,9 +10,7 @@ const HOUR = 3600000,
       YEAR = 31536000000;
 
 
-/*  This is just used so that the server doesnt have to ask
-*   for the users email and password everytime it gets a request
-*/
+//make sure we show the user their data and not someone elses
 router.use((request, response, next) => {
     let emailAddress = request.body.emailAddress, password = request.body.password,
     sql = `SELECT * FROM user WHERE emailAddress="${emailAddress}" AND password="${password}"`,
@@ -30,17 +29,18 @@ router.post("/totalUserEnergy", (request, response) => {
     let user = request.body.user;
     let energyQuery = database.query(`SELECT energyPerHour,id FROM device`);
     let timeQuery = database.query(`SELECT startTime,endTime,device FROM deviceActivity WHERE user = "${user}"`);
+    let result = 0;
 
     timeQuery = limitTimeFrame(timeQuery, request.body.timeFrame);
+    
+    result = calculateEnergy(energyQuery, timeQuery);
 
-    let result = calculateEnergy(energyQuery, timeQuery);
-
-    if(!result){
-        response.json({"message":"error"});
+    if(result){
+        response.json({"user":user,"usage":result});
     }else if(result === 0){
         response.json({"user":user,"usage":"no usage"});
     }else{
-        response.json({"user":user,"usage":result});
+        response.json({"message":"error"});
     }
 });
 
@@ -49,10 +49,11 @@ router.post("/totalUserEnergy", (request, response) => {
 router.post("/totalHomeEnergy", (request, response) => {
     let energyQuery = database.query(`SELECT energyPerHour,id FROM device`);
     let timeQuery = database.query(`SELECT startTime,endTime,device FROM deviceActivity`);
+    let result = 0;
 
     timeQuery = limitTimeFrame(timeQuery, request.body.timeFrame);
 
-    let result = calculateEnergy(energyQuery, timeQuery);
+    result = calculateEnergy(energyQuery, timeQuery);
     
 
     if(result){
@@ -63,18 +64,33 @@ router.post("/totalHomeEnergy", (request, response) => {
 });
 
 
+//returns the date and time based on the UNIX time
+router.post("/getDateTime", (request, response) => {
+    let device = request.body.device;
+    let deviceDates = database.query(`SELECT * FROM deviceActivity WHERE device = "${device}";`);
+    deviceDates[0].endTime = new Date(deviceDates[0].endTime);
+    deviceDates[0].startTime = new Date(deviceDates[0].startTime);
+    
+    response.json(deviceDates);
+});
+
 
 
 
 //TODO
 router.post("/scoreboard", (request, response) => {
-    
-    let sql = `SELECT * from `
+    let numOfUsers = database.query(`SELECT COUNT(emailAddress) AS count FROM user;`);
+    numOfUsers = numOfUsers[0].count;
+    let users = [];
 
+    for(i=0  ;i<numOfUsers ; i++){
+        users.push("localhost:3000/device/totalUserEnergy");
+    }
+    response.json(users);
 });
 
 
-
+//TODO
 //helper function
 //takes an array of device activities and returns 
 //an array with only the ones that are in the time frame we're interested in
@@ -83,6 +99,9 @@ function limitTimeFrame(timeQuery, timeFrame){
     let result = [];
 
     switch(timeFrame){
+        case "hour":
+            timeFrame = HOUR;
+        break;
         case "day":
             timeFrame = DAY;
         break;
@@ -97,6 +116,7 @@ function limitTimeFrame(timeQuery, timeFrame){
         break;
     }
 
+    
     for(i=0  ;i<timeQuery.length ; i++){ //for each element
         if(timeQuery[i].endTime >= currentTime - timeFrame){ //in the correct time frame
             result.push(timeQuery[i]);
