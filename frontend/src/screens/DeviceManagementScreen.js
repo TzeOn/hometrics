@@ -1,18 +1,65 @@
 import { Card } from "react-native-elements"; 
 import React, { Component } from "react";
-import { Button, Text } from "react-native";
+import { Button, Text, View } from "react-native";
+import { TouchableOpacity, ScrollView } from "react-native-gesture-handler";
+const api = require("../api").url; 
 
 export default class DeviceManagement extends Component { 
     constructor(props) { 
         super(props); 
+        this.state = {
+            rooms: []
+        }
+    }
+
+    componentWillMount() { 
+        this.getData()
+    }
+
+    getData() { 
+        fetch(`${api}/deviceManagement/room`).then(response => response.json()).then(response => {
+            this.setState({rooms: response}) 
+        }) 
+    }
+
+    showRooms() { 
+        let rooms = []; 
+        let i = 0; 
+        for (i=0; i<this.state.rooms.length; i++) {
+            console.log(this.state.rooms[i])
+            rooms.push(
+                <TouchableOpacity>
+                    <Card title={this.state.rooms[i].roomName}>
+                            <View style={{  
+                                alignItems: "center", 
+                                justifyContent: "center"
+                            }}>
+                                <Text style={{
+                                    fontSize: 40
+                                }}>{this.state.rooms[i].numberOfDevices}</Text>
+                                <Text>devices</Text>
+                            </View>
+                    </Card>
+                </TouchableOpacity>
+            )
+        }
+        return rooms; 
     }
 
     render() { 
         return (
-            <Card title="beans">
-                <Text>The bean room</Text>
-                <Button title="View Room"></Button>
-            </Card>
+            <ScrollView>
+                <View><Text>Rooms</Text></View>
+                <View style={{
+                    flexDirection: "row",  
+                    flex: 0.33, 
+                    flexWrap: "wrap", 
+                    alignItems:'center',
+                    justifyContent:'space-between' 
+                }}>
+                    {this.showRooms()}
+                </View>
+            </ScrollView> 
         )
     }
 }

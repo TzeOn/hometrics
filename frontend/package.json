@@ -8,6 +8,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "deprecated-react-native-listview": "0.0.6",
     "expo": "~36.0.0",
     "react": "~16.9.0",
     "react-dom": "~16.9.0",
@@ -17,6 +18,7 @@
     "react-native-gesture-handler": "~1.5.0",
     "react-native-pure-chart": "0.0.24",
     "react-native-reanimated": "~1.4.0",
+    "react-native-timeline-flatlist": "^0.6.5",
     "react-native-timeline-listview": "^0.2.3",
     "react-native-web": "~0.11.7",
     "react-navigation": "^4.0.10",

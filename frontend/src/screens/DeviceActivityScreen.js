@@ -1,11 +1,10 @@
-
 import React, { Component } from 'react';
 import {
   StyleSheet,
   Text,
   View
 } from 'react-native';
-import Timeline from 'react-native-timeline-listview'
+import Timeline from 'react-native-timeline-flatlist';
 
 export default class Example extends Component {
   constructor(){
@@ -22,7 +21,7 @@ export default class Example extends Component {
         {time: '12:00', title: 'Event 3', description: 'Event 3 Description'},
         {time: '14:00', title: 'Event 4', description: 'Event 4 Description'},
         {time: '16:30', title: 'Event 5', description: 'Event 5 Description'}
-      ]
+    ]
   }
 
   componentWillMount() { 

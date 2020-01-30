@@ -23,6 +23,9 @@ app.use("/weather", weather);
 const homeSetup = require("./homeSetup");
 app.use("/homeSetup", homeSetup);
 
+const deviceManagement = require("./deviceManagement");
+app.use("/deviceManagement", deviceManagement);
+
 app.get("/", (request, response) => {
     console.log("Ping!"); 
     response.end("Ping!");

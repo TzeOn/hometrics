@@ -20,7 +20,6 @@ const navigator = createStackNavigator({
     Energy: EnergyScreen,
     DeviceActivity: DeviceActivityScreen, 
     DeviceManagement: DeviceManagementScreen
-
   },
   {
     initialRouteName: 'Home',
