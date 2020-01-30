@@ -34,10 +34,26 @@ export default class LandingScreen extends Component {
 
         return (
             <View style={styles.container}>
-                <Text style={styles.textStyle}>This is the landing screen</Text>
-                <Button title="Energy Screen" onPress={() => this.props.navigation.navigate("Energy")}></Button>
-                <Button title="Device Activity Screen" onPress={() => this.props.navigation.navigate("DeviceActivity")}></Button>
-                <Button title="Device Management Screen" onPress={() => this.props.navigation.navigate("DeviceManagement")}></Button>
+               <TouchableOpacity onPress={() => this.props.navigation.navigate("Energy")}>
+                <Card 
+                title={<Text style={styles.titleStyle}>Energy Output </Text>}
+                containerStyle={{flex:1, backgroundColor:'black', alignItems: 'center', borderColor:'gray', paddingVertical:5}}>           
+                </Card>
+                </TouchableOpacity>
+
+                <TouchableOpacity onPress={() => this.props.navigation.navigate("DeviceActivity")}>
+                <Card 
+                title={<Text style={styles.titleStyle}>Device Activity </Text>}
+                containerStyle={{flex:1, backgroundColor:'black', alignItems: 'center', borderColor:'gray', paddingVertical:5}}>           
+                </Card>
+                </TouchableOpacity>
+
+                <TouchableOpacity onPress={() => this.props.navigation.navigate("DeviceManagement")}>
+                <Card 
+                title={<Text style={styles.titleStyle}>Device Management </Text>}
+                containerStyle={{flex:1, backgroundColor:'black', alignItems: 'center', borderColor:'gray', paddingVertical:5}}>           
+                </Card>
+                </TouchableOpacity>
             </View>
         );
     }
