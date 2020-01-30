@@ -1,10 +1,10 @@
 import React, { Component, useState } from 'react';
-import { StyleSheet, Text, View, FlatList, Dimensions, AppRegistry, Button, Alert  } from 'react-native';
+import { StyleSheet, Text, View, FlatList, Dimensions, AppRegistry, Button, Alert, SafeAreaView  } from 'react-native';
 import { TouchableOpacity, TouchableHighlight } from 'react-native-gesture-handler';
 import Modal from 'react-native-modal';
 import { FlatGrid } from 'react-native-super-grid';
 const data = [
-  { key: 'Room 1' }, { key: 'Room 2' }, { key: 'Room 3' }, { key: 'Room 4' }, { key: 'Room 5' } ];
+  { key: 'Room 1' }, { key: 'Room 2' }, { key: 'Room 3' }, { key: 'Room 4' }, { key: 'Room 5' }, { key: 'Room 6' }, { key: 'Room 7' }, { key: 'Room 8' }, { key: 'Room 9' } ];
 const numColumns = 3;
 
 
@@ -41,7 +41,7 @@ setModalText = (text) => {
 
   render() {
     return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
 
       <FlatList
         data={data}
@@ -49,6 +49,7 @@ setModalText = (text) => {
         renderItem={this.renderItem}
         numColumns={numColumns}
       />
+    
 
       <Modal
           isVisible={this.state.isModalVisible}
@@ -58,10 +59,10 @@ setModalText = (text) => {
           backdropOpacity={1}
           animationIn={'zoomIn'}
           animationOut={'zoomOut'}
-          animationInTiming={1000}
-          animationOutTiming={1000}
-          backdropTransitionInTiming={1000}
-          backdropTransitionOutTiming={1000}
+          animationInTiming={750}
+          animationOutTiming={750}
+          backdropTransitionInTiming={750}
+          backdropTransitionOutTiming={750}
         >
         <View style={styles.modalContent}>
             
@@ -69,14 +70,15 @@ setModalText = (text) => {
         <Text>Lights: On</Text>
         <Text>AC: On</Text>
         <Text>IOT: Onf</Text>
+
         {this._renderButton('Close', () => this.setModalVisible(false))}
         </View>
         </Modal>
 
         <FlatGrid
         itemDimension={130}
-        const items={[
-            {name: 'Temperature', value: '27c'} ,{name: 'Air Quality', value: '227ppm'} ,{name: 'Humidity', value: '14%'},{name:'Usage', value: '14kwh'}
+        items={[
+            {name: 'Temperature', value: '31c'} ,{name: 'Air Quality', value: '227ppm'} ,{name: 'Humidity', value: '14%'},{name:'Usage', value: '14kwh'}
         ]}
         style={styles.gridView}
         renderItem={({ item, index }) => (
@@ -88,7 +90,7 @@ setModalText = (text) => {
         
 />
 
-      </View>
+      </SafeAreaView>
     );
   }
 }
@@ -96,24 +98,24 @@ setModalText = (text) => {
 const styles = StyleSheet.create({
     container: {
     flex: 1,
-    margin: 10,
+    margin: 5,
+        
   },
   itemName: {
-    fontSize: 16,
+    fontSize: 18,
     color: '#fff',
     fontWeight: '600',
   },
   itemValue: {
     fontWeight: '600',
-    fontSize: 12,
+    fontSize: 16,
     color: '#fff',
   },
   gridView: {
-    marginTop: 20,
-    flex: 1,
+    flex: 4,
   },
   itemContainer: {
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 5,
     padding: 10,
@@ -129,7 +131,7 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(0, 0, 0, 0.1)',
   },
   button: {
-    backgroundColor: 'lightblue',
+    backgroundColor: '#FF9800',
     padding: 12,
     margin: 16,
     alignItems: 'center',
@@ -142,7 +144,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flex: 1,
     margin: 1,
-    height: Dimensions.get('window').width / numColumns, // approximate a square
+    width: Dimensions.get('window').width / numColumns-20, // approximate a square
+    height: Dimensions.get('window').width / numColumns-20,
   },
   itemInvisible: {
     backgroundColor: 'transparent',
