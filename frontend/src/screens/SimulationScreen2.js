@@ -1,5 +1,5 @@
 import React, { Component, useState } from 'react';
-import { StyleSheet, Text, View, FlatList, Dimensions, AppRegistry, Button, Alert, SafeAreaView  } from 'react-native';
+import { StyleSheet, Text, View, FlatList, Dimensions, AppRegistry, Button, Alert, SafeAreaView, Platform  } from 'react-native';
 import { TouchableOpacity, TouchableHighlight } from 'react-native-gesture-handler';
 import Modal from 'react-native-modal';
 import { FlatGrid } from 'react-native-super-grid';
@@ -42,14 +42,15 @@ setModalText = (text) => {
   render() {
     return (
     <SafeAreaView style={styles.container}>
-
+      <View>
+        <Text>Temperature: 27c</Text>
+      </View>
       <FlatList
         data={data}
         style={styles.container}
         renderItem={this.renderItem}
         numColumns={numColumns}
       />
-    
 
       <Modal
           isVisible={this.state.isModalVisible}
@@ -99,6 +100,7 @@ const styles = StyleSheet.create({
     container: {
     flex: 1,
     margin: 5,
+    alignSelf: "center",
         
   },
   itemName: {
@@ -112,15 +114,15 @@ const styles = StyleSheet.create({
     color: '#fff',
   },
   gridView: {
-    flex: 4,
+    flex: 1,
+    alignSelf:"center",
   },
   itemContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 5,
+    borderRadius: 25,
     padding: 10,
-    height: 125,
-    width: 125,
+    height: 100,
   },
   modalContent: {
     backgroundColor: 'white',
@@ -135,7 +137,7 @@ const styles = StyleSheet.create({
     padding: 12,
     margin: 16,
     alignItems: 'center',
-    borderRadius: 4,
+    borderRadius: 1,
     borderColor: 'rgba(0, 0, 0, 0.1)',
   },
   item: {
