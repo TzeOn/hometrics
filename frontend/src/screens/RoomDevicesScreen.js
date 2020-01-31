@@ -51,7 +51,11 @@ export default class RoomDevicesScreen extends Component {
         if (device.deviceName) {
 
             devices.push(
-                <Card title={device.deviceName} containerStyle={styles.container}>
+                <Card 
+                containerStyle={{backgroundColor:'black'}}
+                titleStyle={{color:'white'}}
+                title={device.deviceName}>
+                    <View style={{alignItems:'center', justifyContent:'center', flex:1}}>
                     <Switch
                     value={device.onOff}
                     onValueChange = {() => {
@@ -78,7 +82,8 @@ export default class RoomDevicesScreen extends Component {
 
                     
                     ></Switch>
-                    <Button title="-" color={"white"} backgroundColor={"red"}></Button>
+                    </View>
+                    <Button title="-" color={"red"} backgroundColor={"red"}></Button>
 
                 </Card>
             )
@@ -98,11 +103,29 @@ export default class RoomDevicesScreen extends Component {
 
     //This render is begin called even before props getting updated
     render() {
+
+        const styles=StyleSheet.create({
+            container: {
+                backgroundColor:'black',
+                flex:1
+                
+            },
+            textStyle: {
+                color: 'white',
+                fontSize:20
+            },
+            headerStyle: {
+                fontSize: 40,
+                color: '#FF9800',
+                textAlign:'center'
+            }
+
+        });
         return (
-            <View>
-            <Text>Devices</Text>
+            <View style={styles.container}>
+            <Text style={styles.headerStyle}>Devices</Text>
             { this.state && this.state.data &&
-                <Text>{this.showDevices()}</Text>
+                <Text style={styles.textStyle}>{this.showDevices()}</Text>
             }
             </View>
         )

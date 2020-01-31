@@ -1,6 +1,6 @@
 import { Card } from "react-native-elements"; 
 import React, { Component } from "react";
-import { Button, Text, View } from "react-native";
+import { Button, Text, View, StyleSheet } from "react-native";
 import { TouchableOpacity, ScrollView } from "react-native-gesture-handler";
 const api = require("../api").url; 
 
@@ -28,16 +28,25 @@ export default class DeviceManagement extends Component {
         for (i=0; i<this.state.rooms.length; i++) {
             let roomName = this.state.rooms[i].name; 
             rooms.push(
-                <TouchableOpacity onPress={() => {this.props.navigation.navigate("RoomDevices",{roomName})}}>
-                    <Card title={roomName}>
+                <TouchableOpacity 
+                style={{backgroundColor:'black'}}
+                onPress={() => {this.props.navigation.navigate("RoomDevices",{roomName})}}>
+                    <Card 
+                    containerStyle={{backgroundColor:'black'}}
+                    titleStyle={{color:'white', borderBottomWidth:.7, borderBottomColor:'white'}}
+                    title={roomName}>
                             <View style={{  
                                 alignItems: "center", 
-                                justifyContent: "center"
+                                justifyContent: "center",
+                                backgroundColor:'black',
+                                borderColor:'gray',
+                                borderWidth:1
                             }}>
                                 <Text style={{
-                                    fontSize: 40
+                                    fontSize: 40,
+                                    color:'#FF9800',
                                 }}>{this.state.rooms[i].numberOfDevices}</Text>
-                                <Text>devices</Text>
+                                <Text style={{fontSize:40, color:'#FF9800', textAlign:'center', textShadowColor: 'gray'}}>devices</Text>
                             </View>
                     </Card>
                 </TouchableOpacity>
@@ -48,8 +57,11 @@ export default class DeviceManagement extends Component {
 
     render() { 
         return (
-            <ScrollView>
-                <View><Text>Rooms</Text></View>
+            <ScrollView contentContainerStyle={{backgroundColor:'black'}}>
+                <View><Text 
+                style={{fontSize: 40,
+                color: '#FF9800',
+                textAlign: 'center'}}>Rooms</Text></View>
                 <View style={{
                     flexDirection: "row",  
                     flex: 0.33, 
