@@ -83,7 +83,7 @@ export default class RoomDevicesScreen extends Component {
                     
                     ></Switch>
                     </View>
-                    <Button title="-" color={"red"} backgroundColor={"red"}></Button>
+                    <Button title="-" color={"red"}></Button>
 
                 </Card>
             )
@@ -124,7 +124,7 @@ export default class RoomDevicesScreen extends Component {
         return (
             <View style={styles.container}>
             <Text style={styles.headerStyle}>Devices</Text>
-            { this.state && this.state.data &&
+            { !!this.state && this.state.data &&
                 <Text style={styles.textStyle}>{this.showDevices()}</Text>
             }
             </View>

@@ -33,7 +33,7 @@ export default class DeviceManagement extends Component {
                 onPress={() => {this.props.navigation.navigate("RoomDevices",{roomName})}}>
                     <Card 
                     containerStyle={{backgroundColor:'black'}}
-                    titleStyle={{color:'white', borderBottomWidth:.7, borderBottomColor:'white'}}
+                    titleStyle={{color:'white', borderBottomWidth:.7, borderBottomColor:'#FF9800'}}
                     title={roomName}>
                             <View style={{  
                                 alignItems: "center", 
