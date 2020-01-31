@@ -31,4 +31,12 @@ router.post("/roomDevices", (request, response) => {
     response.json({roomDevices: roomDevices});
 });
 
+router.post("/toggle", (request, response) => {
+    let sql = `UPDATE device SET onOff=${request.body.onOff} WHERE id="${request.body.deviceId}"`;
+    database.query(sql);
+    sql = `select * from device where id="${request.body.deviceId}"`;
+    let ooh = database.query(sql);
+    response.json({"ok": ooh});
+});
+
 module.exports = router;
