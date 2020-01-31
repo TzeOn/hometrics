@@ -90,9 +90,11 @@ export default class RoomDevicesScreen extends Component {
                 } else {
 
             devices.push(
-                <Card containerStyle={{backgroundColor: "green"}}>
+                <View>
+                    <Card containerStyle={{backgroundColor: "green"}}>
                     <Text style={{fontSize: 20, color: "white"}}>+</Text>
                 </Card>
+                </View>
             )
                 }
 
@@ -125,7 +127,11 @@ export default class RoomDevicesScreen extends Component {
             <View style={styles.container}>
             <Text style={styles.headerStyle}>Devices</Text>
             { !!this.state && this.state.data &&
-                <Text style={styles.textStyle}>{this.showDevices()}</Text>
+                <View>
+                    
+                {this.showDevices()}
+
+                </View>
             }
             </View>
         )
