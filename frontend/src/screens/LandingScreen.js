@@ -63,7 +63,7 @@ export default class LandingScreen extends Component {
 
                 <TouchableOpacity onPress={() => this.props.navigation.navigate("DeviceManagement")}>
                 <Card 
-                title={<Text style={styles.titleStyle}>Device Management </Text>}
+                title={<Text style={styles.titleStyle}>Internal Conditions </Text>}
                 containerStyle={{flex:1, backgroundColor:'black', alignItems: 'center', borderColor:'gray', paddingVertical:5}}>           
                 </Card>
                 </TouchableOpacity>
