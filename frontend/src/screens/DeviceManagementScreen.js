@@ -26,10 +26,10 @@ export default class DeviceManagement extends Component {
         let rooms = []; 
         let i = 0; 
         for (i=0; i<this.state.rooms.length; i++) {
-            console.log(this.state.rooms[i])
+            let roomName = this.state.rooms[i].name; 
             rooms.push(
-                <TouchableOpacity>
-                    <Card title={this.state.rooms[i].roomName}>
+                <TouchableOpacity onPress={() => {this.props.navigation.navigate("RoomDevices",{roomName})}}>
+                    <Card title={roomName}>
                             <View style={{  
                                 alignItems: "center", 
                                 justifyContent: "center"

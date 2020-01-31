@@ -1,5 +1,7 @@
 import React, { useState, Component } from 'react';
 import { View, TouchableOpacity, Text, StyleSheet, Image, Button } from 'react-native';
+import { Card } from "react-native-elements"; 
+import { ScrollView } from 'react-native-gesture-handler';
 
 export default class LandingScreen extends Component {
     constructor(props) { 
@@ -29,11 +31,22 @@ export default class LandingScreen extends Component {
             textStyle: {
                 color: 'white',
                 fontSize: 20
+            },  
+            titleStyle: {
+                color: "white"
             }
         });
 
         return (
             <View style={styles.container}>
+
+<TouchableOpacity onPress={() => this.props.navigation.navigate("DeviceManagement")}>
+                <Card 
+                title={<Text style={styles.titleStyle}>Device Management </Text>}
+                containerStyle={{flex:1, backgroundColor:'black', alignItems: 'center', borderColor:'gray', paddingVertical:5}}>           
+                </Card>
+                </TouchableOpacity>
+                
                <TouchableOpacity onPress={() => this.props.navigation.navigate("Energy")}>
                 <Card 
                 title={<Text style={styles.titleStyle}>Energy Output </Text>}

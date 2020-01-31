@@ -10,6 +10,7 @@ import SimulationScreen from './src/screens/SimulationScreen';
 import SimulationScreen2 from './src/screens/SimulationScreen2';
 import DeviceActivityScreen from './src/screens/DeviceActivityScreen';
 import DeviceManagementScreen from './src/screens/DeviceManagementScreen';
+import RoomDevicesScreen from "./src/screens/RoomDevicesScreen"; 
 import React from 'react';
 import { Image } from 'react-native';
 
@@ -22,6 +23,7 @@ const navigator = createStackNavigator({
     Energy: EnergyScreen,
     DeviceActivity: DeviceActivityScreen, 
     DeviceManagement: DeviceManagementScreen,
+    RoomDevices: RoomDevicesScreen,
     Simulation: SimulationScreen,
     Simulation2: SimulationScreen2,
   },

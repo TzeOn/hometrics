@@ -19,4 +19,16 @@ router.get("/room", (request, response) => {
     response.json(reply);
 });
 
+router.post("/roomDevices", (request, response) => {
+    let sql = `select smartPlug.id as plugId, device.id as deviceId, device.name as deviceName, device.onOff from smartPlug left join device on device.plug = smartPlug.id where smartPlug.roomName = "${request.body.roomName}"`,
+        roomDevices = database.query(sql);
+
+    for (let i=0; i<roomDevices.length; i++) {
+        roomDevices[i].onOff = roomDevices[i].onOff === 1;
+    }
+
+
+    response.json({roomDevices: roomDevices});
+});
+
 module.exports = router;
