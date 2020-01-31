@@ -32,7 +32,7 @@ export default class Example extends Component {
     //'rgb(45,156,219)'
     return (
       <View style={styles.container}>
-        <Text>Your Device Activity</Text>
+        <Text style={styles.headerStyle}>Your Device Activity</Text>
         <Timeline 
           style={styles.list}
           data={this.state.data}
@@ -48,11 +48,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-		paddingTop:65,
-		backgroundColor:'white'
+    backgroundColor:'white',
+    alignItems:'center',
   },
   list: {
     flex: 1,
     marginTop:20,
+
+  },
+  headerStyle: {
+    fontSize: 30,
+    textAlign: 'center'
   },
 });
