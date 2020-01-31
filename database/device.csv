@@ -1,7 +1,7 @@
 #id,name,plug,onOff,energyPerHour
-d1,Living room television,sp1,false,80
-d2,WiFi Hub,sp2,false,20
+d1,Living room television,sp1,false,100
+d2,WiFi Hub,sp2,false,10
 d3,Nintendo Wii,sp3,false,55
-d4,Xbox One,sp4,false,5
-d5,Speakers,sp5,false,101
-d6,Telephone,sp6,true,5
+d4,Xbox One,sp4,false,70
+d5,Speakers,sp5,false,5
+d6,Telephone,sp6,true,3

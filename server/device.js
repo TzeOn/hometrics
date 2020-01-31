@@ -1,6 +1,7 @@
 const express = require("express"),
       router = express.Router(),
-      database = require("./database");
+      database = require("./database")
+      request = require("request");
 
 //constants in ms
 const HOUR = 3600000,
@@ -26,17 +27,93 @@ router.use((request, response, next) => {
 
 //gets the amunt of energy a single user has used
 router.post("/totalUserEnergy", (request, response) => {
-    let user = request.body.user;
+    let user = request.body.emailAddress;
     let energyQuery = database.query(`SELECT energyPerHour,id FROM device`);
     let timeQuery = database.query(`SELECT startTime,endTime,device FROM deviceActivity WHERE user = "${user}"`);
     let result = 0;
 
-    timeQuery = limitTimeFrame(timeQuery, request.body.timeFrame);
-    
+    timeQuery = limitTimeFrame1(timeQuery, request.body.timeFrame);
+
     result = calculateEnergy(energyQuery, timeQuery);
 
     if(result){
         response.json({"user":user,"usage":result});
+    }else if(result === 0){
+        response.json({"user":user,"usage":"no usage"});
+    }else{
+        response.json({"message":"error"});
+    }
+});
+
+
+router.post("/weeklyUserEnergyBreakdown", (request, response) => {
+    let user = request.body.emailAddress;
+    let energyQuery = database.query(`SELECT energyPerHour,id FROM device`);
+    let timeQuery = database.query(`SELECT startTime,endTime,device FROM deviceActivity WHERE user = "${user}"`);
+    let result = [];
+    let time = timeQuery;
+    let currentTime = new Date().getTime();
+
+    result[0] = user;
+    for(a=7 ; a>=1 ; a--){
+        time = limitTimeFrame2(timeQuery, currentTime-(DAY*a), currentTime-(DAY*(a-1)));
+        result.push(calculateEnergy(energyQuery, time));
+        console.log(a);
+    }
+    
+
+    if(result){
+        response.json(result);
+    }else if(result === 0){
+        response.json({"user":user,"usage":"no usage"});
+    }else{
+        response.json({"message":"error"});
+    }
+});
+
+
+router.post("/monthlyUserEnergyBreakdown", (request, response) => {
+    let user = request.body.emailAddress;
+    let energyQuery = database.query(`SELECT energyPerHour,id FROM device`);
+    let timeQuery = database.query(`SELECT startTime,endTime,device FROM deviceActivity WHERE user = "${user}"`);
+    let result = [];
+    let time = timeQuery;
+    let currentTime = new Date().getTime();
+
+    result[0] = user;
+    for(e=4 ; e>=1 ; e--){
+        time = limitTimeFrame2(timeQuery, currentTime-(WEEK*e), currentTime-(WEEK*(e-1)));
+        result.push(calculateEnergy(energyQuery, time));
+    }
+    
+
+    if(result){
+        response.json(result);
+    }else if(result === 0){
+        response.json({"user":user,"usage":"no usage"});
+    }else{
+        response.json({"message":"error"});
+    }
+});
+
+
+router.post("/yearlyUserEnergyBreakdown", (request, response) => {
+    let user = request.body.emailAddress;
+    let energyQuery = database.query(`SELECT energyPerHour,id FROM device`);
+    let timeQuery = database.query(`SELECT startTime,endTime,device FROM deviceActivity WHERE user = "${user}"`);
+    let result = [];
+    let time = timeQuery;
+    let currentTime = new Date().getTime();
+
+    result[0] = user;
+    for(y=12 ; y>=1 ; y--){
+        time = limitTimeFrame2(timeQuery, currentTime-(MONTH*y), currentTime-(MONTH*(y-1)));
+        result.push(calculateEnergy(energyQuery, time));
+    }
+    
+
+    if(result){
+        response.json(result);
     }else if(result === 0){
         response.json({"user":user,"usage":"no usage"});
     }else{
@@ -51,7 +128,7 @@ router.post("/totalHomeEnergy", (request, response) => {
     let timeQuery = database.query(`SELECT startTime,endTime,device FROM deviceActivity`);
     let result = 0;
 
-    timeQuery = limitTimeFrame(timeQuery, request.body.timeFrame);
+    timeQuery = limitTimeFrame1(timeQuery, request.body.timeFrame);
 
     result = calculateEnergy(energyQuery, timeQuery);
     
@@ -75,26 +152,32 @@ router.post("/getDateTime", (request, response) => {
 });
 
 
-
-
-//TODO
-router.post("/scoreboard", (request, response) => {
-    let numOfUsers = database.query(`SELECT COUNT(emailAddress) AS count FROM user;`);
-    numOfUsers = numOfUsers[0].count;
-    let users = [];
-
-    for(i=0  ;i<numOfUsers ; i++){
-        users.push("localhost:3000/device/totalUserEnergy");
-    }
-    response.json(users);
-});
-
-
-//TODO
 //helper function
 //takes an array of device activities and returns 
 //an array with only the ones that are in the time frame we're interested in
-function limitTimeFrame(timeQuery, timeFrame){
+function limitTimeFrame2(timeQuery, startTime, endTime){
+    let result = [];
+
+
+    console.log(startTime + "   "  + endTime + "\n\n");
+    
+    
+    for(c=0  ;c<timeQuery.length ; c++){ //for each element
+        console.log(timeQuery[c].startTime + "   " + timeQuery[c].endTime);
+        if(timeQuery[c].startTime > startTime && timeQuery[c].startTime < endTime && timeQuery[c].endTime > startTime && timeQuery[c].endTime < endTime){ //in the correct time frame
+            result.push(timeQuery[c]);
+            console.log("fgfg");
+        }
+    }
+
+    return result;
+}
+
+
+//helper function
+//takes an array of device activities and returns 
+//an array with only the ones that are in the time frame we're interested in
+function limitTimeFrame1(timeQuery, timeFrame){
     let currentTime = new Date().getTime();
     let result = [];
 
