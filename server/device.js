@@ -1,7 +1,8 @@
 const express = require("express"),
       router = express.Router(),
       database = require("./database")
-      request = require("request");
+      request = require("request"),  
+      date = require("date-and-time"); 
 
 //constants in ms
 const HOUR = 3600000,
@@ -12,6 +13,8 @@ const HOUR = 3600000,
 
 
 //make sure we show the user their data and not someone elses
+
+/*
 router.use((request, response, next) => {
     let emailAddress = request.body.emailAddress, password = request.body.password,
     sql = `SELECT * FROM user WHERE emailAddress="${emailAddress}" AND password="${password}"`,
@@ -24,8 +27,31 @@ router.use((request, response, next) => {
     }
 });
 
+ */
 
-//gets the amunt of energy a single user has used
+router.post("/activity", (request, response) => {
+    let sql = `select device.name, deviceActivity.startTime, deviceActivity.endTime, device.plug from deviceActivity inner join device on deviceActivity.device = device.id where deviceActivity.user="${request.body.emailAddress}"`,
+        deviceActivity = database.query(sql).sort((a, b) => b.endTime - a.endTime);
+
+    let timeline = [];     
+    for (let i=0; i<deviceActivity.length; i++) {
+        let activity = deviceActivity.pop(),
+            sql = `SELECT roomName from smartPlug where id="${activity.plug}"`,
+            room = database.query(sql)[0].roomName;
+        timeline.push({
+            "title": activity.name,
+            "time": date.format(new Date(activity.startTime), 'DD/MM/YYYY HH:mm:ss'),
+            "description":  room + "\n" + (activity.endTime - activity.startTime)/HOUR + " hrs\n\n\n"
+        })
+    }
+
+    response.json({deviceActivity: timeline});
+
+
+});
+
+
+//gets the amount of energy a single user has used
 router.post("/totalUserEnergy", (request, response) => {
     let user = request.body.emailAddress;
     let energyQuery = database.query(`SELECT energyPerHour,id FROM device`);
@@ -36,11 +62,11 @@ router.post("/totalUserEnergy", (request, response) => {
 
     result = calculateEnergy(energyQuery, timeQuery);
 
-    if(result){
+    if (result) {
         response.json({"user":user,"usage":result});
-    }else if(result === 0){
+    } else if (result === 0){
         response.json({"user":user,"usage":"no usage"});
-    }else{
+    } else {
         response.json({"message":"error"});
     }
 });

@@ -1,45 +1,86 @@
 import React, { Component } from 'react';
-import {
-  StyleSheet,
-  Text,
-  View
-} from 'react-native';
-import Timeline from 'react-native-timeline-flatlist';
+import { View, Image, TouchableOpacity, StyleSheet, TextInput, Text, AsyncStorage } from "react-native";
+import { Card } from "react-native-elements"; 
+import Timeline from "react-native-timeline-flatlist";
+const api = require("../api").url; 
 
 export default class Example extends Component {
-  constructor(){
-    super()
-    this.state = {
-        "data": []
-    }
+  constructor(props){
+    super(props)
   } 
 
   getData() { 
-    this.state.data = [
-        {time: '09:00', title: 'Event 1', description: 'Event 1 Description'},
-        {time: '10:45', title: 'Event 2', description: 'Event 2 Description'},
-        {time: '12:00', title: 'Event 3', description: 'Event 3 Description'},
-        {time: '14:00', title: 'Event 4', description: 'Event 4 Description'},
-        {time: '16:30', title: 'Event 5', description: 'Event 5 Description'}
-    ]
+    var emailAddress; 
+    AsyncStorage.getItem("credentials").then(credentials => {
+      emailAddress = JSON.parse(credentials).emailAddress; 
+      console.log(emailAddress);
+      fetch(`${api}/device/activity`, {
+        method: "POST", 
+        "headers": {
+          Accept: "application/json", 
+          "Content-Type": "application/json"
+        }, 
+        body: JSON.stringify({
+          "emailAddress": emailAddress
+        })
+
+      }).then(response => response.json()).then(response => {this.setState({data: response.deviceActivity});}); 
+    })
   }
 
   componentWillMount() { 
-      this.getData()
+    this.getData()
+  }
+
+  showActivity() { 
+    console.log("ehhhh");
+    console.log(this.state.data.deviceActivity);
+    var timeline = [];
+    for (var i=0; i<this.state.data.deviceActivity.length; i++) {
+      let activity = this.state.data.deviceActivity[i]; 
+      console.log(activity); 
+      timeline.push(
+        <Card title={activity.startTime}>
+          <Text>{activity.device}</Text>
+          <Text>{activity.duration}</Text>
+        </Card>
+      )
+    } 
+    return timeline.reverse(); 
   }
 
   render() {
     //'rgb(45,156,219)'
     return (
       <View style={styles.container}>
-        <Text style={styles.headerStyle}>Your Device Activity</Text>
-        <Timeline 
-          style={styles.list}
+        { this.state && this.state.data &&
+                <View>
+                    
+                    <Text style={styles.headerStyle}>Your Device Activity</Text>
+                    <Timeline
           data={this.state.data}
-          lineColor={"orange"}
-          circleColor={"orange"}
+          circleSize={20}
+          circleColor='rgb(45,156,219)'
+          lineColor='rgb(45,156,219)'
+          timeContainerStyle={{minWidth:52, marginTop: -5}}
+          timeStyle={{textAlign: 'center', backgroundColor:'#ff9797', color:'white', padding:5, borderRadius:13}}
+          descriptionStyle={{color:'gray'}}
+          options={{
+            style:{paddingTop:5}
+          }}
         />
+
+                    <Text>Anything under here is idk</Text>
+                    <Card title="eh">
+
+                    </Card>
+
+                </View>
+            }
+        
       </View>
+
+      
     );
   }
 }
