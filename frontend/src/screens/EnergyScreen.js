@@ -1,7 +1,32 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity, Text, StyleSheet, Image, Button , Picker } from 'react-native';
+import { View, TouchableOpacity, Text, StyleSheet, Image, Button , Picker, AsyncStorage} from 'react-native';
 import PureChart from 'react-native-pure-chart'; 
 import { ScrollView } from 'react-native-gesture-handler';
+const api = require("../api").url;
+var emailAddress; 
+    AsyncStorage.getItem("credentials").then(credentials => {
+      emailAddress = JSON.parse(credentials).emailAddress; 
+      fetch(`${api}/device/totalUserEnergy` /*THIS IS WHERE THE API URL GOES*/, {
+        method: "POST", 
+        "headers": {
+          Accept: "application/json", 
+          "Content-Type": "application/json"
+        }, 
+        body: JSON.stringify({
+          "emailAddress": emailAddress
+        })
+
+    }).then(response => response.json()).then(response => {
+
+
+       console.log(response);
+
+
+
+    }); 
+})
+
+
 
 export default class EnergyScreen extends Component {
     constructor(props) { 
@@ -16,8 +41,15 @@ export default class EnergyScreen extends Component {
         }
     }
 
+
+    
+
+    
+    
+
     // Mock data - still to implement server-side before adding fetch function here. 
     getData() { 
+        console.log("emailAddress");
         this.state.monthly = [
             {x: '2018-01-01', y: 30},
             {x: '2018-01-02', y: 200},
@@ -105,6 +137,8 @@ export default class EnergyScreen extends Component {
         this.state.filter = this.state.weekly;
     }
 
+
+
     componentWillMount() { 
         this.getData(); 
     }
@@ -119,16 +153,17 @@ export default class EnergyScreen extends Component {
             },
             textStyle: {
                 color: 'white',
-                fontSize: 20, 
+                fontSize: 30, 
+                paddingTop:10
             }
          });
 
         return (
-            <ScrollView>
+            <ScrollView nestedScrollEnabled={true}>
                 <View style={styles.container}>
                     <Picker
                         selectedValue={this.state.time}
-                        style={{height: 50, width: 100}}
+                        style={{height: 50, width: 100, backgroundColor:'#FF9800'}}
                         onValueChange={(itemValue, itemIndex) => {
                             switch(itemValue) { 
                                 case "weekly": 
@@ -149,11 +184,13 @@ export default class EnergyScreen extends Component {
                     </Picker>
                     
                     <Text style={styles.textStyle}>Personal Statistics</Text>
+                    <ScrollView horizontal={true} nestedScrollEnabled={true} >
                     <PureChart data={this.state.filter}
                     backgroundColor={"black"} 
                     primaryColor = {"white"}
                     height = {200}
                     type="line"/>
+                    </ScrollView>
 
                     <Text style={styles.textStyle}>Scoreboard</Text>
                     <View>

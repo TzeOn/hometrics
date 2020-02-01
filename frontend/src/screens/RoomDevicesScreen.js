@@ -55,7 +55,7 @@ export default class RoomDevicesScreen extends Component {
                 containerStyle={{backgroundColor:'black'}}
                 titleStyle={{color:'white'}}
                 title={device.deviceName}>
-                    <View style={{alignItems:'center', justifyContent:'center', flex:1}}>
+                    <View style={{alignItems:'center', justifyContent:'center', flex:1, paddingBottom:20}}>
                     <Switch
                     value={device.onOff}
                     onValueChange = {() => {
@@ -92,7 +92,7 @@ export default class RoomDevicesScreen extends Component {
             devices.push(
                 <View>
                     <Card containerStyle={{backgroundColor: "green"}}>
-                    <Text style={{fontSize: 20, color: "white"}}>+</Text>
+                    <Text style={{fontSize: 20, color: "white", textAlign:'center'}}>+</Text>
                 </Card>
                 </View>
             )
@@ -124,6 +124,7 @@ export default class RoomDevicesScreen extends Component {
 
         });
         return (
+            <ScrollView>
             <View style={styles.container}>
             <Text style={styles.headerStyle}>Devices</Text>
             { !!this.state && this.state.data &&
@@ -134,6 +135,7 @@ export default class RoomDevicesScreen extends Component {
                 </View>
             }
             </View>
+            </ScrollView>
         )
     }
 }

@@ -7,13 +7,14 @@ import ConfirmationScreen from './src/screens/ConfirmationScreen';
 import LandingScreen from './src/screens/LandingScreen';
 import EnergyScreen from './src/screens/EnergyScreen';
 import SimulationScreen from './src/screens/SimulationScreen';
-import SimulationScreen2 from './src/screens/SimulationScreen2';
 import DeviceActivityScreen from './src/screens/DeviceActivityScreen';
 import DeviceManagementScreen from './src/screens/DeviceManagementScreen';
 import RoomDevicesScreen from "./src/screens/RoomDevicesScreen"; 
+import InternalScreen from "./src/screens/InternalScreen";
 import React from 'react';
-import { Image } from 'react-native';
+import { Image, Dimensions } from 'react-native';
 
+const headerHeight = Dimensions.get('window').height * 0.08;
 const navigator = createStackNavigator({
     Home: HomeScreen,
     Register: RegisterScreen,
@@ -25,7 +26,7 @@ const navigator = createStackNavigator({
     DeviceManagement: DeviceManagementScreen,
     RoomDevices: RoomDevicesScreen,
     Simulation: SimulationScreen,
-    Simulation2: SimulationScreen2,
+    Internal: InternalScreen
   },
   {
     initialRouteName: 'Home',
@@ -33,6 +34,7 @@ const navigator = createStackNavigator({
       title: 'Hometrics',
       headerStyle: {
       backgroundColor: 'black',
+      height: headerHeight,
       },
       headerTitleStyle: {
         color: '#FF9800',
@@ -43,7 +45,7 @@ const navigator = createStackNavigator({
       },
       headerTintColor: '#FF9800',
       headerRight: (      
-        <Image style={{width: 30, height: 30}} source={require('./assets/splash.png')}/>     
+        <Image style={{width: headerHeight * 0.5, height: headerHeight * 0.5 }} source={require('./assets/splash.png')}/>     
       ),
     }
   });
