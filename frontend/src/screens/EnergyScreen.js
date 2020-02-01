@@ -119,16 +119,17 @@ export default class EnergyScreen extends Component {
             },
             textStyle: {
                 color: 'white',
-                fontSize: 20, 
+                fontSize: 30, 
+                paddingTop:10
             }
          });
 
         return (
-            <ScrollView>
+            <ScrollView nestedScrollEnabled={true}>
                 <View style={styles.container}>
                     <Picker
                         selectedValue={this.state.time}
-                        style={{height: 50, width: 100}}
+                        style={{height: 50, width: 100, backgroundColor:'#FF9800'}}
                         onValueChange={(itemValue, itemIndex) => {
                             switch(itemValue) { 
                                 case "weekly": 
@@ -149,11 +150,13 @@ export default class EnergyScreen extends Component {
                     </Picker>
                     
                     <Text style={styles.textStyle}>Personal Statistics</Text>
+                    <ScrollView horizontal={true} nestedScrollEnabled={true} >
                     <PureChart data={this.state.filter}
                     backgroundColor={"black"} 
                     primaryColor = {"white"}
                     height = {200}
                     type="line"/>
+                    </ScrollView>
 
                     <Text style={styles.textStyle}>Scoreboard</Text>
                     <View>
