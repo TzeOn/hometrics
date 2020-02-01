@@ -11,6 +11,7 @@ import SimulationScreen2 from './src/screens/SimulationScreen2';
 import DeviceActivityScreen from './src/screens/DeviceActivityScreen';
 import DeviceManagementScreen from './src/screens/DeviceManagementScreen';
 import RoomDevicesScreen from "./src/screens/RoomDevicesScreen"; 
+import InternalScreen from "./src/screens/InternalScreen";
 import React from 'react';
 import { Image, Dimensions } from 'react-native';
 
@@ -27,6 +28,7 @@ const navigator = createStackNavigator({
     RoomDevices: RoomDevicesScreen,
     Simulation: SimulationScreen,
     Simulation2: SimulationScreen2,
+    Internal: InternalScreen
   },
   {
     initialRouteName: 'Home',
