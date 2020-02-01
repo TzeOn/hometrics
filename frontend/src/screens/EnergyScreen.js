@@ -1,7 +1,32 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity, Text, StyleSheet, Image, Button , Picker } from 'react-native';
+import { View, TouchableOpacity, Text, StyleSheet, Image, Button , Picker, AsyncStorage} from 'react-native';
 import PureChart from 'react-native-pure-chart'; 
 import { ScrollView } from 'react-native-gesture-handler';
+const api = require("../api").url;
+var emailAddress; 
+    AsyncStorage.getItem("credentials").then(credentials => {
+      emailAddress = JSON.parse(credentials).emailAddress; 
+      fetch(`${api}/device/totalUserEnergy` /*THIS IS WHERE THE API URL GOES*/, {
+        method: "POST", 
+        "headers": {
+          Accept: "application/json", 
+          "Content-Type": "application/json"
+        }, 
+        body: JSON.stringify({
+          "emailAddress": emailAddress
+        })
+
+    }).then(response => response.json()).then(response => {
+
+
+       console.log(response);
+
+
+
+    }); 
+})
+
+
 
 export default class EnergyScreen extends Component {
     constructor(props) { 
@@ -16,8 +41,15 @@ export default class EnergyScreen extends Component {
         }
     }
 
+
+    
+
+    
+    
+
     // Mock data - still to implement server-side before adding fetch function here. 
     getData() { 
+        console.log("emailAddress");
         this.state.monthly = [
             {x: '2018-01-01', y: 30},
             {x: '2018-01-02', y: 200},
@@ -104,6 +136,8 @@ export default class EnergyScreen extends Component {
         ]
         this.state.filter = this.state.weekly;
     }
+
+
 
     componentWillMount() { 
         this.getData(); 

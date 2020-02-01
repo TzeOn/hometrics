@@ -26,6 +26,8 @@ router.use((request, response, next) => {
 
 
 //gets the amunt of energy a single user has used
+//body: emailAddress, timeFrame
+//returns json with their email address and amount of energy used
 router.post("/totalUserEnergy", (request, response) => {
     let user = request.body.emailAddress;
     let energyQuery = database.query(`SELECT energyPerHour,id FROM device`);
@@ -46,6 +48,8 @@ router.post("/totalUserEnergy", (request, response) => {
 });
 
 
+//body: emailAddress
+//returns array where the first entry is their email address and the rest are energy usage on each day
 router.post("/weeklyUserEnergyBreakdown", (request, response) => {
     let user = request.body.emailAddress;
     let energyQuery = database.query(`SELECT energyPerHour,id FROM device`);
@@ -71,7 +75,8 @@ router.post("/weeklyUserEnergyBreakdown", (request, response) => {
     }
 });
 
-
+//body: emailAddress
+//returns array where the first entry is their email address and the rest are energy usage for each week
 router.post("/monthlyUserEnergyBreakdown", (request, response) => {
     let user = request.body.emailAddress;
     let energyQuery = database.query(`SELECT energyPerHour,id FROM device`);
@@ -96,7 +101,8 @@ router.post("/monthlyUserEnergyBreakdown", (request, response) => {
     }
 });
 
-
+//body: emailAddress
+//returns array where the first entry is their email address and the rest are energy usage for eah month
 router.post("/yearlyUserEnergyBreakdown", (request, response) => {
     let user = request.body.emailAddress;
     let energyQuery = database.query(`SELECT energyPerHour,id FROM device`);
@@ -123,6 +129,8 @@ router.post("/yearlyUserEnergyBreakdown", (request, response) => {
 
 
 //get the total energy use for the house
+//body: timeFrame
+//returns: amount of total energy used in the whole house during the time period
 router.post("/totalHomeEnergy", (request, response) => {
     let energyQuery = database.query(`SELECT energyPerHour,id FROM device`);
     let timeQuery = database.query(`SELECT startTime,endTime,device FROM deviceActivity`);
@@ -142,6 +150,8 @@ router.post("/totalHomeEnergy", (request, response) => {
 
 
 //returns the date and time based on the UNIX time
+//body: device
+//returns: json with the start and end times that the device was used
 router.post("/getDateTime", (request, response) => {
     let device = request.body.device;
     let deviceDates = database.query(`SELECT * FROM deviceActivity WHERE device = "${device}";`);
