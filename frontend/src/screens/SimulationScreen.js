@@ -3,8 +3,9 @@ import {StyleSheet, Text, View, Dimensions, FlatList, Button } from 'react-nativ
 import { ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import Modal from 'react-native-modal';
 import { FlatGrid } from 'react-native-super-grid';
+import { startAsync } from 'expo/build/AR';
 const data = [
-    { key: 'Room 1' }, { key: 'Room 2' }, { key: 'Room 3' }, { key: 'Room 4' }, { key: 'Room 5' }, { key: 'Room 6' }, { key: 'Room 7' }, { key: 'Room 8' }, { key: 'Room 9' } ];
+    { key: 'Bedroom 1' }, { key: 'Living Room' }, { key: 'Bedroom 2' }, { key: 'Kitchen' }, { key: 'Bathroom' }, { key: 'Garage' }, { key: 'Collonade' }, { key: 'Corridor' }];
   const numColumns = 3;
 const bottomHeight = Dimensions.get('window').height * 0.3;
 const topHeight = Dimensions.get('window').height * 0.6;
@@ -20,17 +21,15 @@ export default class Simulation extends React.Component {
         isModalVisible: false,
         roomText: "",
       };
-    }
+    }    
 
-    setModalVisible = (bool) => {
+    setModalVisible = (bool, text) => {
         this.setState({isModalVisible: bool})
-    }
-    setModalText = (text) => {
         this.setState({roomText: text})
     }
     renderItem = ({ item, onPress }) => {
         return (
-            <TouchableOpacity onPress={() => this.setModalVisible(true)} style={styles.item} > 
+            <TouchableOpacity onPress= {() => this.setModalVisible(true, item.key)} style={styles.item} > 
             <Text style={styles.itemText}>{item.key}</Text>
           </TouchableOpacity>
         );
@@ -38,7 +37,7 @@ export default class Simulation extends React.Component {
     
     render() {
         return (
-            <ScrollView style={styles.container}>
+            <View style={styles.container}>
 
                 <View style={styles.top}>
 
@@ -62,7 +61,7 @@ export default class Simulation extends React.Component {
                     <View style={styles.bottomItem}>
                         <View style={styles.internalEnviroment}>
                             <Text style={styles.itemName}>Air Quality</Text>
-                            <Text style={styles.itemValue}>{airQuality}ppm</Text>
+                            <Text style={styles.itemValue}>{airQuality} ppm</Text>
                         </View>
                     </View>
 
@@ -76,13 +75,13 @@ export default class Simulation extends React.Component {
                     <View style={styles.bottomItem}>
                         <View style={styles.internalEnviroment}>
                             <Text style={styles.itemName}>Light Levels</Text>
-                            <Text style={styles.itemValue}>{lightLevel}</Text>
+                            <Text style={styles.itemValue}>{lightLevel} W/m2</Text>
                         </View>
                     </View>
 
                     <Modal
                     isVisible={this.state.isModalVisible}
-                    onRequestClose={() => this.setModalVisible(false)}
+                    onRequestClose={() => this.setModalVisible(false, '')}
                     transparent={true}
                     animationIn={'zoomIn'}
                     animationOut={'zoomOut'}
@@ -92,6 +91,7 @@ export default class Simulation extends React.Component {
                     backdropTransitionOutTiming={750}>
                         
                         <View style={styles.modalContent}>
+                            <Text style={styles.modalHeader}>{this.state.roomText}</Text>
                             <Text>Devices:</Text>
                             <Text>Lights: On</Text>
                             <Text>AC: On</Text>
@@ -99,13 +99,13 @@ export default class Simulation extends React.Component {
                             <Button
                             color="#FF9800"
                             title="Close"
-                            onPress={() => this.setModalVisible(false)}/>
+                            onPress={() => this.setModalVisible(false, '')}/>
                         </View>
                     </Modal>
 
                 </View>
 
-            </ScrollView>
+            </View>
         );
     }
 }
@@ -170,5 +170,10 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         shadowRadius:10,
         borderColor: 'rgba(0, 0, 0, 0.1)',
+      },
+      modalHeader: {
+        paddingBottom: 5,
+        fontSize: 18,
+        fontWeight: '600',
       },
 })
