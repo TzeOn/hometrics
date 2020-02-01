@@ -1,139 +1,176 @@
-import React, { useState } from 'react';
-import { View, Image, TouchableOpacity, Text, StyleSheet, TextInput, AsyncStorage } from 'react-native';
+import React, { Component } from 'react';
+import {StyleSheet, Text, View, Dimensions, FlatList, Button } from 'react-native';
+import { ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
+import Modal from 'react-native-modal';
+import { FlatGrid } from 'react-native-super-grid';
+const data = [
+    { key: 'Room 1' }, { key: 'Room 2' }, { key: 'Room 3' }, { key: 'Room 4' }, { key: 'Room 5' }, { key: 'Room 6' }, { key: 'Room 7' }, { key: 'Room 8' }, { key: 'Room 9' } ];
+  const numColumns = 3;
+const bottomHeight = Dimensions.get('window').height * 0.3;
+const topHeight = Dimensions.get('window').height * 0.6;
+var temperature = 23.23434;
+var airQuality = 535;
+var humidity = 51.23434;
+var lightLevel = -1.536885246;
 
-const SimulationScreen = (props) => {
-    function login(emailAddress, password) { 
-        fetch("http://localhost:3000/weather", {
-            method: "POST", 
-            "headers": {
-                Accept: "application/json", 
-                "Content-Type": "application/json"
-            }, 
-            body: JSON.stringify({
-                "emailAddress": emailAddress, 
-                "password": password
-            })
-        }).then(response => response.json()).then(response => {
-            let credentials = {
-                "emailAddress": emailAddress, 
-                "password": password
-            }
-            if (response.message === "ok") {
-                AsyncStorage.setItem("credentials", JSON.stringify(credentials));
-                props.navigation.navigate("Landing");
-            } else if (response.message === "confirmationCode") {
-                AsyncStorage.setItem('credentials', JSON.stringify(credentials));
-                props.navigation.navigate("Confirmation"); 
-            } else {
-                setErrorMessage("Invalid credentials");
-            }
-        }).catch(error => console.error(error))
+export default class Simulation extends React.Component {
+    constructor(props) {
+        super(props);
+    this.state = {
+        isModalVisible: false,
+        roomText: "",
+      };
     }
 
-    const [emailAddress, setEmail ] = useState(''),
-          [password, setPassword ] = useState(''),
-          [errorMessage, setErrorMessage] = useState("");
-          
-    return (
-        <View style={styles.container}>
-            <View style={styles.buttonsLayout}>
-                <TouchableOpacity 
-                style={styles.buttons1}
-                onPress={() => props.navigation.navigate('Register')}>
-                    <Text style={styles.textStyle}>This is the SimulationScreen</Text>
-                </TouchableOpacity>
+    setModalVisible = (bool) => {
+        this.setState({isModalVisible: bool})
+    }
+    setModalText = (text) => {
+        this.setState({roomText: text})
+    }
+    renderItem = ({ item, onPress }) => {
+        return (
+            <TouchableOpacity onPress={() => this.setModalVisible(true)} style={styles.item} > 
+            <Text style={styles.itemText}>{item.key}</Text>
+          </TouchableOpacity>
+        );
+      };
+    
+    render() {
+        return (
+            <ScrollView style={styles.container}>
 
-                <TouchableOpacity 
-                style={styles.buttons2}
-                onPress={() => props.navigation.navigate('Login')}>
-                    <Text style={styles.textStyle}>Login</Text>
-                </TouchableOpacity>
-            </View>
-            
-            <Image 
-            style={styles.imageStyle}
-            source={require('../../assets/splash.png')}></Image>
+                <View style={styles.top}>
 
-            <Text style={{color: "red"}}>{errorMessage}</Text>
+                <FlatList
+                data={data}
+                style={styles.container}
+                renderItem={this.renderItem}
+                numColumns={numColumns}/>
 
-            <Text style={styles.textStyle}>Email Address</Text>
-            <TextInput
-            placeholder='Email Address'
-            style={styles.placeStyle}
-            autoCapitalize='none'
-            autoCorrect={false}
-            value={emailAddress}
-            onChangeText={(newValue) => setEmail(newValue)}
-            ></TextInput>
+                </View>
 
-            <Text style={styles.textStyle}>Password</Text>
-            <TextInput
-            placeholder='Password'
-            style={styles.placeStyle}
-            autoCapitalize='none'
-            autoCorrect={false}
-            secureTextEntry={true}
-            value={password}
-            onChangeText={(newValue) => setPassword(newValue)}
-            ></TextInput>
-            
-            <TouchableOpacity
-            style={styles.button}
-            onPress={() => login(emailAddress, password)}>
-                <Text style={styles.submit}>Submit</Text>
-            </TouchableOpacity>
-        </View>
-    );
-};
+                <View style={styles.bottom}>
 
-const styles=StyleSheet.create({
+                    <View style={styles.bottomItem}>
+                        <View style={styles.internalEnviroment}>
+                            <Text style={styles.itemName}>Temperature</Text>
+                            <Text style={styles.itemValue}>{temperature}c</Text>
+                        </View>
+                    </View>
+
+                    <View style={styles.bottomItem}>
+                        <View style={styles.internalEnviroment}>
+                            <Text style={styles.itemName}>Air Quality</Text>
+                            <Text style={styles.itemValue}>{airQuality}ppm</Text>
+                        </View>
+                    </View>
+
+                    <View style={styles.bottomItem}>
+                        <View style={styles.internalEnviroment}>
+                            <Text style={styles.itemName}>Humidity</Text>
+                            <Text style={styles.itemValue}>{humidity}%</Text>
+                        </View>
+                    </View>
+
+                    <View style={styles.bottomItem}>
+                        <View style={styles.internalEnviroment}>
+                            <Text style={styles.itemName}>Light Levels</Text>
+                            <Text style={styles.itemValue}>{lightLevel}</Text>
+                        </View>
+                    </View>
+
+                    <Modal
+                    isVisible={this.state.isModalVisible}
+                    onRequestClose={() => this.setModalVisible(false)}
+                    transparent={false}
+                    backdropColor={'#FF9800'}
+                    backdropOpacity={1}
+                    animationIn={'zoomIn'}
+                    animationOut={'zoomOut'}
+                    animationInTiming={750}
+                    animationOutTiming={750}
+                    backdropTransitionInTiming={750}
+                    backdropTransitionOutTiming={750}>
+                        
+                        <View style={styles.modalContent}>
+                            <Text>Devices:</Text>
+                            <Text>Lights: On</Text>
+                            <Text>AC: On</Text>
+                            <Text>IOT: Onf</Text>
+                            <Button
+                            color="#FF9800"
+                            title="Close"
+                            onPress={() => this.setModalVisible(false)}/>
+                        </View>
+                    </Modal>
+
+                </View>
+
+            </ScrollView>
+        );
+    }
+}
+
+const styles = StyleSheet.create({
     container: {
-        flex:1,
-        backgroundColor: 'black',
-        alignItems: 'center',
+        flex: 1,
     },
-    textStyle: {
-        color: 'white',
-        fontSize: 20,
+    top: {
+        height: topHeight,
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: '#292929',
     },
-    placeStyle: {
-        color:'gray',
-        borderBottomWidth: 2,
-        borderBottomColor: 'white',
-        height:50,
-        bottom: 5
+    bottom: {
+        height: bottomHeight,
+        backgroundColor: '#292929',
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        padding: 5,
+        alignItems: "center",
+        justifyContent: "center",        
     },
-    imageStyle: {
-        height:175,
-        width: 175
+    bottomItem: {
+        height: bottomHeight * 0.5,
+        width: Dimensions.get('window').width * 0.45,
+        padding: 5,
     },
-    button: {
+    internalEnviroment: {
+        flex: 1,
         backgroundColor: '#FF9800',
-        height: 50,
-        width: 75,
-        alignSelf: 'center',
-        alignContent: 'center',
-        marginTop: 20
+        alignItems: "center",
+        justifyContent: "center",
     },
-    submit: {
-        color: 'white',
-        textAlignVertical: 'center',
-        textAlign: 'center',
+    item: {
+        backgroundColor: '#FF9800',
+        alignItems: 'center',
         justifyContent: 'center',
-        fontSize: 20,
-        flex:1
-    },
-    buttonsLayout: {
-        flexDirection: 'row'
-    },
-    buttons1: {
-        right:10
-    },
-    buttons2: {
-        left:10,
-        borderBottomWidth:1,
-        borderBottomColor: '#FF9800'
-    }
-});
-
-export default SimulationScreen;
+        margin: 1,
+        width: Dimensions.get('window').width / numColumns,
+        height: topHeight / 3,
+      },
+    itemText: {
+        fontSize: 18,
+        color: '#fff',
+        fontWeight: '600',
+      },
+      itemName: {
+        fontSize: 18,
+        color: '#fff',
+        fontWeight: '600',
+      },
+      itemValue: {
+        fontWeight: '600',
+        fontSize: 16,
+        color: '#fff',
+      },
+      modalContent: {
+        backgroundColor: '#fff',
+        padding: 22,
+        alignItems: 'center',
+        borderRadius: 10,
+        shadowRadius:10,
+        borderColor: 'rgba(0, 0, 0, 0.1)',
+      },
+})
