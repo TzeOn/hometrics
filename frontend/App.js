@@ -7,7 +7,6 @@ import ConfirmationScreen from './src/screens/ConfirmationScreen';
 import LandingScreen from './src/screens/LandingScreen';
 import EnergyScreen from './src/screens/EnergyScreen';
 import SimulationScreen from './src/screens/SimulationScreen';
-import SimulationScreen2 from './src/screens/SimulationScreen2';
 import DeviceActivityScreen from './src/screens/DeviceActivityScreen';
 import DeviceManagementScreen from './src/screens/DeviceManagementScreen';
 import RoomDevicesScreen from "./src/screens/RoomDevicesScreen"; 
@@ -27,7 +26,6 @@ const navigator = createStackNavigator({
     DeviceManagement: DeviceManagementScreen,
     RoomDevices: RoomDevicesScreen,
     Simulation: SimulationScreen,
-    Simulation2: SimulationScreen2,
     Internal: InternalScreen
   },
   {

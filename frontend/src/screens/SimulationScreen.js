@@ -83,9 +83,7 @@ export default class Simulation extends React.Component {
                     <Modal
                     isVisible={this.state.isModalVisible}
                     onRequestClose={() => this.setModalVisible(false)}
-                    transparent={false}
-                    backdropColor={'#FF9800'}
-                    backdropOpacity={1}
+                    transparent={true}
                     animationIn={'zoomIn'}
                     animationOut={'zoomOut'}
                     animationInTiming={750}
