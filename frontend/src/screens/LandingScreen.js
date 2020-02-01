@@ -39,8 +39,8 @@ export default class LandingScreen extends Component {
 
         return (
             <View style={styles.container}>
-
-<TouchableOpacity onPress={() => this.props.navigation.navigate("DeviceManagement")}>
+                <ScrollView>
+                <TouchableOpacity onPress={() => this.props.navigation.navigate("DeviceManagement")}>
                 <Card 
                 title={<Text style={styles.titleStyle}>Device Management </Text>}
                 containerStyle={{flex:1, backgroundColor:'black', alignItems: 'center', borderColor:'gray', paddingVertical:5}}>           
@@ -67,6 +67,7 @@ export default class LandingScreen extends Component {
                 containerStyle={{flex:1, backgroundColor:'black', alignItems: 'center', borderColor:'gray', paddingVertical:5}}>           
                 </Card>
                 </TouchableOpacity>
+                </ScrollView>
             </View>
         );
     }
