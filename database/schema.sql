@@ -16,12 +16,6 @@ CREATE TABLE room (
     PRIMARY KEY (roomName)
 );
 
-CREATE TABLE light ( 
-    id VARCHAR(255),  
-    roomName VARCHAR(255), 
-    PRIMARY KEY (id), 
-    FOREIGN KEY (roomName) REFERENCES room(roomName)
-);
 
 CREATE TABLE hub (
     id VARCHAR(255),  

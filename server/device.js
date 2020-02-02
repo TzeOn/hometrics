@@ -150,16 +150,10 @@ router.post("/getDateTime", (request, response) => {
 //an array with only the ones that are in the time frame we're interested in
 function limitTimeFrame2(timeQuery, startTime, endTime){
     let result = [];
-
-
-    console.log(startTime + "   "  + endTime + "\n\n");
-    
     
     for(c=0  ;c<timeQuery.length ; c++){ //for each element
-        console.log(timeQuery[c].startTime + "   " + timeQuery[c].endTime);
         if(timeQuery[c].startTime > startTime && timeQuery[c].startTime < endTime && timeQuery[c].endTime > startTime && timeQuery[c].endTime < endTime){ //in the correct time frame
             result.push(timeQuery[c]);
-            console.log("fgfg");
         }
     }
 
