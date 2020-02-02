@@ -111,6 +111,30 @@ router.post("/userEnergyBreakdown", (request, response) => {
 
 
 
+router.post("/scoreboard", (request, response) => {
+    
+    let userQuery = database.query(`SELECT emailAddress FROM user`);
+
+    result = '{"users":[';
+
+    for(u=0; u<userQuery.length ; u++){
+        let user = userQuery[u].emailAddress;
+        let energyQuery = database.query(`SELECT energyPerHour,id FROM device`);
+        let timeQuery = database.query(`SELECT startTime,endTime,device FROM deviceActivity WHERE user = "${user}"`);
+        timeQuery = limitTimeFrame1(timeQuery, request.body.timeFrame);
+        result = result.concat('{"user":"',user,'", "usage":',calculateEnergy(energyQuery, timeQuery),'},');
+    }
+        result = result.substring(0,result.length-1);
+        result = result.concat(']}');
+        result = JSON.parse(result);
+
+    
+        response.json(result);
+    
+});
+
+
+
 //get the total energy use for the house
 //body: timeFrame
 //returns: amount of total energy used in the whole house during the time period
