@@ -108,6 +108,30 @@ router.post("/userEnergyBreakdown", (request, response) => {
 
 
 
+router.post("/scoreboard", (request, response) => {
+    
+    let userQuery = database.query(`SELECT emailAddress FROM user`);
+
+    result = '{"users":[';
+
+    for(u=0; u<userQuery.length ; u++){
+        let user = userQuery[u].emailAddress;
+        let energyQuery = database.query(`SELECT energyPerHour,id FROM device`);
+        let timeQuery = database.query(`SELECT startTime,endTime,device FROM deviceActivity WHERE user = "${user}"`);
+        timeQuery = limitTimeFrame1(timeQuery, request.body.timeFrame);
+        result = result.concat('{"user":"',user,'", "usage":',calculateEnergy(energyQuery, timeQuery),'},');
+    }
+        result = result.substring(0,result.length-1);
+        result = result.concat(']}');
+        result = JSON.parse(result);
+
+    
+        response.json(result);
+    
+});
+
+
+
 //get the total energy use for the house
 //body: timeFrame
 //returns: amount of total energy used in the whole house during the time period
@@ -147,16 +171,10 @@ router.post("/getDateTime", (request, response) => {
 //an array with only the ones that are in the time frame we're interested in
 function limitTimeFrame2(timeQuery, startTime, endTime){
     let result = [];
-
-
-    console.log(startTime + "   "  + endTime + "\n\n");
-    
     
     for(c=0  ;c<timeQuery.length ; c++){ //for each element
-        console.log(timeQuery[c].startTime + "   " + timeQuery[c].endTime);
         if(timeQuery[c].startTime > startTime && timeQuery[c].startTime < endTime && timeQuery[c].endTime > startTime && timeQuery[c].endTime < endTime){ //in the correct time frame
             result.push(timeQuery[c]);
-            console.log("fgfg");
         }
     }
 
