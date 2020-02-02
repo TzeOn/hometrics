@@ -29,7 +29,7 @@ const navigator = createStackNavigator({
     Internal: InternalScreen
   },
   {
-    initialRouteName: 'Home',
+    initialRouteName: 'Simulation',
     defaultNavigationOptions: {
       title: 'Hometrics',
       headerStyle: {
