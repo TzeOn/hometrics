@@ -2,17 +2,18 @@ import React, { Component } from 'react';
 import {StyleSheet, Text, View, Dimensions, FlatList, Button } from 'react-native';
 import { ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import Modal from 'react-native-modal';
-import { FlatGrid } from 'react-native-super-grid';
-import { startAsync } from 'expo/build/AR';
 const data = [
     { key: 'Bedroom 1' }, { key: 'Living Room' }, { key: 'Bedroom 2' }, { key: 'Kitchen' }, { key: 'Bathroom' }, { key: 'Garage' }, { key: 'Collonade' }, { key: 'Corridor' }];
   const numColumns = 3;
 const bottomHeight = Dimensions.get('window').height * 0.3;
 const topHeight = Dimensions.get('window').height * 0.6;
-var temperature = 23.23434;
-var airQuality = 535;
-var humidity = 51.23434;
-var lightLevel = -1.536885246;
+var extTemperature = 23.23434;
+var extAirQuality = 535;
+var extHumidity = 51.23434;
+var extLightLevel = -1.536885246;
+var intTemperature = 23.23434;
+var intAirQuality = 535;
+var intHumidity = 51.23434;
 
 export default class Simulation extends React.Component {
     constructor(props) {
@@ -20,8 +21,44 @@ export default class Simulation extends React.Component {
     this.state = {
         isModalVisible: false,
         roomText: "",
+        date: '',
       };
-    }    
+    }
+    
+    componentDidMount(){
+        this.timer = setInterval(()=> this.getTime(), 1000)
+       }
+       async getWeather(){
+      
+        fetch('', {method: "GET"})
+         .then((response) => response.json())
+         .then((responseData) =>
+         {
+           //set your data here
+            console.log(responseData);
+         })
+         .catch((error) => {
+             console.error(error);
+         });
+       
+       }
+
+       getTime() {
+        var that = this;
+
+        var date = new Date().getDate(); //Current Date
+        var month = new Date().getMonth() + 1; //Current Month
+        var year = new Date().getFullYear(); //Current Year
+        var hours = new Date().getHours(); //Current Hours
+        var min = new Date().getMinutes(); //Current Minutes
+        var sec = new Date().getSeconds(); //Current Seconds
+    
+        that.setState({
+          //Setting the value of the date time
+          date:
+            date + '/' + month + '/' + year + ' ' + hours + ':' + min + ':' + sec,
+        });
+       }
 
     setModalVisible = (bool, text) => {
         this.setState({isModalVisible: bool})
@@ -54,28 +91,28 @@ export default class Simulation extends React.Component {
                     <View style={styles.bottomItem}>
                         <View style={styles.internalEnviroment}>
                             <Text style={styles.itemName}>Temperature</Text>
-                            <Text style={styles.itemValue}>{temperature}c</Text>
+                            <Text style={styles.itemValue}>{this.state.date}c</Text>
                         </View>
                     </View>
 
                     <View style={styles.bottomItem}>
                         <View style={styles.internalEnviroment}>
                             <Text style={styles.itemName}>Air Quality</Text>
-                            <Text style={styles.itemValue}>{airQuality} ppm</Text>
+                            <Text style={styles.itemValue}>{this.state.date} ppm</Text>
                         </View>
                     </View>
 
                     <View style={styles.bottomItem}>
                         <View style={styles.internalEnviroment}>
                             <Text style={styles.itemName}>Humidity</Text>
-                            <Text style={styles.itemValue}>{humidity}%</Text>
+                            <Text style={styles.itemValue}>{this.state.date}%</Text>
                         </View>
                     </View>
 
                     <View style={styles.bottomItem}>
                         <View style={styles.internalEnviroment}>
                             <Text style={styles.itemName}>Light Levels</Text>
-                            <Text style={styles.itemValue}>{lightLevel} W/m2</Text>
+                            <Text style={styles.itemValue}>{this.state.date} W/m2</Text>
                         </View>
                     </View>
 
@@ -95,7 +132,13 @@ export default class Simulation extends React.Component {
                             <Text>Devices:</Text>
                             <Text>Lights: On</Text>
                             <Text>AC: On</Text>
-                            <Text>IOT: Onf</Text>
+                            <Text>IOT: On</Text>
+                            <Text>Temperature:</Text>
+                            <Text>{intTemperature}c</Text>
+                            <Text>Air Quality</Text>
+                            <Text>{intAirQuality} ppm</Text>
+                            <Text>Humidity</Text>
+                            <Text>{intHumidity}%</Text>
                             <Button
                             color="#FF9800"
                             title="Close"
