@@ -44,10 +44,7 @@ router.post("/activity", (request, response) => {
             "description":  room + "\n" + (activity.endTime - activity.startTime)/HOUR + " hrs\n\n\n"
         })
     }
-
     response.json({deviceActivity: timeline});
-
-
 });
 
 //gets the amount of energy a single user has used
