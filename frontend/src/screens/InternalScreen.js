@@ -52,39 +52,14 @@ export default class InternalScreen extends Component {
                 <Card 
                 image={require('../../assets/deviceManagement.png')}
                 imageStyle={styles.imageStyle}
-                title='Device Management'
+                title='Internal Temperature'
                 titleStyle={styles.titleStyle}
-                containerStyle={{flex:1, backgroundColor:'black', alignItems: 'center', borderColor:'gray', paddingVertical:5}}>   
+                containerStyle={{flex:1, backgroundColor:'black', alignItems: 'center', borderColor:'gray', paddingVertical:5, borderRadius:10}}>   
                        
                 </Card>
                 </TouchableOpacity>
                 
-               <TouchableOpacity onPress={() => this.props.navigation.navigate("Energy")}>
-                <Card 
-                image={require('../../assets/energy.png')}
-                imageStyle={styles.imageStyle}
-                title={<Text style={styles.titleStyle}>Energy Output </Text>}
-                containerStyle={{flex:1, backgroundColor:'black', alignItems: 'center', borderColor:'gray', paddingVertical:5}}>           
-                </Card>
-                </TouchableOpacity>
-
-                <TouchableOpacity onPress={() => this.props.navigation.navigate("DeviceActivity")}>
-                <Card 
-                image={require('../../assets/deviceActivity.png')}
-                imageStyle={styles.imageStyle}
-                title={<Text style={styles.titleStyle}>Device Activity </Text>}
-                containerStyle={{flex:1, backgroundColor:'black', alignItems: 'center', borderColor:'gray', paddingVertical:5}}>           
-                </Card>
-                </TouchableOpacity>
-
-                <TouchableOpacity onPress={() => this.props.navigation.navigate("DeviceManagement")}>
-                <Card 
-                image={require('../../assets/internal.png')}
-                imageStyle={styles.imageStyle}
-                title={<Text style={styles.titleStyle}>Internal Conditions </Text>}
-                containerStyle={{flex:1, backgroundColor:'black', alignItems: 'center', borderColor:'gray', paddingVertical:5}}>           
-                </Card>
-                </TouchableOpacity>
+               
                 </ScrollView>
             </View>
         );

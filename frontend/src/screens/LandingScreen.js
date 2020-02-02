@@ -53,7 +53,7 @@ export default class LandingScreen extends Component {
                 imageStyle={styles.imageStyle}
                 title='Device Management'
                 titleStyle={styles.titleStyle}
-                containerStyle={{flex:1, backgroundColor:'black', alignItems: 'center', borderColor:'gray', paddingVertical:5}}>   
+                containerStyle={{flex:1, backgroundColor:'black', alignItems: 'center', borderColor:'gray', paddingVertical:5, borderRadius:10}}>   
                        
                 </Card>
                 </TouchableOpacity>
@@ -64,7 +64,7 @@ export default class LandingScreen extends Component {
                 imageStyle={styles.imageStyle}
                 title='Energy Output'
                 titleStyle={styles.titleStyle}
-                containerStyle={{flex:1, backgroundColor:'black', alignItems: 'center', borderColor:'gray', paddingVertical:5}}>           
+                containerStyle={{flex:1, backgroundColor:'black', alignItems: 'center', borderColor:'gray', paddingVertical:5, borderRadius:10}}>           
                 </Card>
                 </TouchableOpacity>
 
@@ -74,7 +74,7 @@ export default class LandingScreen extends Component {
                 imageStyle={styles.imageStyle}
                 title='Device Activity'
                 titleStyle={styles.titleStyle}
-                containerStyle={{flex:1, backgroundColor:'black', alignItems: 'center', borderColor:'gray', paddingVertical:5}}>           
+                containerStyle={{flex:1, backgroundColor:'black', alignItems: 'center', borderColor:'gray', paddingVertical:5, borderRadius:10}}>           
                 </Card>
                 </TouchableOpacity>
 
@@ -84,7 +84,7 @@ export default class LandingScreen extends Component {
                 imageStyle={styles.imageStyle}
                 title='Internal Conditions'
                 titleStyle={styles.titleStyle}
-                containerStyle={{flex:1, backgroundColor:'black', alignItems: 'center', borderColor:'gray', paddingVertical:5}}>           
+                containerStyle={{flex:1, backgroundColor:'black', alignItems: 'center', borderColor:'gray', paddingVertical:5, borderRadius:10}}>           
                 </Card>
                 </TouchableOpacity>
                 </ScrollView>
