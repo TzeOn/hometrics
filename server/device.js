@@ -71,83 +71,41 @@ router.post("/totalUserEnergy", (request, response) => {
 
 
 //body: emailAddress
-//returns array where the first entry is their email address and the rest are energy usage on each day
-router.post("/weeklyUserEnergyBreakdown", (request, response) => {
+//big array of energy usage
+router.post("/userEnergyBreakdown", (request, response) => {
     let user = request.body.emailAddress;
     let energyQuery = database.query(`SELECT energyPerHour,id FROM device`);
     let timeQuery = database.query(`SELECT startTime,endTime,device FROM deviceActivity WHERE user = "${user}"`);
-    let result = [];
     let time = timeQuery;
-    let currentTime = new Date().getTime();
+    let result = '{"weekly": [';
+    let currentTime = new Date();
 
-    result[0] = user;
-    for(a=7 ; a>=1 ; a--){
+    for(a=6 ; a>=0 ; a--){
         time = limitTimeFrame2(timeQuery, currentTime-(DAY*a), currentTime-(DAY*(a-1)));
-        result.push(calculateEnergy(energyQuery, time));
-        console.log(a);
+        result = result.concat('{"x":"',dayToString((new Date(currentTime-(DAY*a))).getDay()),'", "y":',calculateEnergy(energyQuery, time), '},');
     }
-    
+    result = result.substring(0,result.length-1);
+    result = result.concat('],"monthly":[');
 
-    if(result){
-        response.json(result);
-    }else if(result === 0){
-        response.json({"user":user,"usage":"no usage"});
-    }else{
-        response.json({"message":"error"});
-    }
-});
-
-//body: emailAddress
-//returns array where the first entry is their email address and the rest are energy usage for each week
-router.post("/monthlyUserEnergyBreakdown", (request, response) => {
-    let user = request.body.emailAddress;
-    let energyQuery = database.query(`SELECT energyPerHour,id FROM device`);
-    let timeQuery = database.query(`SELECT startTime,endTime,device FROM deviceActivity WHERE user = "${user}"`);
-    let result = [];
-    let time = timeQuery;
-    let currentTime = new Date().getTime();
-
-    result[0] = user;
-    for(e=4 ; e>=1 ; e--){
+    for(e=3 ; e>=0 ; e--){
         time = limitTimeFrame2(timeQuery, currentTime-(WEEK*e), currentTime-(WEEK*(e-1)));
-        result.push(calculateEnergy(energyQuery, time));
+        result = result.concat('{"x":"',e,'", "y":',calculateEnergy(energyQuery, time), '},');
     }
+    result = result.substring(0,result.length-1);
+    result = result.concat('],"yearly":[');
+    
+     for(y=11 ; y>=0 ; y--){
+         time = limitTimeFrame2(timeQuery, currentTime-(MONTH*y), currentTime-(MONTH*(y-1)));
+         result = result.concat('{"x":"',monthToString((new Date(currentTime-(MONTH*y))).getMonth()),'", "y":',calculateEnergy(energyQuery, time), '},');
+     }
+     result = result.substring(0,result.length-1);
+    result = result.concat(']}');
+    result = JSON.parse(result);
     
 
-    if(result){
-        response.json(result);
-    }else if(result === 0){
-        response.json({"user":user,"usage":"no usage"});
-    }else{
-        response.json({"message":"error"});
-    }
+   response.json(result);
 });
 
-//body: emailAddress
-//returns array where the first entry is their email address and the rest are energy usage for eah month
-router.post("/yearlyUserEnergyBreakdown", (request, response) => {
-    let user = request.body.emailAddress;
-    let energyQuery = database.query(`SELECT energyPerHour,id FROM device`);
-    let timeQuery = database.query(`SELECT startTime,endTime,device FROM deviceActivity WHERE user = "${user}"`);
-    let result = [];
-    let time = timeQuery;
-    let currentTime = new Date().getTime();
-
-    result[0] = user;
-    for(y=12 ; y>=1 ; y--){
-        time = limitTimeFrame2(timeQuery, currentTime-(MONTH*y), currentTime-(MONTH*(y-1)));
-        result.push(calculateEnergy(energyQuery, time));
-    }
-    
-
-    if(result){
-        response.json(result);
-    }else if(result === 0){
-        response.json({"user":user,"usage":"no usage"});
-    }else{
-        response.json({"message":"error"});
-    }
-});
 
 
 //get the total energy use for the house
@@ -241,6 +199,54 @@ function limitTimeFrame1(timeQuery, timeFrame){
     return result;
 }
 
+
+function dayToString(day){
+    switch(day){
+        case 0:
+            return "Sunday";
+        case 1:
+            return "Monday";
+        case 2:
+            return "Tuesday";
+        case 3:
+            return "Wednesday";
+        case 4:
+            return "Thursday";
+        case 5:
+            return "Friday";
+        case 6:
+            return "Saturday";
+    }
+}
+
+function monthToString(month){
+    switch(month){
+        case 0:
+            return "January"
+        case 1:
+            return "Febuary"
+        case 2:
+            return "March"
+        case 3:
+            return "April"
+        case 4:
+            return "May"
+        case 5:
+            return "June"
+        case 6:
+            return "July"
+        case 7:
+            return "August"
+        case 8:
+            return "September"
+        case 9:
+            return "October"
+        case 10:
+            return "November"
+        case 11:
+            return "December"
+    }
+}
 
 
 //Helper function

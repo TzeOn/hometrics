@@ -114,7 +114,8 @@ const styles=StyleSheet.create({
         width: 75,
         alignSelf: 'center',
         alignContent: 'center',
-        marginTop: 20
+        marginTop: 20,
+        borderRadius:10
     },
     submit: {
         color: 'white',
