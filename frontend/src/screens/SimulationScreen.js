@@ -2,15 +2,12 @@ import React, { Component } from 'react';
 import {StyleSheet, Text, View, Dimensions, FlatList, Button } from 'react-native';
 import { ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import Modal from 'react-native-modal';
+const api = require("../api").url; 
 const data = [
-    { key: 'Bedroom 1' }, { key: 'Living Room' }, { key: 'Bedroom 2' }, { key: 'Kitchen' }, { key: 'Bathroom' }, { key: 'Garage' }, { key: 'Collonade' }, { key: 'Corridor' }];
+    { key: 'bedroom' }, { key: 'livingRoom' }, { key: 'otherBedroom' }, { key: 'kitchen' }, { key: 'bathroom' }, { key: 'garage' }, { key: 'collonade' }, { key: 'corridor' }];
   const numColumns = 3;
 const bottomHeight = Dimensions.get('window').height * 0.3;
 const topHeight = Dimensions.get('window').height * 0.6;
-var extTemperature = 23.23434;
-var extAirQuality = 535;
-var extHumidity = 51.23434;
-var extLightLevel = -1.536885246;
 var intTemperature = 23.23434;
 var intAirQuality = 535;
 var intHumidity = 51.23434;
@@ -22,25 +19,66 @@ export default class Simulation extends React.Component {
         isModalVisible: false,
         roomText: "",
         date: '',
+        extTemperature: null,   
+        extAirQuality: null,  
+        extHumidity: null,  
+        extLightLevel: null,
+        devices: 'livingRoom',
       };
     }
     
     componentDidMount(){
-        this.timer = setInterval(()=> this.getTime(), 1000)
+        this.getWeather();
+        this.getRoomDevices();
+        this.timer = setInterval(()=> this.getWeather(), 60000)
        }
        async getWeather(){
       
-        fetch('', {method: "GET"})
+        fetch(`${api}/weather`, {method: "GET"})
          .then((response) => response.json())
-         .then((responseData) =>
+         .then((response) =>
          {
+            console.log(response);
+            console.log("meow"); 
+             this.setState({
+                 "extTemperature": response.temperature,   
+                 "extAirQuality": response.airQuality,  
+                 "extHumidity": response.humidity,  
+                 "extLightLevel": response.lighting
+             })
+              
            //set your data here
-            console.log(responseData);
+            
          })
          .catch((error) => {
              console.error(error);
          });
+
+        
+
+
+         
        
+       }
+
+       getRoomDevices(roomName) { 
+           fetch(`${api}/deviceManagement/roomDevices`, {
+               method: "POST", 
+               headers: {
+                   Accept: "application/json", 
+                   "Content-Type": "application/json"
+               }, 
+               body: JSON.stringify({
+                   roomName: roomName
+               })
+           }).then(response => response.json()).then(response => {
+            var roomDevices = response.roomDevices; 
+            console.log(roomDevices); 
+            this.setState({
+                "devices": roomDevices
+            })
+
+           })
        }
 
        getTime() {
@@ -63,6 +101,7 @@ export default class Simulation extends React.Component {
     setModalVisible = (bool, text) => {
         this.setState({isModalVisible: bool})
         this.setState({roomText: text})
+        {this.getRoomDevices(text)}
     }
     renderItem = ({ item, onPress }) => {
         return (
@@ -91,28 +130,28 @@ export default class Simulation extends React.Component {
                     <View style={styles.bottomItem}>
                         <View style={styles.internalEnviroment}>
                             <Text style={styles.itemName}>Temperature</Text>
-                            <Text style={styles.itemValue}>{this.state.date}c</Text>
+                            <Text style={styles.itemValue}>{this.state.extTemperature}c</Text>
                         </View>
                     </View>
 
                     <View style={styles.bottomItem}>
                         <View style={styles.internalEnviroment}>
                             <Text style={styles.itemName}>Air Quality</Text>
-                            <Text style={styles.itemValue}>{this.state.date} ppm</Text>
+                            <Text style={styles.itemValue}>{this.state.extAirQuality} ppm</Text>
                         </View>
                     </View>
 
                     <View style={styles.bottomItem}>
                         <View style={styles.internalEnviroment}>
                             <Text style={styles.itemName}>Humidity</Text>
-                            <Text style={styles.itemValue}>{this.state.date}%</Text>
+                            <Text style={styles.itemValue}>{this.state.extHumidity}%</Text>
                         </View>
                     </View>
 
                     <View style={styles.bottomItem}>
                         <View style={styles.internalEnviroment}>
                             <Text style={styles.itemName}>Light Levels</Text>
-                            <Text style={styles.itemValue}>{this.state.date} W/m2</Text>
+                            <Text style={styles.itemValue}>{this.state.extLightLevel} W/m2</Text>
                         </View>
                     </View>
 
@@ -129,12 +168,9 @@ export default class Simulation extends React.Component {
                         
                         <View style={styles.modalContent}>
                             <Text style={styles.modalHeader}>{this.state.roomText}</Text>
-                            <Text>Devices:</Text>
-                            <Text>Lights: On</Text>
-                            <Text>AC: On</Text>
-                            <Text>IOT: On</Text>
+                            <Text>{this.state.devices}</Text>
                             <Text>Temperature:</Text>
-                            <Text>{intTemperature}c</Text>
+                            <Text>{this.state.date}</Text>
                             <Text>Air Quality</Text>
                             <Text>{intAirQuality} ppm</Text>
                             <Text>Humidity</Text>

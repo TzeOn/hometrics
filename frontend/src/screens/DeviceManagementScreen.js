@@ -29,10 +29,10 @@ export default class DeviceManagement extends Component {
             let roomName = this.state.rooms[i].name; 
             rooms.push(
                 <TouchableOpacity 
-                style={{backgroundColor:'black'}}
+                style={{backgroundColor:'black', borderRadius:10}}
                 onPress={() => {this.props.navigation.navigate("RoomDevices",{roomName})}}>
                     <Card 
-                    containerStyle={{backgroundColor:'black'}}
+                    containerStyle={{backgroundColor:'black', borderRadius:10}}
                     titleStyle={{color:'white', borderBottomWidth:.7, borderBottomColor:'#FF9800'}}
                     title={roomName}>
                             <View style={{  
@@ -40,7 +40,8 @@ export default class DeviceManagement extends Component {
                                 justifyContent: "center",
                                 backgroundColor:'black',
                                 borderColor:'gray',
-                                borderWidth:1
+                                borderWidth:1,
+                                borderRadius:10
                             }}>
                                 <Text style={{
                                     fontSize: 40,
@@ -58,7 +59,8 @@ export default class DeviceManagement extends Component {
     render() { 
         return (
             <ScrollView contentContainerStyle={{backgroundColor:'black'}}>
-                <View><Text 
+
+                <View style={{flex: 1}}><Text 
                 style={{fontSize: 40,
                 color: '#FF9800',
                 textAlign: 'center'}}>Rooms</Text></View>
@@ -67,7 +69,7 @@ export default class DeviceManagement extends Component {
                     flex: 0.33, 
                     flexWrap: "wrap", 
                     alignItems:'center',
-                    justifyContent:'space-between' 
+                    justifyContent:'space-evenly' 
                 }}>
                     {this.showRooms()}
                 </View>
