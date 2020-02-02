@@ -3,30 +3,6 @@ import { View, TouchableOpacity, Text, StyleSheet, Image, Button , Picker, Async
 import PureChart from 'react-native-pure-chart'; 
 import { ScrollView } from 'react-native-gesture-handler';
 const api = require("../api").url;
-var emailAddress; 
-    AsyncStorage.getItem("credentials").then(credentials => {
-      emailAddress = JSON.parse(credentials).emailAddress; 
-      fetch(`${api}/device/totalUserEnergy` /*THIS IS WHERE THE API URL GOES*/, {
-        method: "POST", 
-        "headers": {
-          Accept: "application/json", 
-          "Content-Type": "application/json"
-        }, 
-        body: JSON.stringify({
-          "emailAddress": emailAddress
-        })
-
-    }).then(response => response.json()).then(response => {
-
-
-       console.log(response);
-
-
-
-    }); 
-})
-
-
 
 export default class EnergyScreen extends Component {
     constructor(props) { 
@@ -41,80 +17,38 @@ export default class EnergyScreen extends Component {
         }
     }
 
-
-    
-
-    
-    
-
-    // Mock data - still to implement server-side before adding fetch function here. 
     getData() { 
-        console.log("emailAddress");
-        this.state.monthly = [
-            {x: '2018-01-01', y: 30},
-            {x: '2018-01-02', y: 200},
-            {x: '2018-01-03', y: 170},
-            {x: '2018-01-04', y: 250},
-            {x: '2018-01-05', y: 10},
-            {x: '2018-01-01', y: 30},
-            {x: '2018-01-02', y: 200},
-            {x: '2018-01-03', y: 170},
-            {x: '2018-01-04', y: 250},
-            {x: '2018-01-05', y: 10},
-            {x: '2018-01-05', y: 10},
-            {x: '2018-01-01', y: 30},
-            {x: '2018-01-02', y: 200},
-            {x: '2018-01-03', y: 170},
-            {x: '2018-01-04', y: 250},
-            {x: '2018-01-05', y: 10},
-            {x: '2018-01-04', y: 250},
-            {x: '2018-01-05', y: 10},
-            {x: '2018-01-05', y: 10},
-            {x: '2018-01-01', y: 30},
-            {x: '2018-01-02', y: 200},
-            {x: '2018-01-03', y: 170},
-            {x: '2018-01-04', y: 250},
-            {x: '2018-01-05', y: 10},
-            {x: '2018-01-04', y: 250},
-            {x: '2018-01-05', y: 10},
-            {x: '2018-01-05', y: 10},
-            {x: '2018-01-01', y: 30},
-            {x: '2018-01-02', y: 200},
-            {x: '2018-01-03', y: 170},
-            {x: '2018-01-04', y: 250},
-            {x: '2018-01-05', y: 10},
-            {x: '2018-01-04', y: 250},
-            {x: '2018-01-05', y: 10},
-            {x: '2018-01-05', y: 10},
-            {x: '2018-01-01', y: 30},
-            {x: '2018-01-02', y: 200},
-            {x: '2018-01-03', y: 170},
-            {x: '2018-01-04', y: 250},
-            {x: '2018-01-05', y: 10},
-        ]; 
-        this.state.weekly = [
-            {x: '2018-01-02', y: 200},
-            {x: '2018-01-03', y: 170},
-            {x: '2018-01-04', y: 250},
-            {x: '2018-01-05', y: 10},
-            {x: '2018-01-04', y: 250},
-            {x: '2018-01-05', y: 10},
-            {x: '2018-01-05', y: 10}
-        ]; 
-        this.state.yearly = [
-            {x: '2018-01-02', y: 200},
-            {x: '2018-01-03', y: 170},
-            {x: '2018-01-04', y: 250},
-            {x: '2018-01-05', y: 10},
-            {x: '2018-01-04', y: 250},
-            {x: '2018-01-05', y: 10},
-            {x: '2018-01-05', y: 10},
-            {x: '2018-01-01', y: 30},
-            {x: '2018-01-02', y: 200},
-            {x: '2018-01-03', y: 170},
-            {x: '2018-01-04', y: 250},
-            {x: '2018-01-05', y: 10},
-        ];
+
+        var emailAddress; 
+    AsyncStorage.getItem("credentials").then(credentials => {
+      emailAddress = JSON.parse(credentials).emailAddress; 
+      fetch(`${api}/device/userEnergyBreakdown` /*THIS IS WHERE THE API URL GOES*/, {
+        method: "POST", 
+        "headers": {
+          Accept: "application/json", 
+          "Content-Type": "application/json"
+        }, 
+        body: JSON.stringify({
+          "emailAddress": emailAddress
+        })
+
+    }).then(response => response.json()).then(response => {
+
+
+       this.setState({
+           monthly: response.weekly, 
+           weekly: response.monthly, 
+           yearly: response.yearly
+       })
+
+
+
+    }).then(() => {
+        console.log("sate");
+        console.log(this.state);
+    }); 
+})
+        
         this.state.scoreboard = [
             {x: "Yaseen", y: 1}, 
             {x: "Lee", y: 2}, 
@@ -126,12 +60,12 @@ export default class EnergyScreen extends Component {
             {
                 value: 50,
                 label: 'House',
-                color: 'red',
+                color: 'blue',
             },
             {
                 value: 25,
                 label: 'You',
-                color: 'green'
+                color: 'orange'
             }
         ]
         this.state.filter = this.state.weekly;
@@ -147,7 +81,7 @@ export default class EnergyScreen extends Component {
         const styles = StyleSheet.create({
             container: {
                 flex:1,
-                backgroundColor: 'black',
+                backgroundColor: 'white',
                 alignItems: 'center',
                 justifyContent: "space-between"
             },
@@ -186,8 +120,8 @@ export default class EnergyScreen extends Component {
                     <Text style={styles.textStyle}>Personal Statistics</Text>
                     <ScrollView horizontal={true} nestedScrollEnabled={true} >
                     <PureChart data={this.state.filter}
-                    backgroundColor={"black"} 
-                    primaryColor = {"white"}
+                    backgroundColor={"white"} 
+                    primaryColor = {"black"}
                     height = {200}
                     type="line"/>
                     </ScrollView>
@@ -195,10 +129,10 @@ export default class EnergyScreen extends Component {
                     <Text style={styles.textStyle}>Scoreboard</Text>
                     <View>
                         <PureChart data={this.state.scoreboard}
-                        backgroundColor={"black"}
+                        backgroundColor={"white"}
                         type={"bar"}
                         height = {200}
-                        primaryColor={"white"}/>
+                        primaryColor={"black"}/>
                     </View>
 
                     <Text style={styles.textStyle}>Comparison</Text>

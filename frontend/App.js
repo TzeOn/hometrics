@@ -1,6 +1,6 @@
 import { createStackNavigator } from 'react-navigation-stack';
 import { createAppContainer} from 'react-navigation';
-import HomeScreen from './src/screens/HomeScreen';
+import HomeScreen from './src/screens/HomeScreen2';
 import RegisterScreen from './src/screens/RegisterScreen';
 import LoginScreen from './src/screens/LoginScreen';
 import ConfirmationScreen from './src/screens/ConfirmationScreen';
@@ -29,21 +29,22 @@ const navigator = createStackNavigator({
     Internal: InternalScreen
   },
   {
-    initialRouteName: 'Simulation',
+    initialRouteName: 'Home',
     defaultNavigationOptions: {
       title: 'Hometrics',
       headerStyle: {
-      backgroundColor: 'black',
+      backgroundColor: '#FF9800',
       height: headerHeight,
+      
       },
       headerTitleStyle: {
-        color: '#FF9800',
+        color: 'white',
         textAlign: 'center',
         flex:1,
         fontSize: 30,
-        alignSelf: 'center'
+        alignSelf: 'center', 
       },
-      headerTintColor: '#FF9800',
+      headerTintColor: 'white',
       headerRight: (      
         <Image style={{width: headerHeight * 0.5, height: headerHeight * 0.5 }} source={require('./assets/splash.png')}/>     
       ),

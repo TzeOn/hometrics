@@ -1,10 +1,11 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, Button, TouchableOpacity, Image} from 'react-native';
+import {ScrollView} from 'react-native-gesture-handler';
 
 const HomeScreen = (props) => {
     return (
-        <ScrollView contentContainerStyle={{flex:1}}>
-        <View style={styles.container} >
+        
+        <ScrollView contentContainerStyle={styles.container} >
             <View>
                 <Image 
                 source={require('../../assets/splash.png')}
@@ -17,26 +18,31 @@ const HomeScreen = (props) => {
                     <Text style={styles.textStyle}>Register</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity 
+                <Button 
+                onPress={() => props.navigation.navigate('Login')}
+                title='Login'
+                
+                ></Button>
+                {/* <TouchableOpacity 
                 style={styles.buttons2}
                 onPress={() => props.navigation.navigate('Login')}>
                     <Text style={styles.textStyle}>Login</Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
             </View>
-        </View>
         </ScrollView>
+   
     );
 };  
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: 'black',
+        backgroundColor: '#FFEFD5',
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center'
     },
     textStyle: {
-        color: '#FF9800',
+        color: 'black',
         fontSize: 25
     },
     buttonsLayout: {
