@@ -1,6 +1,6 @@
 import { createStackNavigator } from 'react-navigation-stack';
 import { createAppContainer} from 'react-navigation';
-import HomeScreen from './src/screens/HomeScreen2';
+import HomeScreen from './src/screens/HomeScreen';
 import RegisterScreen from './src/screens/RegisterScreen';
 import LoginScreen from './src/screens/LoginScreen';
 import ConfirmationScreen from './src/screens/ConfirmationScreen';
@@ -33,12 +33,12 @@ const navigator = createStackNavigator({
     defaultNavigationOptions: {
       title: 'Hometrics',
       headerStyle: {
-      backgroundColor: '#FF9800',
+      backgroundColor: 'black',
       height: headerHeight,
       
       },
       headerTitleStyle: {
-        color: 'white',
+        color: '#FF9800',
         textAlign: 'center',
         flex:1,
         fontSize: 30,

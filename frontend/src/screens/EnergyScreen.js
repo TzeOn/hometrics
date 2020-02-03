@@ -81,7 +81,7 @@ export default class EnergyScreen extends Component {
         const styles = StyleSheet.create({
             container: {
                 flex:1,
-                backgroundColor: 'white',
+                backgroundColor: 'black',
                 alignItems: 'center',
                 justifyContent: "space-between"
             },
@@ -120,8 +120,8 @@ export default class EnergyScreen extends Component {
                     <Text style={styles.textStyle}>Personal Statistics</Text>
                     <ScrollView horizontal={true} nestedScrollEnabled={true} >
                     <PureChart data={this.state.filter}
-                    backgroundColor={"white"} 
-                    primaryColor = {"black"}
+                    backgroundColor={"black"} 
+                    primaryColor = {"white"}
                     height = {200}
                     type="line"/>
                     </ScrollView>
@@ -129,10 +129,10 @@ export default class EnergyScreen extends Component {
                     <Text style={styles.textStyle}>Scoreboard</Text>
                     <View>
                         <PureChart data={this.state.scoreboard}
-                        backgroundColor={"white"}
+                        backgroundColor={"black"}
                         type={"bar"}
                         height = {200}
-                        primaryColor={"black"}/>
+                        primaryColor={"white"}/>
                     </View>
 
                     <Text style={styles.textStyle}>Comparison</Text>

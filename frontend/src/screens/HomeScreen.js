@@ -31,13 +31,13 @@ const HomeScreen = (props) => {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#black',
+        backgroundColor: 'black',
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center'
     },
     textStyle: {
-        color: 'black',
+        color: '#FF9800',
         fontSize: 25
     },
     buttonsLayout: {

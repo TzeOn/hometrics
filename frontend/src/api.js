@@ -1,3 +1,3 @@
 module.exports = { 
-    "url": "http://80844ba5.ngrok.io"
+    "url": "http://6b570e2b.ngrok.io"
 }
