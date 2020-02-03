@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {StyleSheet, Text, View, Dimensions, FlatList, Button } from 'react-native';
-import { ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
+import { ScrollView, TouchableOpacity, Switch} from 'react-native-gesture-handler';
 import Modal from 'react-native-modal';
 import { Card } from "react-native-elements"; 
 const api = require("../api").url; 
@@ -31,9 +31,9 @@ export default class Simulation extends React.Component {
     
     componentDidMount(){
         this.getWeather();
-        this.getRoomDevices();
+        //this.getRoomDevices();
         this.timer = setInterval(()=> this.getWeather(), 60000)
-        this.timer = setInterval(()=> this.getRoomDevices(), 60000)
+       // this.timer = setInterval(()=> this.getRoomDevices(), 60000)
        }
        async getWeather(){
       
@@ -206,7 +206,7 @@ export default class Simulation extends React.Component {
                         
                         <View style={styles.modalContent}>
                             <Text style={styles.modalHeader}>{this.state.roomText}</Text>
-                            {this.showDevices()}
+                            
                             <Text>Temperature:</Text>
                             <Text>{this.state.extTemperature}c</Text>
                             <Text>Air Quality</Text>
@@ -226,7 +226,7 @@ export default class Simulation extends React.Component {
         );
     }
 }
-
+//{this.showDevices()}
 const styles = StyleSheet.create({
     container: {
         flex: 1,
