@@ -7,7 +7,7 @@ const api = require("../api").url;
 const data = [
     { key: 'bedroom' }, { key: 'livingRoom' }, { key: 'otherBedroom' }, { key: 'kitchen' }, { key: 'bathroom' }, { key: 'garage' }, { key: 'collonade' }, { key: 'corridor' }];
   const numColumns = 3;
-const bottomHeight = Dimensions.get('window').height * 0.3;
+const bottomHeight = Dimensions.get('window').height * 0.32;
 const topHeight = Dimensions.get('window').height * 0.6;
 var intTemperature = 23.23434;
 var intAirQuality = 535;
@@ -183,7 +183,7 @@ export default class Simulation extends React.Component {
     
     render() {
         return (
-            <ScrollView style={styles.container}>
+            <View style={styles.container}>
 
                 <View style={styles.top}>
 
@@ -255,7 +255,7 @@ export default class Simulation extends React.Component {
 
                 </View>
 
-            </ScrollView>
+            </View>
         );
     }
 }
