@@ -18,16 +18,11 @@ const HomeScreen = (props) => {
                     <Text style={styles.textStyle}>Register</Text>
                 </TouchableOpacity>
 
-                <Button 
-                onPress={() => props.navigation.navigate('Login')}
-                title='Login'
-                
-                ></Button>
-                {/* <TouchableOpacity 
+                <TouchableOpacity 
                 style={styles.buttons2}
                 onPress={() => props.navigation.navigate('Login')}>
                     <Text style={styles.textStyle}>Login</Text>
-                </TouchableOpacity> */}
+                </TouchableOpacity>
             </View>
         </ScrollView>
    
@@ -36,7 +31,7 @@ const HomeScreen = (props) => {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#FFEFD5',
+        backgroundColor: '#black',
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center'
