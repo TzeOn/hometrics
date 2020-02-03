@@ -139,7 +139,7 @@ export default class Simulation extends React.Component {
     setModalVisible = (bool, roomName) => {
         this.setState({isModalVisible: bool})
         this.setState({roomText: roomName})
-        {this.getRoomDevices(roomName)}
+        //{this.getRoomDevices(roomName)}
     }
     renderItem = ({ item, onPress }) => {
         return (
