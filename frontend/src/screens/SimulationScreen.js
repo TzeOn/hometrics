@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {StyleSheet, Text, View, Dimensions, FlatList, Button } from 'react-native';
 import { ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import Modal from 'react-native-modal';
+import { Card } from "react-native-elements"; 
 const api = require("../api").url; 
 const data = [
     { key: 'bedroom' }, { key: 'livingRoom' }, { key: 'otherBedroom' }, { key: 'kitchen' }, { key: 'bathroom' }, { key: 'garage' }, { key: 'collonade' }, { key: 'corridor' }];
@@ -23,7 +24,8 @@ export default class Simulation extends React.Component {
         extAirQuality: null,  
         extHumidity: null,  
         extLightLevel: null,
-        devices: 'livingRoom',
+        deviceRoom: '',
+        devices: [],
       };
     }
     
@@ -31,6 +33,7 @@ export default class Simulation extends React.Component {
         this.getWeather();
         this.getRoomDevices();
         this.timer = setInterval(()=> this.getWeather(), 60000)
+        this.timer = setInterval(()=> this.getRoomDevices(), 60000)
        }
        async getWeather(){
       
@@ -70,6 +73,7 @@ export default class Simulation extends React.Component {
                }, 
                body: JSON.stringify({
                    roomName: roomName
+                 // roomName: "livingRoom"
                })
            }).then(response => response.json()).then(response => {
             var roomDevices = response.roomDevices; 
@@ -80,6 +84,72 @@ export default class Simulation extends React.Component {
 
            })
        }
+
+
+       showDevices() { 
+
+       let devices = [];
+       let device; 
+       
+       for (let i=0; i<this.state.data.length; i++) {
+           device = this.state.data[i]; 
+
+        if (device.deviceName) {
+
+            devices.push(
+                <Card 
+                containerStyle={{backgroundColor:'black'}}
+                titleStyle={{color:'white'}}
+                title={device.deviceName}>
+                    <View style={{alignItems:'center', justifyContent:'center', flex:1, paddingBottom:20}}>
+                    <Switch
+                    value={device.onOff}
+                    onValueChange = {() => {
+
+                        var copy = this.state.data; 
+
+                        fetch(`${api}/deviceManagement/toggle`, {
+                            method: "POST", 
+                            "headers": {
+                                Accept: "application/json", 
+                                "Content-Type": "application/json"
+                            }, 
+                            body: JSON.stringify({
+                                "deviceId": copy[i].deviceId,
+                                "onOff": (!copy[i].onOff) ? 1:0
+                            })
+                        }).then(response => response.json()).then(response => {
+                            copy[i].onOff = !copy[i].onOff;
+                            this.setState({data: copy});
+                            
+                        }).catch(error => console.error(error)); 
+                    }}
+                    
+
+                    
+                    ></Switch>
+                    </View>
+                    <Button title="-" color={"red"}></Button>
+
+                </Card>
+            )
+                } else {
+
+            devices.push(
+                <View>
+                    <Card containerStyle={{backgroundColor: "green"}}>
+                    <Text style={{fontSize: 20, color: "white", textAlign:'center'}}>+</Text>
+                </Card>
+                </View>
+            )
+                }
+
+
+       }
+       return devices; 
+    }
+
+
 
        getTime() {
         var that = this;
@@ -98,10 +168,10 @@ export default class Simulation extends React.Component {
         });
        }
 
-    setModalVisible = (bool, text) => {
+    setModalVisible = (bool, roomName) => {
         this.setState({isModalVisible: bool})
-        this.setState({roomText: text})
-        {this.getRoomDevices(text)}
+        this.setState({roomText: roomName})
+        {this.getRoomDevices(roomName)}
     }
     renderItem = ({ item, onPress }) => {
         return (
@@ -113,7 +183,7 @@ export default class Simulation extends React.Component {
     
     render() {
         return (
-            <View style={styles.container}>
+            <ScrollView style={styles.container}>
 
                 <View style={styles.top}>
 
@@ -168,23 +238,24 @@ export default class Simulation extends React.Component {
                         
                         <View style={styles.modalContent}>
                             <Text style={styles.modalHeader}>{this.state.roomText}</Text>
-                            <Text>{this.state.devices}</Text>
+                            <Text>{this.showDevices}</Text>
                             <Text>Temperature:</Text>
-                            <Text>{this.state.date}</Text>
+                            <Text>{this.state.extTemperature}c</Text>
                             <Text>Air Quality</Text>
-                            <Text>{intAirQuality} ppm</Text>
+                            <Text>{this.state.extAirQuality} ppm</Text>
                             <Text>Humidity</Text>
-                            <Text>{intHumidity}%</Text>
+                            <Text>{this.state.extHumidity}%</Text>
                             <Button
                             color="#FF9800"
                             title="Close"
                             onPress={() => this.setModalVisible(false, '')}/>
                         </View>
                     </Modal>
+                    {this.showDevices}
 
                 </View>
 
-            </View>
+            </ScrollView>
         );
     }
 }
