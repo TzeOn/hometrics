@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {StyleSheet, Text, View, Dimensions, FlatList, Button } from 'react-native';
-import { ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
+import { ScrollView, TouchableOpacity, Switch} from 'react-native-gesture-handler';
 import Modal from 'react-native-modal';
 import { Card } from "react-native-elements"; 
 const api = require("../api").url; 
@@ -31,9 +31,9 @@ export default class Simulation extends React.Component {
     
     componentDidMount(){
         this.getWeather();
-        this.getRoomDevices();
+        //this.getRoomDevices();
         this.timer = setInterval(()=> this.getWeather(), 60000)
-        this.timer = setInterval(()=> this.getRoomDevices(), 60000)
+       // this.timer = setInterval(()=> this.getRoomDevices(), 60000)
        }
        async getWeather(){
       
@@ -91,8 +91,8 @@ export default class Simulation extends React.Component {
        let devices = [];
        let device; 
        
-       for (let i=0; i<this.state.data.length; i++) {
-           device = this.state.data[i]; 
+       for (let i=0; i<this.state.devices.length; i++) {
+           device = this.state.devices[i]; 
 
         if (device.deviceName) {
 
@@ -103,45 +103,13 @@ export default class Simulation extends React.Component {
                 title={device.deviceName}>
                     <View style={{alignItems:'center', justifyContent:'center', flex:1, paddingBottom:20}}>
                     <Switch
-                    value={device.onOff}
-                    onValueChange = {() => {
-
-                        var copy = this.state.data; 
-
-                        fetch(`${api}/deviceManagement/toggle`, {
-                            method: "POST", 
-                            "headers": {
-                                Accept: "application/json", 
-                                "Content-Type": "application/json"
-                            }, 
-                            body: JSON.stringify({
-                                "deviceId": copy[i].deviceId,
-                                "onOff": (!copy[i].onOff) ? 1:0
-                            })
-                        }).then(response => response.json()).then(response => {
-                            copy[i].onOff = !copy[i].onOff;
-                            this.setState({data: copy});
-                            
-                        }).catch(error => console.error(error)); 
-                    }}
-                    
-
-                    
+                    value={device.onOff}                    
                     ></Switch>
                     </View>
-                    <Button title="-" color={"red"}></Button>
 
                 </Card>
             )
                 } else {
-
-            devices.push(
-                <View>
-                    <Card containerStyle={{backgroundColor: "green"}}>
-                    <Text style={{fontSize: 20, color: "white", textAlign:'center'}}>+</Text>
-                </Card>
-                </View>
-            )
                 }
 
 
@@ -171,7 +139,7 @@ export default class Simulation extends React.Component {
     setModalVisible = (bool, roomName) => {
         this.setState({isModalVisible: bool})
         this.setState({roomText: roomName})
-        {this.getRoomDevices(roomName)}
+        //{this.getRoomDevices(roomName)}
     }
     renderItem = ({ item, onPress }) => {
         return (
@@ -238,7 +206,7 @@ export default class Simulation extends React.Component {
                         
                         <View style={styles.modalContent}>
                             <Text style={styles.modalHeader}>{this.state.roomText}</Text>
-                            <Text>{this.showDevices}</Text>
+                            
                             <Text>Temperature:</Text>
                             <Text>{this.state.extTemperature}c</Text>
                             <Text>Air Quality</Text>
@@ -251,7 +219,6 @@ export default class Simulation extends React.Component {
                             onPress={() => this.setModalVisible(false, '')}/>
                         </View>
                     </Modal>
-                    {this.showDevices}
 
                 </View>
 
@@ -259,7 +226,7 @@ export default class Simulation extends React.Component {
         );
     }
 }
-
+//{this.showDevices()}
 const styles = StyleSheet.create({
     container: {
         flex: 1,
