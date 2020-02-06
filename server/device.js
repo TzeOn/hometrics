@@ -1,39 +1,18 @@
 const express = require("express"),
       router = express.Router(),
-      database = require("./database")
-      request = require("request"),  
-      date = require("date-and-time"); 
+      database = require("./database") 
 
-//constants in ms
+// Constants in milliseconds.
 const HOUR = 3600000,
       DAY = 86400000, 
       WEEK = 604800000,
       MONTH = 2419200000,
       YEAR = 31536000000;
 
-
-//make sure we show the user their data and not someone elses
-
-/*
-router.use((request, response, next) => {
-    let emailAddress = request.body.emailAddress, password = request.body.password,
-    sql = `SELECT * FROM user WHERE emailAddress="${emailAddress}" AND password="${password}"`,
-    user = database.query(sql);
-    if (user.length === 1) {
-        request.emailAddress = user[0].emailAddress;
-        next();
-    } else {
-        response.json({"authenticity": false})
-    }
-});
-
- */
-
 router.post("/activity", (request, response) => {
-    let sql = `select device.name, deviceActivity.startTime, deviceActivity.endTime, device.plug from deviceActivity inner join device on deviceActivity.device = device.id where deviceActivity.user="${request.body.emailAddress}"`,
-        deviceActivity = database.query(sql).sort((a, b) => b.endTime - a.endTime);
-
-    let timeline = [];     
+    let sql = `SELECT device.name, deviceActivity.startTime, deviceActivity.endTime, device.plug FROM deviceActivity INNER JOIN device ON deviceActivity.device = device.id WHERE deviceActivity.user="${request.body.emailAddress}"`,
+     deviceActivity = database.query(sql).sort((a, b) => b.endTime - a.endTime), 
+     timeline = [];     
     for (let i=0; i<deviceActivity.length; i++) {
         let activity = deviceActivity.pop(),
             sql = `SELECT roomName from smartPlug where id="${activity.plug}"`,
@@ -47,39 +26,37 @@ router.post("/activity", (request, response) => {
     response.json({deviceActivity: timeline});
 });
 
-//gets the amount of energy a single user has used
-//body: emailAddress, timeFrame
-//returns json with their email address and amount of energy used
+/* 
+ * Gets the amount of energy a single user has consumed. 
+ * body: emailAddress, timeFrame 
+ * Returns a JSON containing the user's email address and their tota energy consumption value. 
+ */
 router.post("/totalUserEnergy", (request, response) => {
-    let user = request.body.emailAddress;
-    let energyQuery = database.query(`SELECT energyPerHour,id FROM device`);
-    let timeQuery = database.query(`SELECT startTime,endTime,device FROM deviceActivity WHERE user = "${user}"`);
-    let result = 0;
-
-    timeQuery = limitTimeFrame1(timeQuery, request.body.timeFrame);
-
-    result = calculateEnergy(energyQuery, timeQuery);
-
-    if (result) {
+    let user = request.body.emailAddress,
+        energyQuery = database.query(`SELECT energyPerHour,id FROM device`),
+        timeQuery = database.query(`SELECT startTime,endTime,device FROM deviceActivity WHERE user = "${user}"`);
+        result = 0,
+        timeQuery = limitTimeFrame1(timeQuery, request.body.timeFrame),
+        result = calculateEnergy(energyQuery, timeQuery);
+    if (result) 
         response.json({"user":user,"usage":result});
-    } else if (result === 0){
+    else if (result === 0)
         response.json({"user":user,"usage":"no usage"});
-    } else {
+    else 
         response.json({"message":"error"});
-    }
 });
 
-
-//body: emailAddress
-//big array of energy usage
+/* 
+ * Body: emailAddress
+ * Returns an array breaking down energy usage. 
+ */ 
 router.post("/userEnergyBreakdown", (request, response) => {
-    let user = request.body.emailAddress;
-    let energyQuery = database.query(`SELECT energyPerHour,id FROM device`);
-    let timeQuery = database.query(`SELECT startTime,endTime,device FROM deviceActivity WHERE user = "${user}"`);
-    let time = timeQuery;
-    let result = '{"weekly": [';
-    let currentTime = new Date();
-
+    let user = request.body.emailAddress,
+        energyQuery = database.query(`SELECT energyPerHour,id FROM device`),
+        timeQuery = database.query(`SELECT startTime,endTime,device FROM deviceActivity WHERE user = "${user}"`),
+        time = timeQuery,
+        result = '{"weekly": [',
+        currentTime = new Date();
     for(a=6 ; a>=0 ; a--){
         time = limitTimeFrame2(timeQuery, currentTime-(DAY*a), currentTime-(DAY*(a-1)));
         result = result.concat('{"x":"',dayToString((new Date(currentTime-(DAY*a))).getDay()),'", "y":',calculateEnergy(energyQuery, time), '},');
