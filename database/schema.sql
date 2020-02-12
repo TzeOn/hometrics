@@ -16,7 +16,6 @@ CREATE TABLE room (
     PRIMARY KEY (roomName)
 );
 
-
 CREATE TABLE hub (
     id VARCHAR(255),  
     password VARCHAR(255), 
