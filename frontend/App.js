@@ -32,7 +32,7 @@ const navigator = createStackNavigator({
     Humidity: HumidityScreen
   },
   {
-    initialRouteName: 'Landing',
+    initialRouteName: 'Home',
     defaultNavigationOptions: {
       title: 'Hometrics',
       headerStyle: {
