@@ -12,26 +12,29 @@ CREATE TABLE weather (
 );
 
 CREATE TABLE room ( 
-    roomName VARCHAR(255), 
-    PRIMARY KEY (roomName)
+    roomName VARCHAR(255),
+    hub VARCHAR(255), 
+    PRIMARY KEY (roomName),
+    FOREIGN KEY (hub) REFERENCES hub(id)
 );
 
 
 CREATE TABLE hub (
     id VARCHAR(255),  
     password VARCHAR(255), 
+    thermostat REAL,
     PRIMARY KEY(id)
 );
 
 CREATE TABLE user (
+    emailAddress VARCHAR(255),
+    hub VARCHAR(255),
     forename VARCHAR(255),
     surname VARCHAR(255),
     dob DATE,
-    emailAddress VARCHAR(255),
     password VARCHAR(255),
     type VARCHAR(255),
     confirmationCode VARCHAR(255),
-    hub VARCHAR(255),
     PRIMARY KEY (emailAddress),
     FOREIGN KEY (hub) REFERENCES hub(id)
 );
@@ -39,16 +42,14 @@ CREATE TABLE user (
 CREATE TABLE smartPlug (
     id VARCHAR(255),
     roomName VARCHAR(255),
-    hub VARCHAR(255),
     PRIMARY KEY (id),
-    FOREIGN KEY (hub) REFERENCES hub(id), 
     FOREIGN KEY (roomName) references room(roomName)
 );
 
 CREATE TABLE device (
     id VARCHAR(255),
-    name VARCHAR(255),
     plug VARCHAR(255),
+    name VARCHAR(255),
     onOff BOOLEAN,
     energyPerHour INT,
     PRIMARY KEY (id),
@@ -56,28 +57,21 @@ CREATE TABLE device (
 );
 
 CREATE TABLE deviceActivity (
-    startTime REAL,
-    endTime REAL,
     device VARCHAR(255),
     user VARCHAR(255),
+    startTime REAL,
+    endTime REAL,
     FOREIGN KEY (device) REFERENCES device(id),
     FOREIGN KEY (user) references user(emailAddress)
 );
 
 CREATE TABLE deviceRestriction (
     device VARCHAR(255),
-    cap INT,
     restricted VARCHAR(255),
     restrictor VARCHAR(255),
+    cap INT,
     hoursUsed INT,
     FOREIGN KEY (device) REFERENCES device(id),
     FOREIGN KEY (restrictor) REFERENCES user(emailAddress),
     FOREIGN KEY (restricted) REFERENCES user(emailAddress)
-);
-
-CREATE TABLE comfort (
-    thermostat REAL,
-    hub VARCHAR(255), 
-    PRIMARY KEY (hub), 
-    FOREIGN KEY (hub) REFERENCES hub(id)
 );
