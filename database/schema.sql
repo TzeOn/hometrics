@@ -11,6 +11,13 @@ CREATE TABLE weather (
     PRIMARY KEY (time)
 );
 
+CREATE TABLE hub (
+    id VARCHAR(255),  
+    password VARCHAR(255), 
+    thermostat REAL,
+    PRIMARY KEY(id)
+);
+
 CREATE TABLE room ( 
     roomName VARCHAR(255),
     hub VARCHAR(255), 
@@ -18,12 +25,7 @@ CREATE TABLE room (
     FOREIGN KEY (hub) REFERENCES hub(id)
 );
 
-CREATE TABLE hub (
-    id VARCHAR(255),  
-    password VARCHAR(255), 
-    thermostat REAL,
-    PRIMARY KEY(id)
-);
+
 
 CREATE TABLE user (
     emailAddress VARCHAR(255),
@@ -42,13 +44,13 @@ CREATE TABLE smartPlug (
     id VARCHAR(255),
     roomName VARCHAR(255),
     PRIMARY KEY (id),
-    FOREIGN KEY (roomName) references room(roomName)
+    FOREIGN KEY (roomName) REFERENCES room(roomName)
 );
 
 CREATE TABLE device (
     id VARCHAR(255),
-    plug VARCHAR(255),
     name VARCHAR(255),
+    plug VARCHAR(255),
     onOff BOOLEAN,
     energyPerHour INT,
     PRIMARY KEY (id),
