@@ -1,7 +1,8 @@
 import React, { useState, Component } from 'react';
-import { View, TouchableOpacity, Text, StyleSheet, Image, Button } from 'react-native';
+import { View, TouchableOpacity, Text, StyleSheet, Image, Button, Dimensions } from 'react-native';
 import { Card } from "react-native-elements"; 
 import { ScrollView } from 'react-native-gesture-handler';
+const trueHeight = Dimensions.get('window').height *1.5;
 
 export default class LandingScreen extends Component {
     constructor(props) { 
@@ -29,7 +30,8 @@ export default class LandingScreen extends Component {
                 alignItems: 'center',
                 flexDirection:'row',
                 justifyContent:'flex-start',
-                flexWrap:'wrap'
+                flexWrap:'wrap',
+                height: trueHeight,
             },
             textStyle: {
                 color: 'white'

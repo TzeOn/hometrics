@@ -18,7 +18,6 @@ CREATE TABLE room (
     FOREIGN KEY (hub) REFERENCES hub(id)
 );
 
-
 CREATE TABLE hub (
     id VARCHAR(255),  
     password VARCHAR(255), 

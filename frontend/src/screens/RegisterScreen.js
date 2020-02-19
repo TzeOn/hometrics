@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Image, TextInput, TouchableOpacity, AsyncStorage, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, Image, TextInput, TouchableOpacity, AsyncStorage, ScrollView, Dimensions } from 'react-native';
 const api = require("../api").url; 
+const trueHeight = Dimensions.get('window').height * 1.1;
 
 const RegisterScreen = props => {
     function signup() { 
@@ -66,8 +67,9 @@ const RegisterScreen = props => {
           [hubError, setHubError] = useState("");
 
     return (
+        <View style={styles.container}>
         <ScrollView>
-            <View style={styles.container}>
+           
             <View style={styles.buttonsLayout}>
                 <TouchableOpacity 
                 style={styles.buttons1}
@@ -82,11 +84,12 @@ const RegisterScreen = props => {
                 </TouchableOpacity>
             </View>
             
-            <Image
-            source={require('../../assets/splash.png')}
-            style={styles.imageStyle}></Image>
 
-            <View>       
+            <View style={styles.container}>
+                <Image
+                source={require('../../assets/splash.png')}
+                style={styles.imageStyle}></Image>  
+                     
                 <Text style={styles.textStyle}>Forename</Text>
                 <Text style={{color: "red"}}>{forenameError}</Text>
                 <TextInput 
@@ -170,8 +173,9 @@ const RegisterScreen = props => {
                     <Text style={styles.submit}>Submit</Text>
                 </TouchableOpacity>
             </View>
-            </View>
+            
         </ScrollView>
+        </View>
     );
 };
 
@@ -190,7 +194,8 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: 'black',
         flex: 1,
-        alignItems: 'center'
+        alignItems: 'center',
+        height:trueHeight
     },
     button: {
         backgroundColor: '#FF9800',
@@ -214,7 +219,9 @@ const styles = StyleSheet.create({
         width:175
     },
     buttonsLayout: {
-        flexDirection: 'row'
+        flexDirection: 'row',
+        alignSelf:'center'
+
     },
     buttons1: {
         right:10,

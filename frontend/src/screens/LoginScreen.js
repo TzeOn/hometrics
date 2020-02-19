@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { View, Image, TouchableOpacity, Text, StyleSheet, TextInput, AsyncStorage } from 'react-native';
+import { View, Image, TouchableOpacity, Text, StyleSheet, TextInput, AsyncStorage, Dimensions } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 const api = require("../api").url;
+const trueHeight = Dimensions.get('window').height * .92;
 
 const LoginScreen = (props) => {
     function login(emailAddress, password) { 
@@ -36,6 +38,7 @@ const LoginScreen = (props) => {
           [errorMessage, setErrorMessage] = useState("");
     
     return (
+        <ScrollView contentContainerStyle={styles.container}>
         <View style={styles.container}>
             <View style={styles.buttonsLayout}>
                 <TouchableOpacity 
@@ -84,6 +87,7 @@ const LoginScreen = (props) => {
                 <Text style={styles.submit}>Submit</Text>
             </TouchableOpacity>
         </View>
+        </ScrollView>
     );
 };
 
@@ -92,6 +96,7 @@ const styles=StyleSheet.create({
         flex:1,
         backgroundColor: 'black',
         alignItems: 'center',
+        height: trueHeight,
     },
     textStyle: {
         color: 'white',
