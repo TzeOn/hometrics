@@ -1,11 +1,16 @@
 import React from 'react';
-import { View, Text, StyleSheet, Button, TouchableOpacity, Image} from 'react-native';
+import { View, Text, StyleSheet, Button, TouchableOpacity, Image, Dimensions} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
+const topHeight = Dimensions.get('window').height * .40;
+const bottomHeight = Dimensions.get('window').height * .52;
+const trueHeight = Dimensions.get('window').height * .92;
+
 
 const HomeScreen = (props) => {
     return (
         
         <ScrollView contentContainerStyle={styles.container} >
+            <View style={styles.container}>
             <View>
                 <Image 
                 source={require('../../assets/splash.png')}
@@ -24,6 +29,7 @@ const HomeScreen = (props) => {
                     <Text style={styles.textStyle}>Login</Text>
                 </TouchableOpacity>
             </View>
+            </View>
         </ScrollView>
    
     );
@@ -34,7 +40,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'black',
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'center'
+        height: trueHeight,
     },
     textStyle: {
         color: '#FF9800',

@@ -6,7 +6,7 @@ const api = require('../api').url;
 const trueHeight = Dimensions.get('window').height * .92;
 const width = Dimensions.get('window').width * .33;
 
-export default class InternalScreen extends Component {
+export default class HumidityScreen extends Component {
     constructor(props) { 
         super(props); 
         this.state = {
@@ -61,11 +61,11 @@ export default class InternalScreen extends Component {
             },
             buttons1: {
                 right:10,
-                borderBottomWidth:1,
-                borderBottomColor: '#FF9800'
             },
             buttons2: {
                 left:10,
+                borderBottomColor: '#FF9800',
+                borderBottomWidth: 1
             }
         });
 
@@ -88,7 +88,7 @@ export default class InternalScreen extends Component {
                 </View>
 
                 <Card 
-                title='Room Temperature'
+                title='Room Humidity'
                 titleStyle={styles.titleStyle}
                 containerStyle={{flex:1, backgroundColor:'black', alignItems: 'center', borderColor:'gray', paddingVertical:5, borderRadius:10, flexDirection: 'row'}}>   
                        

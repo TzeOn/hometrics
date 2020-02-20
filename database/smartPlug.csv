@@ -2,49 +2,49 @@
 # 
 # Living Room 
 # ===========
-sp1,livingRoom,HOMEF3DA
-sp2,livingRoom,HOMEF3DA
-sp3,livingRoom,HOMEF3DA
-sp4,livingRoom,HOMEF3DA
-sp5,livingRoom,HOMEF3DA
-sp6,livingRoom,HOMEF3DA
-sp7,livingRoom,HOMEF3DA
-sp8,livingRoom,HOMEF3DA
-sp9,livingRoom,HOMEF3DA
+sp1,livingRoom
+sp2,livingRoom
+sp3,livingRoom
+sp4,livingRoom
+sp5,livingRoom
+sp6,livingRoom
+sp7,livingRoom
+sp8,livingRoom
+sp9,livingRoom
 #
 # Kitchen 
 # =======
-sp10,kitchen,HOMEF3DA
-sp11,kitchen,HOMEF3DA
-sp12,kitchen,HOMEF3DA
-sp13,kitchen,HOMEF3DA
-sp14,kitchen,HOMEF3DA
-sp15,kitchen,HOMEF3DA
-sp16,kitchen,HOMEF3DA
-sp17,kitchen,HOMEF3DA
+sp10,kitchen
+sp11,kitchen
+sp12,kitchen
+sp13,kitchen
+sp14,kitchen
+sp15,kitchen
+sp16,kitchen
+sp17,kitchen
 #
 # Bedroom 
 # =======
-sp18,bedroom,HOMEF3DA
-sp19,bedroom,HOMEF3DA
-sp20,bedroom,HOMEF3DA
-sp21,bedroom,HOMEF3DA
+sp18,bedroom
+sp19,bedroom
+sp20,bedroom
+sp21,bedroom
 #
 # Other Bedroom
 # =============
-sp22,otherBedroom,HOMEF3DA
-sp23,otherBedroom,HOMEF3DA
-sp24,otherBedroom,HOMEF3DA
-sp25,otherBedroom,HOMEF3DA
+sp22,otherBedroom
+sp23,otherBedroom
+sp24,otherBedroom
+sp25,otherBedroom
 #
 # Garage 
 # ======
-sp26,garage,HOMEF3DA
+sp26,garage
 #
 # Corridor 
 # ========
-sp27,corridor,HOMEF3DA
+sp27,corridor
 #
 # Collonade 
 # =========
-sp28,collonade,HOMEF3DA
+sp28,collonade

@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity, Text, StyleSheet, Image, Button , Picker, AsyncStorage} from 'react-native';
+import { View, TouchableOpacity, Text, StyleSheet, Image, Button , Picker, AsyncStorage, Dimensions} from 'react-native';
 import PureChart from 'react-native-pure-chart'; 
 import { ScrollView } from 'react-native-gesture-handler';
 const api = require("../api").url;
+const trueHeight = Dimensions.get('window').height * 1.5;
 
 export default class EnergyScreen extends Component {
     constructor(props) { 
@@ -83,7 +84,8 @@ export default class EnergyScreen extends Component {
                 flex:1,
                 backgroundColor: 'black',
                 alignItems: 'center',
-                justifyContent: "space-between"
+                justifyContent: "space-between",
+                height: trueHeight
             },
             textStyle: {
                 color: 'white',
@@ -140,6 +142,7 @@ export default class EnergyScreen extends Component {
                         <PureChart data={this.state.comparison} type='pie' />
                     </View>
                 </View>
+                <View style={{flex:1}}></View>
             </ScrollView>
         )
     }

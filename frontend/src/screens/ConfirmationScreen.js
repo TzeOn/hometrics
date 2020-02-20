@@ -1,6 +1,8 @@
 import React from "react";
-import { View, Image, TouchableOpacity, StyleSheet, TextInput, Text, AsyncStorage } from "react-native";
+import { View, Image, TouchableOpacity, StyleSheet, TextInput, Text, AsyncStorage, Dimensions } from "react-native";
+import { ScrollView } from 'react-native-gesture-handler';
 const api = require("../api").url; 
+const trueHeight = Dimensions.get('window').height * .92;
 
 export default class ConfirmationScreen extends React.Component  {
     constructor(props) {
@@ -47,7 +49,8 @@ export default class ConfirmationScreen extends React.Component  {
             container: {
                 backgroundColor: 'black',
                 flex: 1,
-                alignItems: 'center'
+                alignItems: 'center',
+                height: trueHeight
             },
             imageStyle: {
                 height:175,
@@ -79,6 +82,7 @@ export default class ConfirmationScreen extends React.Component  {
         });
 
         return(
+            <ScrollView contentContainerStyle={styles.container}>
             <View style={styles.container}>
                 <Image 
                 source={require('../../assets/splash.png')}
@@ -102,6 +106,7 @@ export default class ConfirmationScreen extends React.Component  {
                 <Text style={styles.submit}>Submit</Text>
                 </TouchableOpacity>
             </View>
+            </ScrollView>
         );
     }
 }

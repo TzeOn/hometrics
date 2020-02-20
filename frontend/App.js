@@ -11,6 +11,8 @@ import DeviceActivityScreen from './src/screens/DeviceActivityScreen';
 import DeviceManagementScreen from './src/screens/DeviceManagementScreen';
 import RoomDevicesScreen from "./src/screens/RoomDevicesScreen"; 
 import InternalScreen from "./src/screens/InternalScreen";
+import HumidityScreen from "./src/screens/HumidityScreen";
+import styles from './styles';
 import React from 'react';
 import { Image, Dimensions } from 'react-native';
 
@@ -26,7 +28,8 @@ const navigator = createStackNavigator({
     DeviceManagement: DeviceManagementScreen,
     RoomDevices: RoomDevicesScreen,
     Simulation: SimulationScreen,
-    Internal: InternalScreen
+    Internal: InternalScreen,
+    Humidity: HumidityScreen
   },
   {
     initialRouteName: 'Home',
@@ -44,7 +47,7 @@ const navigator = createStackNavigator({
         fontSize: 30,
         alignSelf: 'center', 
       },
-      headerTintColor: 'white',
+      headerTintColor: '#FF9800',
       headerRight: (      
         <Image style={{width: headerHeight * 0.5, height: headerHeight * 0.5 }} source={require('./assets/splash.png')}/>     
       ),
