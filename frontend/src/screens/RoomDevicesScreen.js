@@ -29,15 +29,15 @@ export default class RoomDevicesScreen extends Component {
         const styles = StyleSheet.create({
             container: {
                 
-                backgroundColor: 'black',
+                backgroundColor: '#E5FCFF',
                 alignItems: 'center',
             },
             textStyle: {
-                color: 'white',
+                color: 'black',
                 fontSize: 20
             },  
             titleStyle: {
-                color: "white"
+                color: "black"
             }
         });
        
@@ -52,8 +52,8 @@ export default class RoomDevicesScreen extends Component {
 
             devices.push(
                 <Card 
-                containerStyle={{backgroundColor:'black'}}
-                titleStyle={{color:'white'}}
+                containerStyle={{backgroundColor:'#ccfaff'}}
+                titleStyle={{color:'black'}}
                 title={device.deviceName}>
                     <View style={{alignItems:'center', justifyContent:'center', flex:1, paddingBottom:20}}>
                     <Switch
@@ -83,7 +83,7 @@ export default class RoomDevicesScreen extends Component {
                     
                     ></Switch>
                     </View>
-                    <Button title="-" color={"red"}></Button>
+                    <Button title="-" color={"#E27D60"}></Button>
 
                 </Card>
             )
@@ -91,8 +91,8 @@ export default class RoomDevicesScreen extends Component {
 
             devices.push(
                 <View>
-                    <Card containerStyle={{backgroundColor: "green"}}>
-                    <Text style={{fontSize: 20, color: "white", textAlign:'center'}}>+</Text>
+                    <Card containerStyle={{backgroundColor: "#8EE4AF"}}>
+                    <Text style={{fontSize: 20, color: "black", textAlign:'center'}}>+</Text>
                 </Card>
                 </View>
             )
@@ -108,17 +108,17 @@ export default class RoomDevicesScreen extends Component {
 
         const styles=StyleSheet.create({
             container: {
-                backgroundColor:'black',
+                backgroundColor:'#E5FCFF',
                 flex:1
                 
             },
             textStyle: {
-                color: 'white',
+                color: 'black',
                 fontSize:20
             },
             headerStyle: {
                 fontSize: 40,
-                color: '#FF9800',
+                color: 'black',
                 textAlign:'center'
             }
 

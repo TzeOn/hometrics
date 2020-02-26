@@ -26,7 +26,7 @@ export default class LandingScreen extends Component {
         const styles = StyleSheet.create({
             container: {
                 flex:1,
-                backgroundColor: 'black',
+                backgroundColor: '#E5FCFF',
                 alignItems: 'center',
                 flexDirection:'row',
                 justifyContent:'flex-start',
@@ -34,16 +34,24 @@ export default class LandingScreen extends Component {
                 height: trueHeight,
             },
             textStyle: {
-                color: 'white'
+                color: 'black'
             },  
             titleStyle: {
-                color: "white",
+                color: "black",
                 textAlign:'center'
             },
             imageStyle: {
                 height:175,
                 width: 175
             },
+            cardStyle: {
+                flex: 1,
+                backgroundColor: '#ccfaff',
+                alignItems: 'center',
+                borderColor: 'gray',
+                paddingVertical:5,
+                borderRadius:10
+            }
         });
 
         return (
@@ -55,7 +63,7 @@ export default class LandingScreen extends Component {
                 imageStyle={styles.imageStyle}
                 title='Device Management'
                 titleStyle={styles.titleStyle}
-                containerStyle={{flex:1, backgroundColor:'black', alignItems: 'center', borderColor:'gray', paddingVertical:5, borderRadius:10}}>   
+                containerStyle={styles.cardStyle}>   
                        
                 </Card>
                 </TouchableOpacity>
@@ -66,7 +74,7 @@ export default class LandingScreen extends Component {
                 imageStyle={styles.imageStyle}
                 title='Energy Output'
                 titleStyle={styles.titleStyle}
-                containerStyle={{flex:1, backgroundColor:'black', alignItems: 'center', borderColor:'gray', paddingVertical:5, borderRadius:10}}>           
+                containerStyle={styles.cardStyle}>           
                 </Card>
                 </TouchableOpacity>
 
@@ -76,7 +84,7 @@ export default class LandingScreen extends Component {
                 imageStyle={styles.imageStyle}
                 title='Device Activity'
                 titleStyle={styles.titleStyle}
-                containerStyle={{flex:1, backgroundColor:'black', alignItems: 'center', borderColor:'gray', paddingVertical:5, borderRadius:10}}>           
+                containerStyle={styles.cardStyle}>           
                 </Card>
                 </TouchableOpacity>
 
@@ -86,7 +94,7 @@ export default class LandingScreen extends Component {
                 imageStyle={styles.imageStyle}
                 title='Internal Conditions'
                 titleStyle={styles.titleStyle}
-                containerStyle={{flex:1, backgroundColor:'black', alignItems: 'center', borderColor:'gray', paddingVertical:5, borderRadius:10}}>           
+                containerStyle={styles.cardStyle}>           
                 </Card>
                 </TouchableOpacity>
                 </ScrollView>

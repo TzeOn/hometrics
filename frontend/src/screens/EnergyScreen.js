@@ -82,13 +82,13 @@ export default class EnergyScreen extends Component {
         const styles = StyleSheet.create({
             container: {
                 flex:1,
-                backgroundColor: 'black',
+                backgroundColor: '#E5FCFF',
                 alignItems: 'center',
                 justifyContent: "space-between",
                 height: trueHeight
             },
             textStyle: {
-                color: 'white',
+                color: 'black',
                 fontSize: 30, 
                 paddingTop:10
             }
@@ -99,7 +99,7 @@ export default class EnergyScreen extends Component {
                 <View style={styles.container}>
                     <Picker
                         selectedValue={this.state.time}
-                        style={{height: 50, width: 100, backgroundColor:'#FF9800'}}
+                        style={{height: 50, width: 100, backgroundColor:'#ccfaff'}}
                         onValueChange={(itemValue, itemIndex) => {
                             switch(itemValue) { 
                                 case "weekly": 
@@ -122,8 +122,8 @@ export default class EnergyScreen extends Component {
                     <Text style={styles.textStyle}>Personal Statistics</Text>
                     <ScrollView horizontal={true} nestedScrollEnabled={true} >
                     <PureChart data={this.state.filter}
-                    backgroundColor={"black"} 
-                    primaryColor = {"white"}
+                    backgroundColor={"#ccfaff"} 
+                    primaryColor = {"black"}
                     height = {200}
                     type="line"/>
                     </ScrollView>
@@ -131,10 +131,10 @@ export default class EnergyScreen extends Component {
                     <Text style={styles.textStyle}>Scoreboard</Text>
                     <View>
                         <PureChart data={this.state.scoreboard}
-                        backgroundColor={"black"}
+                        backgroundColor={"#E5FCFF"}
                         type={"bar"}
                         height = {200}
-                        primaryColor={"white"}/>
+                        primaryColor={"black"}/>
                     </View>
 
                     <Text style={styles.textStyle}>Comparison</Text>

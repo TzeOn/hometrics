@@ -32,22 +32,22 @@ export default class DeviceManagement extends Component {
                 style={{backgroundColor:'black', borderRadius:10}}
                 onPress={() => {this.props.navigation.navigate("RoomDevices",{roomName})}}>
                     <Card 
-                    containerStyle={{backgroundColor:'black', borderRadius:10}}
-                    titleStyle={{color:'white', borderBottomWidth:.7, borderBottomColor:'#FF9800'}}
+                    containerStyle={{backgroundColor:'#ccfaff', borderRadius:10}}
+                    titleStyle={{color:'black', borderBottomWidth:.7, borderBottomColor:'#41B3A3'}}
                     title={roomName}>
                             <View style={{  
                                 alignItems: "center", 
                                 justifyContent: "center",
-                                backgroundColor:'black',
+                                backgroundColor:'#ccfaff',
                                 borderColor:'gray',
                                 borderWidth:1,
                                 borderRadius:10
                             }}>
                                 <Text style={{
                                     fontSize: 40,
-                                    color:'#FF9800',
+                                    color:'black',
                                 }}>{this.state.rooms[i].numberOfDevices}</Text>
-                                <Text style={{fontSize:40, color:'#FF9800', textAlign:'center', textShadowColor: 'gray'}}>devices</Text>
+                                <Text style={{fontSize:40, color:'black', textAlign:'center', textShadowColor: 'gray'}}>devices</Text>
                             </View>
                     </Card>
                 </TouchableOpacity>
@@ -58,11 +58,11 @@ export default class DeviceManagement extends Component {
 
     render() { 
         return (
-            <ScrollView contentContainerStyle={{backgroundColor:'black'}}>
+            <ScrollView contentContainerStyle={{backgroundColor:'#E5FCFF'}}>
 
                 <View style={{flex: 1}}><Text 
                 style={{fontSize: 40,
-                color: '#FF9800',
+                color: 'black',
                 textAlign: 'center'}}>Rooms</Text></View>
                 <View style={{
                     flexDirection: "row",  

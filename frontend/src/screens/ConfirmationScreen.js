@@ -47,7 +47,7 @@ export default class ConfirmationScreen extends React.Component  {
     render() {
         const styles = StyleSheet.create({
             container: {
-                backgroundColor: 'black',
+                backgroundColor: '#E5FCFF',
                 flex: 1,
                 alignItems: 'center',
                 height: trueHeight
@@ -59,20 +59,21 @@ export default class ConfirmationScreen extends React.Component  {
             placeStyle: {
                 color:'gray',
                 borderBottomWidth: 2,
-                borderBottomColor: 'white',
+                borderBottomColor: '#41B3A3',
                 height:50,
                 bottom: 5
             },
             button: {
-                backgroundColor: '#FF9800',
-                height: 50,
+                backgroundColor: '#41B3A3',
+                height: 40,
                 width: 75,
                 alignSelf: 'center',
                 alignContent: 'center',
-                marginTop: 20
+                marginTop: 20,
+                borderRadius:10
             },
             submit: {
-                color: 'white',
+                color: 'black',
                 textAlignVertical: 'center',
                 textAlign: 'center',
                 justifyContent: 'center',
@@ -88,7 +89,7 @@ export default class ConfirmationScreen extends React.Component  {
                 source={require('../../assets/splash.png')}
                 style={styles.imageStyle}/>
 
-                <Text style={{color: "white"}}>A confirmation code was sent to {this.state.emailAddress}</Text>
+                <Text style={{color: "black"}}>A confirmation code was sent to {this.state.emailAddress}</Text>
 
                 <Text style={{color: "red"}}>{this.state.errorMessage}</Text>
                 <TextInput

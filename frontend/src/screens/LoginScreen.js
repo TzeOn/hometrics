@@ -94,31 +94,33 @@ const LoginScreen = (props) => {
 const styles=StyleSheet.create({
     container: {
         flex:1,
-        backgroundColor: 'black',
+        backgroundColor: '#E5FCFF',
         alignItems: 'center',
         height: trueHeight,
     },
     textStyle: {
-        color: 'white',
+        color: 'black',
         fontSize: 20,
+        fontWeight:'500'
     },
     placeStyle: {
         color:'gray',
         borderBottomWidth: 2,
-        borderBottomColor: 'white',
+        borderBottomColor: '#41B3A3',
         height:50,
-        bottom: 5
+        bottom: 5,
     },
     imageStyle: {
         height:175,
         width: 175
     },
     button: {
-        backgroundColor: '#FF9800',
-        height: 50,
+        backgroundColor: '#41B3A3',
+        height: 40,
         width: 75,
         alignSelf: 'center',
         alignContent: 'center',
+        justifyContent: 'center',
         marginTop: 20,
         borderRadius:10
     },
@@ -139,7 +141,7 @@ const styles=StyleSheet.create({
     buttons2: {
         left:10,
         borderBottomWidth:1,
-        borderBottomColor: '#FF9800'
+        borderBottomColor: '#41B3A3'
     }
 });
 

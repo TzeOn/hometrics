@@ -68,7 +68,7 @@ const RegisterScreen = props => {
 
     return (
         <View style={styles.container}>
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
            
             <View style={styles.buttonsLayout}>
                 <TouchableOpacity 
@@ -114,7 +114,7 @@ const RegisterScreen = props => {
 
                 <Text style={styles.textStyle}> Date of Birth </Text>
                 <TextInput 
-                placeholder='Enter your date of birth (YYYY-MM-DD)'
+                placeholder='Date of birth (YYYY-MM-DD)'
                 style={styles.placeStyle}
                 autoCapitalize='none'
                 autoCorrect={false}
@@ -181,25 +181,27 @@ const RegisterScreen = props => {
 
 const styles = StyleSheet.create({
     textStyle: {
-        color: 'white',
-        fontSize: 20
+        color: 'black',
+        fontSize: 20,
+        fontWeight:'500'
     },
     placeStyle: {
         color: 'gray',
         borderBottomWidth:2,
-        borderBottomColor: 'white',
+        borderBottomColor: '#41B3A3',
         height:40, 
-        bottom:5
+        bottom:5,
+        
     },
     container: {
-        backgroundColor: 'black',
+        backgroundColor: '#E5FCFF',
         flex: 1,
         alignItems: 'center',
         height:trueHeight
     },
     button: {
-        backgroundColor: '#FF9800',
-        height:50,
+        backgroundColor: '#41B3A3',
+        height:40,
         width:75,
         alignSelf: 'center',
         alignContent: 'center',
@@ -226,7 +228,7 @@ const styles = StyleSheet.create({
     buttons1: {
         right:10,
         borderBottomWidth:1,
-        borderBottomColor: '#FF9800'
+        borderBottomColor: '#41B3A3'
     },
     buttons2: {
         left:10,

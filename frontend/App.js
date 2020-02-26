@@ -36,18 +36,19 @@ const navigator = createStackNavigator({
     defaultNavigationOptions: {
       title: 'Hometrics',
       headerStyle: {
-      backgroundColor: 'black',
+      backgroundColor: '#41B3A3',
       height: headerHeight,
       
       },
       headerTitleStyle: {
-        color: '#FF9800',
+        color: '#ffffff',
         textAlign: 'center',
         flex:1,
-        fontSize: 30,
-        alignSelf: 'center', 
+        fontSize: 35,
+        alignSelf: 'center',
+         
       },
-      headerTintColor: '#FF9800',
+      headerTintColor: '#ffffff',
       headerRight: (      
         <Image style={{width: headerHeight * 0.5, height: headerHeight * 0.5 }} source={require('./assets/splash.png')}/>     
       ),

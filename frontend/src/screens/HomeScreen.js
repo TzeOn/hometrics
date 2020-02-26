@@ -37,14 +37,16 @@ const HomeScreen = (props) => {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: 'black',
+        backgroundColor: '#E5FCFF',
         flex: 1,
         alignItems: 'center',
         height: trueHeight,
     },
     textStyle: {
-        color: '#FF9800',
-        fontSize: 25
+        color: 'black',
+        fontSize: 30,
+        fontWeight:'600'
+        
     },
     buttonsLayout: {
         flexDirection: 'row',

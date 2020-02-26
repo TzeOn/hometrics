@@ -63,7 +63,7 @@ export default class Example extends Component {
           circleColor='rgb(45,156,219)'
           lineColor='rgb(45,156,219)'
           timeContainerStyle={{minWidth:52, marginTop: -5}}
-          timeStyle={{textAlign: 'center', backgroundColor:'#ff9797', color:'white', padding:5, borderRadius:13}}
+          timeStyle={{textAlign: 'center', backgroundColor:'#ff9797', color:'black', padding:5, borderRadius:13}}
           descriptionStyle={{color:'gray'}}
           options={{
             style:{paddingTop:5}
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor:'white',
+    backgroundColor:'#E5FCFF',
     alignItems:'center',
   },
   list: {

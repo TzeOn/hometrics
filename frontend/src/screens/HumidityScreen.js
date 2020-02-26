@@ -38,16 +38,16 @@ export default class HumidityScreen extends Component {
         const styles = StyleSheet.create({
             container: {
                 flex:1,
-                backgroundColor: 'black',
+                backgroundColor: '#E5FCFF',
                 alignItems: 'center',
                 height: trueHeight
             },
             textStyle: {
-                color: 'white',
+                color: 'black',
                 fontSize:20
             },  
             titleStyle: {
-                color: "white",
+                color: "black",
                 textAlign:'center'
             },
             imageStyle: {
@@ -60,12 +60,12 @@ export default class HumidityScreen extends Component {
         
             },
             buttons1: {
-                right:10,
+                right:10
             },
             buttons2: {
                 left:10,
-                borderBottomColor: '#FF9800',
-                borderBottomWidth: 1
+                borderBottomColor: '#41B3A3',
+                borderBottomWidth:1
             }
         });
 
@@ -90,17 +90,17 @@ export default class HumidityScreen extends Component {
                 <Card 
                 title='Room Humidity'
                 titleStyle={styles.titleStyle}
-                containerStyle={{flex:1, backgroundColor:'black', alignItems: 'center', borderColor:'gray', paddingVertical:5, borderRadius:10, flexDirection: 'row'}}>   
+                containerStyle={{flex:1, backgroundColor:'#41B3A3', alignItems: 'center', borderColor:'gray', paddingVertical:5, borderRadius:10, flexDirection: 'row'}}>   
                        
                 <View style={{
                      alignItems: "center", 
-                     backgroundColor:'black',
+                     backgroundColor:'#ccfaff',
                      borderColor:'gray',
                      borderWidth:1,
                      borderRadius:10,
                      padding:20
                 }}>
-                    <Text style={{fontSize:80, color:'white', padding:10}}>
+                    <Text style={{fontSize:80, color:'black', padding:10}}>
                         {this.state.roomTemp} °C
                     </Text>
                    
@@ -110,15 +110,15 @@ export default class HumidityScreen extends Component {
                     
                     <TouchableOpacity
                         onPress={() => this.raiseTemp()}
-                        style={{padding:30, borderRadius:10, backgroundColor:'green', width: width}}>
-                    <Text style={{color:'white', fontSize:25, textAlign:'center'}}>   +   </Text>    
+                        style={{padding:30, borderRadius:10, backgroundColor:'#8EE4AF', width: width}}>
+                    <Text style={{color:'black', fontSize:25, textAlign:'center'}}>   +   </Text>    
                     </TouchableOpacity>
                    
                     
                     <TouchableOpacity
                         onPress={() => this.lowerTemp()}
-                        style={{padding:30, borderRadius:10, backgroundColor:'red', width: width}}>
-                    <Text style={{color:'white', fontSize:25, textAlign:'center'}}>   -   </Text>
+                        style={{padding:30, borderRadius:10, backgroundColor:'#E27D60', width: width}}>
+                    <Text style={{color:'black', fontSize:25, textAlign:'center'}}>   -   </Text>
                     </TouchableOpacity>  
                     </View>            
                     <View style={{flex:1}}></View>  
