@@ -20,8 +20,9 @@ for hub in hub_data:
     hub = hub.rstrip("\n").split(",")
     hub_id = hub[0]
     password = hub[1]
-    sql = "INSERT INTO hub (id, password) VALUES (%s, %s)"
-    values = (hub_id, password)
+    thermostat = hub[2]
+    sql = "INSERT INTO hub (id, password, thermostat) VALUES (%s, %s, %s)"
+    values = (hub_id, password, thermostat)
     cursor.execute(sql, values)
 hub_data.close()
 
@@ -30,10 +31,11 @@ room_data = open(os.path.join(sys.path[0], "room.csv"), "r")
 for room in room_data: 
     if "#" in room:
         continue
-    room = room.rstrip("\n")
-    name = room
-    sql = "INSERT INTO room (roomName) VALUES ('"+name+"')"
-    values = name
+    room = room.rstrip("\n").split(",")
+    name = room[0]
+    hub = room[1]
+    sql = "INSERT INTO room (roomName, hub) VALUES (%s,%s)"
+    values = (name,hub)
     cursor.execute(sql, values)
 room_data.close()
 
@@ -74,18 +76,6 @@ for user in user_data:
     cursor.execute(sql, values)
 user_data.close()
 
-# Populate comfort data. 
-comfort_data = open(os.path.join(sys.path[0],"comfort.csv"), "r")
-for entry in comfort_data:
-    if "#" in entry:
-        continue
-    entry = entry.rstrip("\n").split(",")
-    thermostat = int(entry[0])
-    hub = entry[1]
-    sql = "INSERT INTO comfort (thermostat, hub) VALUES (%s, %s)"
-    values = (thermostat, hub)
-    cursor.execute(sql, values)
-comfort_data.close()
 
 # Populate plug data. 
 plug_data = open(os.path.join(sys.path[0],"smartPlug.csv"), "r")
@@ -94,10 +84,9 @@ for entry in plug_data:
         continue
     entry = entry.rstrip("\n").split(",")
     id = entry[0]
-    location = entry[1]
-    hub = entry[2]
-    sql = "INSERT INTO smartPlug (id, roomName, hub) VALUES (%s, %s, %s)"
-    values = (id, location, hub)
+    roomName = entry[1]
+    sql = "INSERT INTO smartPlug (id, roomName) VALUES (%s, %s)"
+    values = (id, roomName)
     cursor.execute(sql, values)
 plug_data.close()
 

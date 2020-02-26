@@ -2,7 +2,7 @@ const express = require("express"),
     bodyParser = require("body-parser"),
     cors = require("cors"); 
 
-const port = 3000 || process.env.PORT,
+const port = process.env.PORT || 5000,
       app = express();
 
 app.listen(port, () => console.log(`Server up and running - listening for requests on port ${port}.`));
