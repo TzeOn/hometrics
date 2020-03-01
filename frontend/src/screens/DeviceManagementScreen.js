@@ -1,6 +1,6 @@
 import { Card } from "react-native-elements"; 
 import React, { Component } from "react";
-import { Button, Text, View, StyleSheet } from "react-native";
+import { ActivityIndicator, Button, Text, View, StyleSheet } from "react-native";
 import { TouchableOpacity, ScrollView } from "react-native-gesture-handler";
 const api = require("../api").url; 
 
@@ -8,7 +8,8 @@ export default class DeviceManagement extends Component {
     constructor(props) { 
         super(props); 
         this.state = {
-            rooms: []
+            rooms: [],
+            loading: true
         }
     }
 
@@ -18,7 +19,7 @@ export default class DeviceManagement extends Component {
 
     getData() { 
         fetch(`${api}/deviceManagement/room`).then(response => response.json()).then(response => {
-            this.setState({rooms: response}) 
+            this.setState({rooms: response, loading: false}) 
         }) 
     }
 
@@ -59,6 +60,10 @@ export default class DeviceManagement extends Component {
     render() { 
         return (
             <ScrollView contentContainerStyle={{backgroundColor:'#E5FCFF'}}>
+
+                {this.state.loading && 
+                    <ActivityIndicator size="large"/>
+                }
 
                 <View style={{flex: 1}}><Text 
                 style={{fontSize: 40,

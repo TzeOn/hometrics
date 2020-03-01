@@ -11,22 +11,21 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-const user = require("./user");
+const user = require("./routes/user");
 app.use("/user", user);
 
-const device = require("./device");
+const device = require("./routes/device");
 app.use("/device", device);
 
-const weather = require("./weather");
+const weather = require("./routes/weather");
 app.use("/weather", weather);
 
-const homeSetup = require("./homeSetup");
+const homeSetup = require("./routes/homeSetup");
 app.use("/homeSetup", homeSetup);
 
-const deviceManagement = require("./deviceManagement");
+const deviceManagement = require("./routes/deviceManagement");
 app.use("/deviceManagement", deviceManagement);
 
 app.get("/", (request, response) => {
-    console.log("Ping!"); 
-    response.end("Ping!");
+    console.log("Ping!");
 });

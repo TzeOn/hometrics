@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
-import { View, Image, TouchableOpacity, StyleSheet, TextInput, Text, AsyncStorage } from "react-native";
+import { ActivityIndicator, View, Image, TouchableOpacity, StyleSheet, TextInput, Text, AsyncStorage } from "react-native";
 import { Card } from "react-native-elements"; 
 import Timeline from "react-native-timeline-flatlist";
 const api = require("../api").url; 
 
 export default class Example extends Component {
   constructor(props){
-    super(props)
+    super(props); 
+    this.state = {
+      loading: true
+    }
   } 
 
   getData() { 
@@ -24,7 +27,7 @@ export default class Example extends Component {
           "emailAddress": emailAddress
         })
 
-      }).then(response => response.json()).then(response => {this.setState({data: response.deviceActivity});}); 
+      }).then(response => response.json()).then(response => {this.setState({data: response.deviceActivity, loading: false});}); 
     })
   }
 
@@ -53,6 +56,12 @@ export default class Example extends Component {
     //'rgb(45,156,219)'
     return (
       <View style={styles.container}>
+
+        {this.state.loading && 
+          <View>
+            <ActivityIndicator size="large"/>
+          </View>
+        }
         { this.state && this.state.data &&
                 <View>
                     

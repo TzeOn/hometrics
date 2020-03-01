@@ -1,6 +1,7 @@
 const express = require("express"),
       router = express.Router(),
-      database = require("./database") 
+      database = require("./database"),
+      date = require("date-and-time");
 
 // Constants in milliseconds.
 const HOUR = 3600000,
@@ -29,7 +30,7 @@ router.post("/activity", (request, response) => {
 /* 
  * Gets the amount of energy a single user has consumed. 
  * body: emailAddress, timeFrame 
- * Returns a JSON containing the user's email address and their tota energy consumption value. 
+ * Returns a JSON containing the user's email address and their total energy consumption value.
  */
 router.post("/totalUserEnergy", (request, response) => {
     let user = request.body.emailAddress,

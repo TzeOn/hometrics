@@ -1,10 +1,16 @@
 import { Card } from "react-native-elements"; 
 import React, { Component } from "react";
-import { Button, Text, View, StyleSheet } from "react-native";
+import { ActivityIndicator, Button, Text, View, StyleSheet } from "react-native";
 import { TouchableOpacity, ScrollView, Switch } from "react-native-gesture-handler";
 const api = require("../api").url; 
 
 export default class RoomDevicesScreen extends Component {
+    constructor(props) { 
+        super(props);
+        this.state = {
+            loading: true
+        }
+    }
 
 
     getData() {
@@ -17,7 +23,7 @@ export default class RoomDevicesScreen extends Component {
             body: JSON.stringify({
                 "roomName": this.props.navigation.state.params.roomName
             })
-        }).then(response => response.json()).then(response => this.setState({data: response.roomDevices}))
+        }).then(response => response.json()).then(response => this.setState({data: response.roomDevices, loading: false}))
     }
 
     componentDidMount() {
@@ -127,6 +133,13 @@ export default class RoomDevicesScreen extends Component {
             <ScrollView>
             <View style={styles.container}>
             <Text style={styles.headerStyle}>Devices</Text>
+          
+            {
+                this.state.loading &&
+                <View>
+                <ActivityIndicator size="large" />
+                </View>
+            }
             { !!this.state && this.state.data &&
                 <View>
                     
