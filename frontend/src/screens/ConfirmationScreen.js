@@ -84,29 +84,27 @@ export default class ConfirmationScreen extends React.Component  {
 
         return(
             <ScrollView contentContainerStyle={styles.container}>
-            <View style={styles.container}>
-                <Image 
-                source={require('../../assets/splash.png')}
-                style={styles.imageStyle}/>
+                <View style={styles.container}>
+                    <Image 
+                        source={require('../../assets/splash.png')}
+                        style={styles.imageStyle}
+                    />
 
-                <Text style={{color: "black"}}>A confirmation code was sent to {this.state.emailAddress}</Text>
+                    <Text style={{color: "black"}}>A confirmation code was sent to {this.state.emailAddress}</Text>
+                    <Text style={{color: "red"}}>{this.state.errorMessage}</Text>
 
-                <Text style={{color: "red"}}>{this.state.errorMessage}</Text>
-                <TextInput
-                placeholder='Confirmation Code'
-                style={styles.placeStyle}
-                autoCapitalize='none'
-                autoCorrect={false}
-                
-                onChangeText={(newValue) => this.setState({confirmationCode: newValue})}
-                ></TextInput>
+                    <TextInput
+                        placeholder='Confirmation Code'
+                        style={styles.placeStyle}
+                        autoCapitalize='none'
+                        autoCorrect={false}
+                        onChangeText={(newValue) => this.setState({confirmationCode: newValue})}
+                    />
 
-                <TouchableOpacity
-                style={styles.button}
-                onPress={() => this.confirm()}>
-                <Text style={styles.submit}>Submit</Text>
-                </TouchableOpacity>
-            </View>
+                    <TouchableOpacity style={styles.button} onPress={() => this.confirm()}>
+                        <Text style={styles.submit}>Submit</Text>
+                    </TouchableOpacity>
+                </View>
             </ScrollView>
         );
     }

@@ -76,7 +76,6 @@ for user in user_data:
     cursor.execute(sql, values)
 user_data.close()
 
-
 # Populate plug data. 
 plug_data = open(os.path.join(sys.path[0],"smartPlug.csv"), "r")
 for entry in plug_data:

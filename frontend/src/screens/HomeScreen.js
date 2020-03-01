@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Button, TouchableOpacity, Image, Dimensions} from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, Dimensions} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 const topHeight = Dimensions.get('window').height * .40;
 const bottomHeight = Dimensions.get('window').height * .52;
@@ -8,7 +8,6 @@ const trueHeight = Dimensions.get('window').height * .92;
 
 const HomeScreen = (props) => {
     return (
-        
         <ScrollView contentContainerStyle={styles.container} >
             <View style={styles.container}>
             <View>

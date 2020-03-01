@@ -264,6 +264,4 @@ function calculateEnergy(energyQuery, timeQuery){
     return result;
 }
 
-
-
 module.exports = router;

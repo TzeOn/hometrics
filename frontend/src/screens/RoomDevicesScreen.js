@@ -1,7 +1,7 @@
 import { Card } from "react-native-elements"; 
 import React, { Component } from "react";
 import { ActivityIndicator, Button, Text, View, StyleSheet } from "react-native";
-import { TouchableOpacity, ScrollView, Switch } from "react-native-gesture-handler";
+import { ScrollView, Switch } from "react-native-gesture-handler";
 const api = require("../api").url; 
 
 export default class RoomDevicesScreen extends Component {
@@ -11,7 +11,6 @@ export default class RoomDevicesScreen extends Component {
             loading: true
         }
     }
-
 
     getData() {
         fetch(`${api}/deviceManagement/roomDevices`, {
@@ -31,7 +30,6 @@ export default class RoomDevicesScreen extends Component {
     }
 
     showDevices() { 
-
         const styles = StyleSheet.create({
             container: {
                 
@@ -46,77 +44,59 @@ export default class RoomDevicesScreen extends Component {
                 color: "black"
             }
         });
-       
-
-       let devices = [];
-       let device; 
-       
+       let devices = [], device;
        for (let i=0; i<this.state.data.length; i++) {
            device = this.state.data[i]; 
-
-        if (device.deviceName) {
-
-            devices.push(
-                <Card 
-                containerStyle={{backgroundColor:'#ccfaff'}}
-                titleStyle={{color:'black'}}
-                title={device.deviceName}>
-                    <View style={{alignItems:'center', justifyContent:'center', flex:1, paddingBottom:20}}>
-                    <Switch
-                    value={device.onOff}
-                    onValueChange = {() => {
-
-                        var copy = this.state.data; 
-
-                        fetch(`${api}/deviceManagement/toggle`, {
-                            method: "POST", 
-                            "headers": {
-                                Accept: "application/json", 
-                                "Content-Type": "application/json"
-                            }, 
-                            body: JSON.stringify({
-                                "deviceId": copy[i].deviceId,
-                                "onOff": (!copy[i].onOff) ? 1:0
-                            })
-                        }).then(response => response.json()).then(response => {
-                            copy[i].onOff = !copy[i].onOff;
-                            this.setState({data: copy});
-                            
-                        }).catch(error => console.error(error)); 
-                    }}
-                    
-
-                    
-                    ></Switch>
+            if (device.deviceName) {
+                devices.push (
+                    <Card 
+                        containerStyle={{backgroundColor:'#ccfaff'}}
+                        titleStyle={{color:'black'}}
+                        title={device.deviceName}>
+                            <View style={{alignItems:'center', justifyContent:'center', flex:1, paddingBottom:20}}>
+                                <Switch
+                                    value={device.onOff}
+                                    onValueChange = {() => {
+                                        var copy = this.state.data; 
+                                        fetch(`${api}/deviceManagement/toggle`, {
+                                            method: "POST", 
+                                            "headers": {
+                                                Accept: "application/json", 
+                                                "Content-Type": "application/json"
+                                            }, 
+                                            body: JSON.stringify({
+                                                "deviceId": copy[i].deviceId,
+                                                "onOff": (!copy[i].onOff) ? 1:0
+                                            })
+                                        }).then(response => response.json()).then(response => {
+                                            copy[i].onOff = !copy[i].onOff;
+                                            this.setState({data: copy});
+                                            
+                                        }).catch(error => console.error(error)); 
+                                    }}
+                                />
+                            </View>
+                        <Button title="-" color={"#E27D60"}></Button>
+                    </Card>
+                )   
+            } else {
+                devices.push(
+                    <View>
+                        <Card containerStyle={{backgroundColor: "#8EE4AF"}}>
+                        <Text style={{fontSize: 20, color: "black", textAlign:'center'}}>+</Text>
+                    </Card>
                     </View>
-                    <Button title="-" color={"#E27D60"}></Button>
-
-                </Card>
-            )
-                } else {
-
-            devices.push(
-                <View>
-                    <Card containerStyle={{backgroundColor: "#8EE4AF"}}>
-                    <Text style={{fontSize: 20, color: "black", textAlign:'center'}}>+</Text>
-                </Card>
-                </View>
-            )
-                }
-
-
+                )   
+            }
        }
        return devices; 
     }
 
-    //This render is begin called even before props getting updated
     render() {
-
         const styles=StyleSheet.create({
             container: {
                 backgroundColor:'#E5FCFF',
-                flex:1
-                
+                flex:1  
             },
             textStyle: {
                 color: 'black',
@@ -127,27 +107,26 @@ export default class RoomDevicesScreen extends Component {
                 color: 'black',
                 textAlign:'center'
             }
-
         });
         return (
             <ScrollView>
-            <View style={styles.container}>
-            <Text style={styles.headerStyle}>Devices</Text>
-          
-            {
-                this.state.loading &&
-                <View>
-                <ActivityIndicator size="large" />
-                </View>
-            }
-            { !!this.state && this.state.data &&
-                <View>
-                    
-                {this.showDevices()}
+                <View style={styles.container}>
+                    <Text style={styles.headerStyle}>Devices</Text>
+                
+                    {
+                        this.state.loading &&
+                        <View>
+                            <ActivityIndicator size="large" />
+                        </View>
+                    }
 
+                    { 
+                        !!this.state && this.state.data &&
+                        <View>  
+                            {this.showDevices()}
+                        </View>
+                    }
                 </View>
-            }
-            </View>
             </ScrollView>
         )
     }

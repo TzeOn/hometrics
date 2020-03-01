@@ -7,22 +7,9 @@ const trueHeight = Dimensions.get('window').height *1.5;
 export default class LandingScreen extends Component {
     constructor(props) { 
         super(props); 
-        this.state = {
-            // Store fetched data here. This shall replace hooks used in functional components.
-            // See ConfirmationScreen for how I handled onChangeText, etc.  
-          };
     }
 
-    componentWillMount() {
-        this.getData();
-    }
-
-    getData() {
-        // Fetch data here, and store as state objects. 
-    }
-
-    render() { 
-        // Start reusing the same stylesheet object for every screen (and remove the instance below). 
+    render() {  
         const styles = StyleSheet.create({
             container: {
                 flex:1,

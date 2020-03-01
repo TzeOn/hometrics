@@ -3,9 +3,6 @@ const express = require("express"),
       database = require("./database"),
       date = require("date-and-time");
 
-var weather = null;
-
-
 router.get("/", (request, response) => {
     let time = date.format(new Date(), "HH:mm"),
         sql = `SELECT * FROM weather WHERE time="${time}"`,
@@ -13,6 +10,5 @@ router.get("/", (request, response) => {
     response.json(weather); 
 
 });
-
 
 module.exports = router;

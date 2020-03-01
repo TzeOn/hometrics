@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ActivityIndicator, View, Image, TouchableOpacity, StyleSheet, TextInput, Text, AsyncStorage } from "react-native";
+import { ActivityIndicator, View, StyleSheet, Text, AsyncStorage } from "react-native";
 import { Card } from "react-native-elements"; 
 import Timeline from "react-native-timeline-flatlist";
 const api = require("../api").url; 
@@ -26,8 +26,7 @@ export default class Example extends Component {
         body: JSON.stringify({
           "emailAddress": emailAddress
         })
-
-      }).then(response => response.json()).then(response => {this.setState({data: response.deviceActivity, loading: false});}); 
+      }).then(response => response.json()).then(response => this.setState({data: response.deviceActivity, loading: false})); 
     })
   }
 
@@ -36,12 +35,9 @@ export default class Example extends Component {
   }
 
   showActivity() { 
-    console.log("ehhhh");
-    console.log(this.state.data.deviceActivity);
     var timeline = [];
     for (var i=0; i<this.state.data.deviceActivity.length; i++) {
       let activity = this.state.data.deviceActivity[i]; 
-      console.log(activity); 
       timeline.push(
         <Card title={activity.startTime}>
           <Text>{activity.device}</Text>
@@ -53,43 +49,33 @@ export default class Example extends Component {
   }
 
   render() {
-    //'rgb(45,156,219)'
     return (
       <View style={styles.container}>
+        <Text style={styles.headerStyle}>Your Device Activity</Text>
 
-        {this.state.loading && 
+        {
+          this.state.loading && 
           <View>
             <ActivityIndicator size="large"/>
           </View>
         }
-        { this.state && this.state.data &&
-                <View>
-                    
-                    <Text style={styles.headerStyle}>Your Device Activity</Text>
-                    <Timeline
-          data={this.state.data}
-          circleSize={20}
-          circleColor='rgb(45,156,219)'
-          lineColor='rgb(45,156,219)'
-          timeContainerStyle={{minWidth:52, marginTop: -5}}
-          timeStyle={{textAlign: 'center', backgroundColor:'#ff9797', color:'black', padding:5, borderRadius:13}}
-          descriptionStyle={{color:'gray'}}
-          options={{
-            style:{paddingTop:5}
-          }}
-        />
 
-                    <Text>Anything under here is idk</Text>
-                    <Card title="eh">
-
-                    </Card>
-
-                </View>
-            }
-        
+        { 
+          this.state && this.state.data &&
+          <View> 
+            <Timeline
+              data={this.state.data}
+              circleSize={20}
+              circleColor='rgb(45,156,219)'
+              lineColor='rgb(45,156,219)'
+              timeContainerStyle={{minWidth:52, marginTop: -5}}
+              timeStyle={{textAlign: 'center', backgroundColor:'#ff9797', color:'black', padding:5, borderRadius:13}}
+              descriptionStyle={{color:'gray'}}
+              options={{style:{paddingTop:5}}}
+            />
+          </View>
+        }
       </View>
-
-      
     );
   }
 }

@@ -10,8 +10,6 @@ export default class InternalScreen extends Component {
     constructor(props) { 
         super(props); 
         this.state = {
-            // Store fetched data here. This shall replace hooks used in functional components.
-            // See ConfirmationScreen for how I handled onChangeText, etc. 
             roomTemp: 24 
           };
     }
@@ -34,7 +32,6 @@ export default class InternalScreen extends Component {
 
 
     render() { 
-        // Start reusing the same stylesheet object for every screen (and remove the instance below). 
         const styles = StyleSheet.create({
             container: {
                 flex:1,

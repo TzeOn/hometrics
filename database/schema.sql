@@ -25,8 +25,6 @@ CREATE TABLE room (
     FOREIGN KEY (hub) REFERENCES hub(id)
 );
 
-
-
 CREATE TABLE user (
     emailAddress VARCHAR(255),
     hub VARCHAR(255),
