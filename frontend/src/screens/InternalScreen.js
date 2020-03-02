@@ -1,5 +1,5 @@
-import React, { useState, Component } from 'react';
-import { View, TouchableOpacity, Text, StyleSheet, Image, Button, Dimensions } from 'react-native';
+import React, { Component } from 'react';
+import { View, TouchableOpacity, Text, StyleSheet, Image, Button, AsyncStorage, Dimensions, ActivityIndicator } from 'react-native';
 import { Card } from "react-native-elements"; 
 import { ScrollView } from 'react-native-gesture-handler';
 const api = require('../api').url;
@@ -10,26 +10,66 @@ export default class InternalScreen extends Component {
     constructor(props) { 
         super(props); 
         this.state = {
-            roomTemp: 24 
-          };
+            loading: true
+        }
+    }
+
+    getData() { 
+        var emailAddress; 
+        AsyncStorage.getItem("credentials").then(credentials => {
+          emailAddress = JSON.parse(credentials).emailAddress; 
+          fetch(`${api}/comfort/getThermostat`, {
+            method: "POST", 
+            "headers": {
+              Accept: "application/json", 
+              "Content-Type": "application/json"
+            }, 
+            body: JSON.stringify({
+              "emailAddress": emailAddress
+            })
+          }).then(response => response.json()).then(response => {this.setState({roomTemp: response.temperature, loading: false}); console.log("temp is" + response.temperature)}); 
+        })
     }
 
     componentWillMount() {
         this.getData();
     }
 
-    getData() {
-     
-    }
-
     raiseTemp = () => {
-        this.setState(prevState => ({ roomTemp : prevState.roomTemp + 1 }));
+        var emailAddress; 
+        AsyncStorage.getItem("credentials").then(credentials => {
+            emailAddress = JSON.parse(credentials).emailAddress; 
+            fetch(`${api}/comfort/setThermostat`, {
+                method: "POST", 
+                "headers": {
+                  Accept: "application/json", 
+                  "Content-Type": "application/json"
+                }, 
+                body: JSON.stringify({
+                  "emailAddress": emailAddress,   
+                  "value": this.state.roomTemp + 1
+                })
+            }).then(response => response.json()).then(response => this.setState({roomTemp: response.temperature})); 
+        })  
     }
 
     lowerTemp = () => {
-        this.setState(prevState => ({ roomTemp : prevState.roomTemp - 1 }));
+        var emailAddress; 
+        AsyncStorage.getItem("credentials").then(credentials => {
+            emailAddress = JSON.parse(credentials).emailAddress; 
+            fetch(`${api}/comfort/setThermostat`, {
+                method: "POST", 
+                "headers": {
+                  Accept: "application/json", 
+                  "Content-Type": "application/json"
+                }, 
+                body: JSON.stringify({
+                  "emailAddress": emailAddress,   
+                  "value": this.state.roomTemp - 1
+                })
+            }).then(response => response.json()).then(response => this.setState({roomTemp: response.temperature})); 
+        })  
     }
-
 
     render() { 
         const styles = StyleSheet.create({
@@ -67,10 +107,21 @@ export default class InternalScreen extends Component {
         });
 
         return (
-            
             <View style={styles.container}>
 
-                <View style={styles.buttonsLayout}>
+                {
+                    this.state.loading && 
+
+                    <View>
+                        <ActivityIndicator size="large" />
+                    </View>
+                }
+
+                {
+                    this.state && this.state.roomTemp && 
+
+                    <View>
+                        <View style={styles.buttonsLayout}>
                 <TouchableOpacity 
                 style={styles.buttons1}
                 onPress={() => this.props.navigation.navigate('Internal')}>
@@ -118,7 +169,12 @@ export default class InternalScreen extends Component {
                     <Text style={{color:'black', fontSize:25, textAlign:'center'}}>   -   </Text>
                     </TouchableOpacity>  
                     </View>            
-                    <View style={{flex:1}}></View>  
+                    <View style={{flex:1}}></View>
+                    </View>
+
+                }
+
+                  
             </View>
         );
     }

@@ -47,9 +47,4 @@ router.post("/device", (request, response) => {
     }
 });
 
-router.post("/ew", (request, response) => {
-
-})
-
-
 module.exports = router;

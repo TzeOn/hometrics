@@ -26,6 +26,9 @@ app.use("/homeSetup", homeSetup);
 const deviceManagement = require("./routes/deviceManagement");
 app.use("/deviceManagement", deviceManagement);
 
+const comfort = require("./routes/comfort");
+app.use("/comfort", comfort);
+
 app.get("/", (request, response) => {
     console.log("Ping!");
 });
