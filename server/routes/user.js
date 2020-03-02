@@ -125,4 +125,39 @@ router.post("/confirmationCode", (request, response) => {
        });
 });
 
+router.post("/download", (request, response) => {
+    let sql = `SELECT * FROM user WHERE emailAddress = "${request.body.emailAddress}"`,
+        result = database.query(sql);
+    sql = `SELECT * FROM deviceActivity WHERE user="${request.body.emailAddress}"`;
+    result.deviceActivity = database.query(sql);
+    sql = `SELECT * FROM deviceRestriction WHERE restrictor="${request.body.emailAddress}" OR restricted="${request.body.emailAddress}"`;
+    result.restrictions = database.query(sql);
+
+    const transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+            user: "hometrics.donotreply@gmail.com",
+            pass: "hometrics123"
+        }
+    });
+
+    const mailOptions = {
+        from: "hometrics.donotreply@gmail.com",
+        to: request.body.emailAddress,
+        subject: "Your Data",
+        text: `Attached to this email is a JSON object containing all the data we have related to you.`,
+        attachments: {
+            filename: 'data.json',
+            content: JSON.stringify(result)
+        }
+    };
+
+    transporter.sendMail(mailOptions, function(error, info){
+        if (error)
+            console.error("Accepted an invalid email address.");
+        else
+            console.log(`Confirmation code emailed to ${user.emailAddress}.`);
+    });
+});
+
 module.exports = router;
