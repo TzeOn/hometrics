@@ -39,9 +39,37 @@ router.post("/remove", (request, response) => {
     let sql = `UPDATE device SET plug=NULL WHERE id="${request.body.deviceId}"`;
     database.query(sql);
     response.json({"ok": true})
-    
+});
 
+function makeid() {
+    let id = '',
+        characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    for (let i=0; i<12; i++ )
+        id += characters.charAt(Math.floor(Math.random() * characters.length));
+    return id;
+}
 
+router.post("/add", (request, response) => {
+    let device = request.body.device,
+        sql = `SELECT * FROM device WHERE name="${device.name}"`,
+        result = database.query(sql);
+        if (result.length !== 0) {
+            sql = `UPDATE device SET plug="${request.body.plugId}" WHERE name="${result[0].name}"`;
+            database.query(sql);
+            response.json(result[0]);
+        } else {
+            let id,
+                exist = [];
+            do {
+                id = makeid();
+                result = database.query(`SELECT * FROM device WHERE id="${id}"`);
+            } while (exist.length !== 0);
+            sql = `INSERT INTO device (id,name,plug,onOff,energyPerHour) VALUES ("${id}","${device.name}","${request.body.plugId}",0,${Math.floor(Math.random() * (3000 - 600 + 1) + 600)})`;
+            database.query(sql);
+            sql = `select smartPlug.id as plugId, device.id as deviceId, device.name as deviceName, device.onOff from smartPlug left join device on device.plug = smartPlug.id where device.id = "${id}"`;
+            result = database.query(sql);
+            response.json(result[0]);
+        }
 });
 
 module.exports = router;

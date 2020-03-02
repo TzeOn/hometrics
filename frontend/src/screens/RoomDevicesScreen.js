@@ -1,6 +1,6 @@
 import { Card } from "react-native-elements"; 
 import React, { Component } from "react";
-import { ActivityIndicator, Button, Text, View, StyleSheet } from "react-native";
+import { ActivityIndicator, Button, Text, View, StyleSheet, Modal, TouchableHighlight } from "react-native";
 import { ScrollView, Switch } from "react-native-gesture-handler";
 const api = require("../api").url; 
 
@@ -45,7 +45,9 @@ export default class RoomDevicesScreen extends Component {
         });
        let devices = [], device;
        for (let i=0; i<this.state.data.length; i++) {
+           
            device = this.state.data[i]; 
+           console.log(device); 
             if (device && device.deviceName) {
                 devices.push (
                     <Card 
@@ -100,7 +102,25 @@ export default class RoomDevicesScreen extends Component {
                 devices.push(
                     <View>
                         <Card containerStyle={{backgroundColor: "#8EE4AF"}}>
-                            <Text style={{fontSize: 20, color: "black", textAlign:'center'}}>+</Text>
+                            
+                            <Button title="+" style={{fontSize: 20, color: "black", textAlign:'center'}} onPress={() => {
+                                var copy = this.state.data; 
+                                fetch(`${api}/deviceManagement/add`, {
+                                    method: "POST", 
+                                    "headers": {
+                                        Accept: "application/json", 
+                                        "Content-Type": "application/json"
+                                    }, 
+                                    body: JSON.stringify({
+                                        "plugId": device.plugId
+                                       
+                                    })
+                                }).then(response => response.json()).then(response => {
+                                    delete copy[i]; 
+                                    this.setState({data: copy}); 
+                                }).catch(error => console.error(error));
+
+                            }}/>
                         </Card>
                     </View>
                 )   
