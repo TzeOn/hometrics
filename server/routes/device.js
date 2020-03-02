@@ -196,7 +196,7 @@ function limitTimeFrame1(timeQuery, timeFrame){
 }
 
 
-function dayToString(day){
+function dayToString(day) {
     switch(day){
         case 0:
             return "Sunday";

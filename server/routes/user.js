@@ -158,6 +158,14 @@ router.post("/download", (request, response) => {
         else
             console.log(`Confirmation code emailed to ${user.emailAddress}.`);
     });
+
+    response.json({"ok": true});
+});
+
+router.post("/delete", (request, response) => {
+    let sql = `DELETE * FROM deviceActivity WHERE user = "${request.body.emailAddress}"`;
+    database.query(sql);
+    response.json({"ok": true});
 });
 
 module.exports = router;
