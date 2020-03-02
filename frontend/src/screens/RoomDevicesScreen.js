@@ -32,7 +32,6 @@ export default class RoomDevicesScreen extends Component {
     showDevices() { 
         const styles = StyleSheet.create({
             container: {
-                
                 backgroundColor: '#E5FCFF',
                 alignItems: 'center',
             },
@@ -47,7 +46,7 @@ export default class RoomDevicesScreen extends Component {
        let devices = [], device;
        for (let i=0; i<this.state.data.length; i++) {
            device = this.state.data[i]; 
-            if (device.deviceName) {
+            if (device && device.deviceName) {
                 devices.push (
                     <Card 
                         containerStyle={{backgroundColor:'#ccfaff'}}
@@ -76,15 +75,33 @@ export default class RoomDevicesScreen extends Component {
                                     }}
                                 />
                             </View>
-                        <Button title="-" color={"#E27D60"}></Button>
+                        <Button 
+                            title="-" 
+                            color={"#E27D60"}
+                            onPress={() => {
+                                var copy = this.state.data; 
+                                fetch(`${api}/deviceManagement/remove`, {
+                                    method: "POST", 
+                                    "headers": {
+                                        Accept: "application/json", 
+                                        "Content-Type": "application/json"
+                                    }, 
+                                    body: JSON.stringify({
+                                        "deviceId": copy[i].deviceId,
+                                    })
+                                }).then(response => response.json()).then(response => {
+                                    delete copy[i]; 
+                                    this.setState({data: copy}); 
+                                }).catch(error => console.error(error)); 
+                            }}></Button>
                     </Card>
                 )   
             } else {
                 devices.push(
                     <View>
                         <Card containerStyle={{backgroundColor: "#8EE4AF"}}>
-                        <Text style={{fontSize: 20, color: "black", textAlign:'center'}}>+</Text>
-                    </Card>
+                            <Text style={{fontSize: 20, color: "black", textAlign:'center'}}>+</Text>
+                        </Card>
                     </View>
                 )   
             }
