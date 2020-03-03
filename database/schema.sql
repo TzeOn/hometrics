@@ -15,6 +15,9 @@ CREATE TABLE hub (
     id VARCHAR(255),  
     password VARCHAR(255), 
     thermostat REAL,
+    humidity REAL,
+    airQuality REAL,
+    lighting REAL,
     PRIMARY KEY(id)
 );
 
