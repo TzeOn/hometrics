@@ -1,11 +1,11 @@
-let Book = require('../routes/device');
 
 //Require the dev-dependencies
 let chai = require('chai');
 let chaiHttp = require('chai-http');
-let server = require('../server');
+let server = require('../routes/device');
 let should = chai.should();
 
+chai.use(chaiHttp);
 
 var assert = require('assert');
 describe('Array', function() {
@@ -16,10 +16,10 @@ describe('Array', function() {
   });
 });
 
-describe('/GET book', () => {
-  it('it should GET all the books', (done) => {
+describe('/POST device', () => {
+  it('test', (done) => {
     chai.request(server)
-        .get('/book')
+        .post('/getDateTime')
         .end((err, res) => {
               res.should.have.status(200);
           done();
