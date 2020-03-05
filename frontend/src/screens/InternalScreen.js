@@ -108,20 +108,17 @@ export default class InternalScreen extends Component {
 
         return (
             <View style={styles.container}>
-
                 {
                     this.state.loading && 
-
-                    <View>
-                        <ActivityIndicator size="large" />
-                    </View>
+                    <ActivityIndicator size="large" />
+                    
                 }
 
                 {
                     this.state && this.state.roomTemp && 
 
-                    <View>
-                        <View style={styles.buttonsLayout}>
+                <View style={styles.container}>
+                <View style={styles.buttonsLayout}>
                 <TouchableOpacity 
                 style={styles.buttons1}
                 onPress={() => this.props.navigation.navigate('Internal')}>

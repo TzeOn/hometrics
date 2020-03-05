@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { ActivityIndicator, View, StyleSheet, Text, AsyncStorage } from "react-native";
+import { ActivityIndicator, View, StyleSheet, Text, AsyncStorage, Dimensions } from "react-native";
 import { Card } from "react-native-elements"; 
 import Timeline from "react-native-timeline-flatlist";
 const api = require("../api").url; 
+const trueHeight = Dimensions.get('window').height *.92;
 
 export default class Example extends Component {
   constructor(props){
@@ -75,6 +76,7 @@ export default class Example extends Component {
             />
           </View>
         }
+        <View style={{flex:1}}></View>
       </View>
     );
   }
@@ -86,6 +88,7 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor:'#E5FCFF',
     alignItems:'center',
+    height: trueHeight
   },
   list: {
     flex: 1,
