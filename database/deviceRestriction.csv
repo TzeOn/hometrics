@@ -1,2 +1,11 @@
 #device,cap,restricted,restrictor,hoursUsed
-d6,10,eoghann@hooli.com,lee@hooli.com,5
+d1,10,eoghann@hooli.com,lee@hooli.com,5
+d2,5,vincent@hooli.com,lee@hooli.com,2
+d3,7,yaseen@hooli.com,mike@hooli.com,2
+d4,20,lee@hooli.com,vincent@hooli.com,5
+d5,10,mike@hooli.com,yaseen@hooli.com,3
+d6,5,mike@hooli.com,lee@hooli.com,5
+d7,5,troy@hooli.com,lee@hooli.com,5
+d8,10,eoghann@hooli.com,mike@hooli.com,9
+d9,7,lee@hooli.com,ram@hooli.com,5
+d10,9,eoghann@hooli.com,ram@hooli.com,5
