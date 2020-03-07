@@ -51,7 +51,7 @@ export default class RoomDevicesScreen extends Component {
             if (device && device.deviceName) {
                 devices.push (
                     <Card 
-                        containerStyle={{backgroundColor:'#ccfaff'}}
+                        containerStyle={{backgroundColor:'#ccfaff', borderColor: 'gray', paddingBottom:5}}
                         titleStyle={{color:'black'}}
                         title={device.deviceName}>
                             <View style={{alignItems:'center', justifyContent:'center', flex:1, paddingBottom:20}}>
@@ -101,9 +101,9 @@ export default class RoomDevicesScreen extends Component {
             } else {
                 devices.push(
                     <View>
-                        <Card containerStyle={{backgroundColor: "#8EE4AF"}}>
+                        <Card containerStyle={{backgroundColor: "#8EE4AF", borderColor:'gray'}}>
                             
-                            <Button title="+" style={{fontSize: 20, color: "black", textAlign:'center'}} onPress={() => {
+                            <Button color={"#8EE4AF"} title="+" style={{fontSize: 20, color: "black", textAlign:'center'}} onPress={() => {
                                 var copy = this.state.data; 
                                 fetch(`${api}/deviceManagement/add`, {
                                     method: "POST", 

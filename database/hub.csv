@@ -1,2 +1,2 @@
-#id,password,thermostat
-HOMEF3DA,homeSweetHome,20
+#id,password,thermostat,humidity,lighting,airQuality
+HOMEF3DA,homeSweetHome,20,50,22.9,-1.4

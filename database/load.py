@@ -21,8 +21,11 @@ for hub in hub_data:
     hub_id = hub[0]
     password = hub[1]
     thermostat = hub[2]
-    sql = "INSERT INTO hub (id, password, thermostat) VALUES (%s, %s, %s)"
-    values = (hub_id, password, thermostat)
+    humidity = hub[3]
+    lighting = hub[4]
+    airQuality = hub[5]
+    sql = "INSERT INTO hub (id, password, thermostat, humidity, lighting, airQuality) VALUES (%s, %s, %s, %s, %s, %s)"
+    values = (hub_id, password, thermostat, humidity, lighting, airQuality)
     cursor.execute(sql, values)
 hub_data.close()
 
