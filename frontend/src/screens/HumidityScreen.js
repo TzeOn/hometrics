@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity, Text, StyleSheet, Dimensions } from 'react-native';
+import { View, TouchableOpacity, Text, StyleSheet, Dimensions, AsyncStorage, ActivityIndicator } from 'react-native';
 import { Card } from "react-native-elements"; 
 const api = require('../api').url;
 const trueHeight = Dimensions.get('window').height * .92;
@@ -9,25 +9,68 @@ export default class HumidityScreen extends Component {
     constructor(props) { 
         super(props); 
         this.state = {
-            roomTemp: 24 
-        };
+            loading: true
+        }
+    }
+
+  
+    getData() { 
+        var emailAddress; 
+        AsyncStorage.getItem("credentials").then(credentials => {
+          emailAddress = JSON.parse(credentials).emailAddress; 
+          fetch(`${api}/comfort/getHumidity`, {
+            method: "POST", 
+            "headers": {
+              Accept: "application/json", 
+              "Content-Type": "application/json"
+            }, 
+            body: JSON.stringify({
+              "emailAddress": emailAddress
+            })
+          }).then(response => response.json()).then(response => {this.setState({roomTemp: response.temperature, loading: false}); console.log("temp is" + response.temperature)}); 
+        })
     }
 
     componentWillMount() {
         this.getData();
     }
 
-    getData() {
-     
-    }
-
     raiseTemp = () => {
-        this.setState(prevState => ({ roomTemp : prevState.roomTemp + 1 }));
+        var emailAddress; 
+        AsyncStorage.getItem("credentials").then(credentials => {
+            emailAddress = JSON.parse(credentials).emailAddress; 
+            fetch(`${api}/comfort/setHumidity`, {
+                method: "POST", 
+                "headers": {
+                  Accept: "application/json", 
+                  "Content-Type": "application/json"
+                }, 
+                body: JSON.stringify({
+                  "emailAddress": emailAddress,   
+                  "value": this.state.roomTemp + 1
+                })
+            }).then(response => response.json()).then(response => this.setState({roomTemp: response.temperature})); 
+        })  
     }
 
     lowerTemp = () => {
-        this.setState(prevState => ({ roomTemp : prevState.roomTemp - 1 }));
+        var emailAddress; 
+        AsyncStorage.getItem("credentials").then(credentials => {
+            emailAddress = JSON.parse(credentials).emailAddress; 
+            fetch(`${api}/comfort/setHumidity`, {
+                method: "POST", 
+                "headers": {
+                  Accept: "application/json", 
+                  "Content-Type": "application/json"
+                }, 
+                body: JSON.stringify({
+                  "emailAddress": emailAddress,   
+                  "value": this.state.roomTemp - 1
+                })
+            }).then(response => response.json()).then(response => this.setState({roomTemp: response.temperature})); 
+        })  
     }
+
 
     render() { 
         const styles = StyleSheet.create({
@@ -65,7 +108,19 @@ export default class HumidityScreen extends Component {
         });
 
         return (
+
+            
             <View style={styles.container}>
+                {
+                    this.state.loading && 
+                    <ActivityIndicator size="large" />
+                    
+                }
+
+
+                { !this.state.loading && 
+              <View>
+
                 <View style={styles.buttonsLayout}>
                     <TouchableOpacity 
                     style={styles.buttons1}
@@ -94,7 +149,7 @@ export default class HumidityScreen extends Component {
                         padding:20
                     }}>
                         <Text style={{fontSize:80, color:'black', padding:10}}>
-                            {this.state.roomTemp} °C
+                            {this.state.roomTemp} 
                         </Text>
                    
                     </View>
@@ -111,9 +166,15 @@ export default class HumidityScreen extends Component {
                         style={{padding:30, borderRadius:10, backgroundColor:'#E27D60', width: width}}>
                     <Text style={{color:'black', fontSize:25, textAlign:'center'}}>   -   </Text>
                     </TouchableOpacity>  
-                    </View>            
-                    <View style={{flex:1}}></View>  
+                    </View>    
+
+
+
+                    <View style={{flex:1}}></View> 
+                
             </View>
+    }
+                </View>
         );
     }
 }
