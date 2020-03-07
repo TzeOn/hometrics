@@ -168,4 +168,11 @@ router.post("/delete", (request, response) => {
     response.json({"ok": true});
 });
 
+router.post("/type", (request, response) => {
+    let sql = `SELECT type from user where emailAddress = "${request.body.emailAddress}"`,
+        result = database.query(sql);
+    response.json({"type": result[0].type});
+
+});
+
 module.exports = router;
