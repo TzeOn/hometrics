@@ -81,7 +81,8 @@ export default class InternalScreen extends Component {
             },
             textStyle: {
                 color: 'black',
-                fontSize:20
+                fontSize:20,
+                fontWeight:'600'
             },  
             titleStyle: {
                 color: "black",
@@ -158,7 +159,6 @@ export default class InternalScreen extends Component {
                         style={{padding:30, borderRadius:10, backgroundColor:'#8EE4AF', width: width}}>
                     <Text style={{color:'black', fontSize:25, textAlign:'center'}}>   +   </Text>    
                     </TouchableOpacity>
-                   
                     
                     <TouchableOpacity
                         onPress={() => this.lowerTemp()}
@@ -171,7 +171,6 @@ export default class InternalScreen extends Component {
 
                 }
 
-                  
             </View>
         );
     }

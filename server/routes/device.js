@@ -28,6 +28,25 @@ router.post("/activity", (request, response) => {
     response.json({deviceActivity: timeline});
 });
 
+router.post("/allActivity", (request, response) => {
+    let sql = `SELECT device.name, deviceActivity.user, deviceActivity.startTime, deviceActivity.endTime, device.plug FROM deviceActivity INNER JOIN device ON deviceActivity.device = device.id`,
+        deviceActivity = database.query(sql).sort((a, b) => b.endTime - a.endTime),
+        timeline = [];
+    for (let i=0; i<deviceActivity.length; i++) {
+        let activity = deviceActivity.pop(),
+            sql = `SELECT roomName from smartPlug where id="${activity.plug}"`,
+            room = database.query(sql)[0].roomName,
+            name = "(" + database.query(`SELECT forename from user where emailAddress = "${activity.user}"`)[0].forename + ")";
+
+        timeline.push({
+            "title": activity.name + "\n" + name,
+            "time": date.format(new Date(activity.startTime), 'DD/MM/YYYY HH:mm:ss'),
+            "description":  room + "\n" + (activity.endTime - activity.startTime)/HOUR + " hrs\n\n\n"
+        })
+    }
+    response.json({deviceActivity: timeline});
+});
+
 /* 
  * Gets the amount of energy a single user has consumed. 
  * body: emailAddress, timeFrame 

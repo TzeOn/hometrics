@@ -27,8 +27,36 @@ export default class Example extends Component {
         body: JSON.stringify({
           "emailAddress": emailAddress
         })
-      }).then(response => response.json()).then(response => this.setState({data: response.deviceActivity, loading: false})); 
-    })
+      }).then(response => response.json()).then(response => {this.setState({data: response.deviceActivity}); 
+    
+      fetch(`${api}/user/type`, {
+        method: "POST", 
+        "headers": {
+          Accept: "application/json", 
+          "Content-Type": "application/json"
+        }, 
+        body: JSON.stringify({
+          "emailAddress": emailAddress
+        })
+      }).then(response => response.json()).then(response => {console.log(response); this.setState({type: response.type}),
+    
+    
+      fetch(`${api}/device/allActivity`, {
+        method: "POST", 
+        "headers": {
+          Accept: "application/json", 
+          "Content-Type": "application/json"
+        }, 
+        body: JSON.stringify({
+          "emailAddress": emailAddress
+        })
+      }).then(response => response.json()).then(response => {console.log(response); this.setState({all: response.deviceActivity, loading: false})}); 
+   
+    }); 
+   
+    
+    }); 
+       })
   }
 
   componentWillMount() { 
@@ -62,7 +90,7 @@ export default class Example extends Component {
         }
 
         { 
-          this.state && this.state.data &&
+          this.state && this.state.data && this.state.type === "dweller" && 
           <View> 
             <Timeline
               data={this.state.data}
@@ -76,10 +104,41 @@ export default class Example extends Component {
             />
           </View>
         }
+
+
+        {
+
+          this.state && this.state.all && this.state.type === "admin" && 
+
+          <View> 
+           
+          <Timeline
+            data={this.state.all}
+            circleSize={20}
+            circleColor='rgb(45,156,219)'
+            lineColor='rgb(45,156,219)'
+            timeContainerStyle={{minWidth:52, marginTop: -5}}
+            timeStyle={{textAlign: 'center', backgroundColor:'#ff9797', color:'black', padding:5, borderRadius:13}}
+            descriptionStyle={{color:'gray'}}
+            options={{style:{paddingTop:5}}}
+          />
+        </View>
+
+
+        }
+
+
+
+
+
+
         <View style={{flex:1}}></View>
       </View>
     );
   }
+
+
+  
 }
 
 const styles = StyleSheet.create({
