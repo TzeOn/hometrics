@@ -16,6 +16,7 @@ import ManageUsersScreen from "./src/screens/ManageUsersScreen";
 import styles from './styles';
 import React from 'react';
 import { Image, Dimensions } from 'react-native';
+import PendingScreen from "./src/screens/PendingScreen"; 
 
 const headerHeight = Dimensions.get('window').height * 0.08;
 const navigator = createStackNavigator({
@@ -31,7 +32,8 @@ const navigator = createStackNavigator({
     Simulation: SimulationScreen,
     Internal: InternalScreen,
     Humidity: HumidityScreen, 
-    ManageUsers: ManageUsersScreen
+    ManageUsers: ManageUsersScreen, 
+    Pending: PendingScreen
   },
   {
     initialRouteName: 'Home',

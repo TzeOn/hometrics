@@ -5,7 +5,6 @@ const express = require("express"),
 const port = process.env.PORT || 5000,
       app = express();
 
-
 app.listen(port, () => console.log(`Server up and running - listening for requests on port ${port}.`));
 
 app.use(cors()); 
@@ -37,4 +36,3 @@ app.get("/", (request, response) => {
     response.send("Ping!");
     console.log("Ping!");
 });
-

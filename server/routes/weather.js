@@ -3,7 +3,6 @@ const express = require("express"),
       database = require("./database"),
       date = require("date-and-time");
 
-
 let ac  = "";
 let light = "";
 
@@ -38,13 +37,9 @@ function doStuff() {
         light = "moderate";
 };
 
-
-
-
 function run() {
     setInterval(doStuff, 60000);
 };
 run();
-
 
 module.exports = router;
