@@ -49,7 +49,18 @@ export default class LandingScreen extends Component {
                 <Card 
                 image={require('../../assets/deviceManagement.png')}
                 imageStyle={styles.imageStyle}
-                title='temp ting'
+                title='manage users (admin only gang)'
+                titleStyle={styles.titleStyle}
+                containerStyle={styles.cardStyle}>   
+                       
+                </Card>
+                </TouchableOpacity>
+
+                <TouchableOpacity onPress={() => this.props.navigation.navigate("Pending")}>
+                <Card 
+                image={require('../../assets/deviceManagement.png')}
+                imageStyle={styles.imageStyle}
+                title='accept/reject pending users (admin only gang)'
                 titleStyle={styles.titleStyle}
                 containerStyle={styles.cardStyle}>   
                        

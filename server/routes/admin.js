@@ -20,7 +20,7 @@ router.post("/deleteUser", (request, response) => {
 });
 
 router.post("/getPendingUsers", (request, response) => {
-    let users = database.query(`select forename, surname, type, emailAddress from user where hub = (select hub from user where emailAddress = "${request.body.emailAddress}") and not emailAddress = "${request.body.emailAddress}" and approved=0`);
+    let users = database.query(`select forename, surname, dob, emailAddress from user where hub = (select hub from user where emailAddress = "${request.body.emailAddress}") and not emailAddress = "${request.body.emailAddress}" and approved=0`);
     response.json({"users": users});
 
 });

@@ -83,11 +83,6 @@ router.post("/signup", (request, response) => {
         console.log("Rejected a sign-up request."); 
     }
 
-
-
-
-
-
 });
 
 router.post("/login", (request, response) => {
