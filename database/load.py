@@ -121,7 +121,7 @@ for entry in deviceActivity_data:
     startTime = entry[0]
     endTime = entry[1]
     device = entry[2]
-    user = entry[3]
+    user = entry[3].strip(" ")
     sql = "INSERT INTO deviceActivity (startTime, endTime, device, user) VALUES (%s, %s, %s, %s)"
     values = (startTime, endTime, device, user)
     cursor.execute(sql, values)

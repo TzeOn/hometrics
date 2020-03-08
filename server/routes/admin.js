@@ -5,6 +5,7 @@ const database = require("./database");
 router.post("/getUsers", (request, response) => {
     let users = database.query(`select forename, surname, type, emailAddress from user where hub = (select hub from user where emailAddress = "${request.body.emailAddress}") and not emailAddress = "${request.body.emailAddress}"`);
     response.json({"users": users});
+    
 });
 
 router.post("/deleteUser", (request, response) => {
@@ -27,6 +28,13 @@ router.post("/getPendingUsers", (request, response) => {
 router.post("/approveUser", (request, response) => {
     database.query(`update user set approved = 1 where emailAddress = "${request.body.emailAddress}"`);
     response.json({"ok": true});
+
+});
+
+router.post("/changeUser", (request, response) => {
+    database.query(`update user set type = "${request.body.type}" where emailAddress = "${request.body.emailAddress}"`);
+    response.json({"ok": true});
+
 });
 
 module.exports = router;
