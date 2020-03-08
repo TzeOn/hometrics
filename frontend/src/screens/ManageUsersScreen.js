@@ -220,6 +220,15 @@ export default class ManageUsersScreen extends React.Component {
                 borderColor: 'gray',
                 paddingVertical:5,
                 borderRadius:10
+            },
+            tabs: {
+                paddingHorizontal:10,
+                paddingVertical:10
+            },
+            tabTextStyle: {
+                color:'black',
+                fontSize:20,
+                fontWeight:'600'
             }
         });
 
@@ -230,7 +239,7 @@ export default class ManageUsersScreen extends React.Component {
                 <TouchableOpacity 
                     style={styles.tabs}
                     onPress={() => this.props.navigation.navigate('Settings')}>
-                        <Text style={styles.textStyle}>User Details</Text>
+                        <Text style={styles.tabTextStyle}>User Details</Text>
                     </TouchableOpacity>
     
                     <TouchableOpacity 
@@ -241,14 +250,8 @@ export default class ManageUsersScreen extends React.Component {
 
                     <TouchableOpacity 
                     style={styles.tabs}
-                    onPress={() => this.props.navigation.navigate('ManageUsers')}>
-                        <Text style={styles.textStyle}>User Data</Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity 
-                    style={styles.tabs}
-                    onPress={() => this.props.navigation.navigate('ManageUsers')}>
-                        <Text style={styles.textStyle}>Requests</Text>
+                    onPress={() => this.props.navigation.navigate('Pending')}>
+                        <Text style={styles.tabTextStyle}>Requests</Text>
                     </TouchableOpacity>
                     </View>
                 {

@@ -64,13 +64,7 @@ export default class SettingsScreen extends Component {
 
                     <TouchableOpacity 
                     style={styles.tabs}
-                    onPress={() => this.props.navigation.navigate('ManageUsers')}>
-                        <Text style={styles.textStyle}>User Data</Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity 
-                    style={styles.tabs}
-                    onPress={() => this.props.navigation.navigate('ManageUsers')}>
+                    onPress={() => this.props.navigation.navigate('Pending')}>
                         <Text style={styles.textStyle}>Requests</Text>
                     </TouchableOpacity>
                 </View>
