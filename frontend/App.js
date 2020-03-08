@@ -12,6 +12,7 @@ import DeviceManagementScreen from './src/screens/DeviceManagementScreen';
 import RoomDevicesScreen from "./src/screens/RoomDevicesScreen"; 
 import InternalScreen from "./src/screens/InternalScreen";
 import HumidityScreen from "./src/screens/HumidityScreen";
+import SettingsScreen from "./src/screens/SettingsScreen";
 import ManageUsersScreen from "./src/screens/ManageUsersScreen"; 
 import styles from './styles';
 import React from 'react';
@@ -36,7 +37,7 @@ const navigator = createStackNavigator({
     Pending: PendingScreen
   },
   {
-    initialRouteName: 'Home',
+    initialRouteName: 'Landing',
     defaultNavigationOptions: {
       title: 'Hometrics',
       headerStyle: {
