@@ -60,11 +60,13 @@ export default class ManageUsersScreen extends React.Component {
 
 
     showUsers() { 
-        var alright= []
+        var alright= []; 
+        var current;
             for (let i=0; i<this.state.users.length; i++) {
 
     
-                var current = this.state.users[i]; 
+                current = this.state.users[i]; 
+               
 
                 if (current !== undefined) { 
                 var what; 
@@ -73,33 +75,26 @@ export default class ManageUsersScreen extends React.Component {
                         <Button
                             title="Demote to dweller"
                             onPress={() => {
-
-
-
-
+                                console.log(this.state.users[i].emailAddress); 
                                 fetch(`${api}/admin/changeUser`, {
-            method: "POST", 
-            "headers": {
-              Accept: "application/json", 
-              "Content-Type": "application/json"
-            }, 
-            body: JSON.stringify({
-              "emailAddress": current.emailAddress
-            })
-          }).then(response => response.json()).then(response => {
-
-            var copy = this.state.users; 
-            copy[i].type = "dweller"; 
-              
-            this.setState({users:copy}); 
-              
-          })
-
-
-
-
-
-
+                                    method: "POST", 
+                                    "headers": {
+                                      Accept: "application/json", 
+                                      "Content-Type": "application/json"
+                                    }, 
+                                    body: JSON.stringify({
+                                      "emailAddress": this.state.users[i].emailAddress,
+                                      "type": "dweller"
+                                    })
+                                  }).then(response => JSON.stringify(response)).then(response => {
+                                      console.log("HIHIHIHIHIHI"); 
+                                     
+                                      this.state.users[i].type = "dweller";
+                                      this.setState({users: this.state.users})
+                                      console.log(response);
+    
+                                 
+                                  })
                             }}
                         />
                     )
@@ -110,32 +105,32 @@ export default class ManageUsersScreen extends React.Component {
                         <Button
                             title="Promote to admin"
                             onPress={() => {
-
-
-
-
+                                console.log(this.state.users[i].emailAddress); 
                                 fetch(`${api}/admin/changeUser`, {
-            method: "POST", 
-            "headers": {
-              Accept: "application/json", 
-              "Content-Type": "application/json"
-            }, 
-            body: JSON.stringify({
-              "emailAddress": current.emailAddress
-            })
-          }).then(response => response.json()).then(response => {
-            var copy = this.state.users; 
-            copy[i].type = "admin"; 
-              
-            this.setState({users:copy}); 
-          })
-
-
-
-
-
-
+                                    method: "POST", 
+                                    "headers": {
+                                      Accept: "application/json", 
+                                      "Content-Type": "application/json"
+                                    }, 
+                                    body: JSON.stringify({
+                                      "emailAddress": this.state.users[i].emailAddress,
+                                      "type": "admin"
+                                    })
+                                  }).then(response => JSON.stringify(response)).then(response => {
+                                      console.log("HIHIHIHIHIHI"); 
+                                     
+                                      this.state.users[i].type = "admin";
+                                      this.setState({users: this.state.users})
+                                      console.log(response);
+    
+                                 
+                                  })
                             }}
+
+
+
+
+                               
                         />
                     )
 
