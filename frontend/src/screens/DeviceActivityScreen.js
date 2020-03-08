@@ -59,7 +59,7 @@ export default class Example extends Component {
        })
   }
 
-  componentWillMount() { 
+  componentDidMount() { 
     this.getData()
   }
 

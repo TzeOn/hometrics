@@ -12,6 +12,7 @@ import DeviceManagementScreen from './src/screens/DeviceManagementScreen';
 import RoomDevicesScreen from "./src/screens/RoomDevicesScreen"; 
 import InternalScreen from "./src/screens/InternalScreen";
 import HumidityScreen from "./src/screens/HumidityScreen";
+import SettingsScreen from "./src/screens/SettingsScreen";
 import styles from './styles';
 import React from 'react';
 import { Image, Dimensions } from 'react-native';
@@ -29,10 +30,11 @@ const navigator = createStackNavigator({
     RoomDevices: RoomDevicesScreen,
     Simulation: SimulationScreen,
     Internal: InternalScreen,
-    Humidity: HumidityScreen
+    Humidity: HumidityScreen,
+    Settings: SettingsScreen,
   },
   {
-    initialRouteName: 'Home',
+    initialRouteName: 'Landing',
     defaultNavigationOptions: {
       title: 'Hometrics',
       headerStyle: {

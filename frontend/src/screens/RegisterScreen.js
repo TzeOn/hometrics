@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Image, TextInput, TouchableOpacity, AsyncStorage, ScrollView, Dimensions } from 'react-native';
+import { KeyboardAvoidingView, View, Text, StyleSheet, Image, TextInput, TouchableOpacity, AsyncStorage, ScrollView, Dimensions } from 'react-native';
 const api = require("../api").url; 
 const trueHeight = Dimensions.get('window').height * 1.1;
 
@@ -67,7 +67,7 @@ const RegisterScreen = props => {
           [hubError, setHubError] = useState("");
 
     return (
-        <View style={styles.container}>
+        <KeyboardAvoidingView style={styles.container} enabled>
         <ScrollView showsVerticalScrollIndicator={false}>
            
             <View style={styles.buttonsLayout}>
@@ -175,7 +175,7 @@ const RegisterScreen = props => {
             </View>
             
         </ScrollView>
-        </View>
+        </KeyboardAvoidingView>
     );
 };
 

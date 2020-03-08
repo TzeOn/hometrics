@@ -4,6 +4,7 @@ import PureChart from 'react-native-pure-chart';
 import { ScrollView } from 'react-native-gesture-handler';
 const api = require("../api").url;
 const trueHeight = Dimensions.get('window').height * 1.5;
+const graphHeight = Dimensions.get('window').height * .4;
 
 export default class EnergyScreen extends Component {
     constructor(props) { 
@@ -90,13 +91,15 @@ export default class EnergyScreen extends Component {
             textStyle: {
                 color: 'black',
                 fontSize: 30, 
-                paddingTop:10
+                paddingTop:10,
+                textAlign: 'center'
             }
          });
 
         return (
             <ScrollView nestedScrollEnabled={true}>
                 <View style={styles.container}>
+                <View>
                     <Picker
                         selectedValue={this.state.time}
                         style={{height: 50, width: 100, backgroundColor:'#ccfaff'}}
@@ -118,7 +121,9 @@ export default class EnergyScreen extends Component {
                         <Picker.Item label="Monthly" value="monthly"/>
                         <Picker.Item label="Yearly" value="yearly"/>
                     </Picker>
+                    </View>
                     
+                    <View style={{height: graphHeight}}>
                     <Text style={styles.textStyle}>Personal Statistics</Text>
                     <ScrollView horizontal={true} nestedScrollEnabled={true} >
                     <PureChart data={this.state.filter}
@@ -126,7 +131,7 @@ export default class EnergyScreen extends Component {
                     primaryColor = {"black"}
                     height = {200}
                     type="line"/>
-                    </ScrollView>
+                    </ScrollView></View>
 
                     <Text style={styles.textStyle}>Scoreboard</Text>
                     <View>
@@ -141,8 +146,9 @@ export default class EnergyScreen extends Component {
                     <View>
                         <PureChart data={this.state.comparison} type='pie' />
                     </View>
-                </View>
+                
                 <View style={{flex:1}}></View>
+                </View>
             </ScrollView>
         )
     }
