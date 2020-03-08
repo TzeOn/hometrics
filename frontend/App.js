@@ -36,7 +36,8 @@ const navigator = createStackNavigator({
     Humidity: HumidityScreen, 
     ManageUsers: ManageUsersScreen, 
     Pending: PendingScreen, 
-    UserInfo: UserInfo
+    UserInfo: UserInfo,
+    Settings: SettingsScreen
   },
   {
     initialRouteName: 'Landing',
