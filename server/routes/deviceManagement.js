@@ -28,11 +28,22 @@ router.post("/roomDevices", (request, response) => {
 });
 
 router.post("/toggle", (request, response) => {
-    let sql = `UPDATE device SET onOff=${request.body.onOff} WHERE id="${request.body.deviceId}"`;
-    database.query(sql);
-    sql = `select * from device where id="${request.body.deviceId}"`;
-    let result = database.query(sql);
-    response.json({"ok": result});
+    let check = database.query(`select * from deviceRestriction where restricted="${request.body.emailAddress}" and device="${request.body.deviceId}"`);
+    if (check.length === 0) {
+        let sql = `UPDATE device SET onOff=${request.body.onOff} WHERE id="${request.body.deviceId}"`;
+        database.query(sql);
+        sql = `select * from device where id="${request.body.deviceId}"`;
+        let result = database.query(sql);
+        response.json({"ok": result});
+
+    } else {
+        // THERE IS A RESTRICTION SET ON THE USER FOR THIS PARTICULAR DEVICE
+        sql = `select * from device where id="${request.body.deviceId}"`;
+        let result = database.query(sql);
+        response.json({"ok": result});
+
+    }
+
 });
 
 router.post("/remove", (request, response) => {

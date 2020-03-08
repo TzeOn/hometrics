@@ -29,6 +29,10 @@ app.use("/deviceManagement", deviceManagement);
 const comfort = require("./routes/comfort");
 app.use("/comfort", comfort);
 
+const admin = require("./routes/admin");
+app.use("/admin", admin);
+
 app.get("/", (request, response) => {
+    response.send("Ping!");
     console.log("Ping!");
 });

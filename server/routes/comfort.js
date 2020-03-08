@@ -16,9 +16,6 @@ router.post("/setThermostat", (request, response) => {
     response.json({"temperature":result[0].thermostat});
 });
 
-
-
-
 router.post("/getHumidity", (request, response) => {
     let sql = `SELECT humidity FROM hub WHERE id = (SELECT hub FROM user WHERE emailAddress="${request.body.emailAddress}")`,
         result = database.query(sql);
@@ -32,9 +29,5 @@ router.post("/setHumidity", (request, response) => {
     let result = database.query(sql);
     response.json({"temperature":result[0].humidity});
 });
-
-
-
-
 
 module.exports = router;

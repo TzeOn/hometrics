@@ -74,7 +74,7 @@ for user in user_data:
     hub = user[7]
     if confirmation_code == "null":
         confirmation_code = None
-    sql = "INSERT INTO user (forename, surname, dob, emailAddress, password, type, confirmationCode, hub) VALUES (%s, %s, DATE %s, %s, %s, %s, %s, %s)"
+    sql = "INSERT INTO user (forename, surname, dob, emailAddress, password, type, confirmationCode, hub, approved) VALUES (%s, %s, DATE %s, %s, %s, %s, %s, %s, 1)"
     values = (forename, surname, dob, email_address, password, user_type, confirmation_code, hub)
     cursor.execute(sql, values)
 user_data.close()
