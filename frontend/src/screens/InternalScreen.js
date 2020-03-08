@@ -81,7 +81,8 @@ export default class InternalScreen extends Component {
             },
             textStyle: {
                 color: 'black',
-                fontSize:20
+                fontSize:20,
+                fontWeight:'600'
             },  
             titleStyle: {
                 color: "black",
