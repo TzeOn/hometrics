@@ -44,6 +44,21 @@ export default class LandingScreen extends Component {
         return (
             <View style={styles.container}>
                 <ScrollView>
+
+                <TouchableOpacity onPress={() => this.props.navigation.navigate("ManageUsers")}>
+                <Card 
+                image={require('../../assets/deviceManagement.png')}
+                imageStyle={styles.imageStyle}
+                title='temp ting'
+                titleStyle={styles.titleStyle}
+                containerStyle={styles.cardStyle}>   
+                       
+                </Card>
+                </TouchableOpacity>
+
+
+
+
                 <TouchableOpacity onPress={() => this.props.navigation.navigate("DeviceManagement")}>
                 <Card 
                 image={require('../../assets/deviceManagement.png')}

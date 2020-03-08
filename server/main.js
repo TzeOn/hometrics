@@ -5,6 +5,7 @@ const express = require("express"),
 const port = process.env.PORT || 5000,
       app = express();
 
+
 app.listen(port, () => console.log(`Server up and running - listening for requests on port ${port}.`));
 
 app.use(cors()); 
@@ -29,6 +30,11 @@ app.use("/deviceManagement", deviceManagement);
 const comfort = require("./routes/comfort");
 app.use("/comfort", comfort);
 
+const admin = require("./routes/admin");
+app.use("/admin", admin);
+
 app.get("/", (request, response) => {
+    response.send("Ping!");
     console.log("Ping!");
 });
+

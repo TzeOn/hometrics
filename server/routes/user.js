@@ -45,7 +45,7 @@ router.post("/signup", (request, response) => {
         let confirmationCode = Math.floor(Math.pow(10, 3) + Math.random() * 9 * Math.pow(10, 3)); 
 
         // Insert user credentials into database. 
-        sql = `INSERT INTO user (forename, surname, dob, emailAddress, password, hub, confirmationCode) VALUES ("${user.forename}", "${user.surname}", DATE "${user.dob}", "${user.emailAddress}", "${user.password}", "${user.hubName}", "${confirmationCode}")`
+        sql = `INSERT INTO user (forename, surname, dob, emailAddress, password, hub, confirmationCode, approved) VALUES ("${user.forename}", "${user.surname}", DATE "${user.dob}", "${user.emailAddress}", "${user.password}", "${user.hubName}", "${confirmationCode}", 0)`;
         database.query(sql);
 
         // Send confirmation code to user's email address.
@@ -70,13 +70,24 @@ router.post("/signup", (request, response) => {
             else 
               console.log(`Confirmation code emailed to ${user.emailAddress}.`);
         });
-        response.json({"ok": true}) 
-        console.log(`Signed up ${user.emailAddress} as a user.`); 
+        response.json({"ok": true});
+        console.log(`Signed up ${user.emailAddress} as a user.`);
+
+        let check = database.query(`select * from user where hub = "${request.body.hubName}"`);
+        if (check.length === 1) {
+            database.query(`update user set type="admin" where emailAddress = "${request.body.emailAddress}"`);
+        }
     } else {
         if (!response.ok)
             response.json(reply); 
         console.log("Rejected a sign-up request."); 
     }
+
+
+
+
+
+
 });
 
 router.post("/login", (request, response) => {
@@ -163,7 +174,7 @@ router.post("/download", (request, response) => {
 });
 
 router.post("/delete", (request, response) => {
-    let sql = `DELETE * FROM deviceActivity WHERE user = "${request.body.emailAddress}"`;
+    let sql = `DELETE FROM deviceActivity WHERE user = "${request.body.emailAddress}"`;
     database.query(sql);
     response.json({"ok": true});
 });

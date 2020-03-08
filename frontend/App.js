@@ -13,6 +13,7 @@ import RoomDevicesScreen from "./src/screens/RoomDevicesScreen";
 import InternalScreen from "./src/screens/InternalScreen";
 import HumidityScreen from "./src/screens/HumidityScreen";
 import SettingsScreen from "./src/screens/SettingsScreen";
+import ManageUsersScreen from "./src/screens/ManageUsersScreen"; 
 import styles from './styles';
 import React from 'react';
 import { Image, Dimensions } from 'react-native';
@@ -32,6 +33,7 @@ const navigator = createStackNavigator({
     Internal: InternalScreen,
     Humidity: HumidityScreen,
     Settings: SettingsScreen,
+    ManageUsers: ManageUsersScreen
   },
   {
     initialRouteName: 'Landing',

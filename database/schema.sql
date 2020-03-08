@@ -36,6 +36,7 @@ CREATE TABLE user (
     dob DATE,
     password VARCHAR(255),
     type VARCHAR(255),
+    approved BOOLEAN,
     confirmationCode VARCHAR(255),
     PRIMARY KEY (emailAddress),
     FOREIGN KEY (hub) REFERENCES hub(id)

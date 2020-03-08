@@ -74,7 +74,7 @@ for user in user_data:
     hub = user[7]
     if confirmation_code == "null":
         confirmation_code = None
-    sql = "INSERT INTO user (forename, surname, dob, emailAddress, password, type, confirmationCode, hub) VALUES (%s, %s, DATE %s, %s, %s, %s, %s, %s)"
+    sql = "INSERT INTO user (forename, surname, dob, emailAddress, password, type, confirmationCode, hub, approved) VALUES (%s, %s, DATE %s, %s, %s, %s, %s, %s, 1)"
     values = (forename, surname, dob, email_address, password, user_type, confirmation_code, hub)
     cursor.execute(sql, values)
 user_data.close()
@@ -121,7 +121,7 @@ for entry in deviceActivity_data:
     startTime = entry[0]
     endTime = entry[1]
     device = entry[2]
-    user = entry[3]
+    user = entry[3].strip(" ")
     sql = "INSERT INTO deviceActivity (startTime, endTime, device, user) VALUES (%s, %s, %s, %s)"
     values = (startTime, endTime, device, user)
     cursor.execute(sql, values)
