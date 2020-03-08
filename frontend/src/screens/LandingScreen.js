@@ -7,6 +7,9 @@ const trueHeight = Dimensions.get('window').height *1.5;
 export default class LandingScreen extends Component {
     constructor(props) { 
         super(props); 
+        this.state = { 
+            loading: false
+        }
     }
 
     render() {  
@@ -44,6 +47,17 @@ export default class LandingScreen extends Component {
         return (
             <View style={styles.container}>
                 <ScrollView>
+
+                <TouchableOpacity onPress={() => this.props.navigation.navigate("UserInfo")}>
+                <Card 
+                image={require('../../assets/deviceManagement.png')}
+                imageStyle={styles.imageStyle}
+                title='User Info'
+                titleStyle={styles.titleStyle}
+                containerStyle={styles.cardStyle}>   
+                       
+                </Card>
+                </TouchableOpacity>
 
                 <TouchableOpacity onPress={() => this.props.navigation.navigate("ManageUsers")}>
                 <Card 

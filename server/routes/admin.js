@@ -8,6 +8,8 @@ router.post("/getUsers", (request, response) => {
     
 });
 
+
+
 router.post("/deleteUser", (request, response) => {
     let emailAddress = request.body.emailAddress;
     let sql = `DELETE FROM deviceActivity WHERE user = "${request.body.emailAddress}"`;

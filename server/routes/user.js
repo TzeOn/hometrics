@@ -3,6 +3,11 @@ const express = require("express"),
       database = require("./database"),
       nodemailer = require("nodemailer");
 
+
+router.post("/getInfo", (request, response) => {
+    response.json({"info": database.query(`select * from user where emailAddress = "${request.body.emailAddress}"`)[0]});
+});
+
 router.post("/signup", (request, response) => {
     let user = request.body,
         reply = {
