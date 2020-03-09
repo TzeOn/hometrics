@@ -125,7 +125,7 @@ export default class LandingScreen extends Component {
                 </Card>
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={() => this.props.navigation.navigate("Settings")}>
+                <TouchableOpacity onPress={() => this.props.navigation.navigate("UserInfo")}>
                 <Card 
                 image={require('../../assets/settings.png')}
                 imageStyle={styles.imageStyle}

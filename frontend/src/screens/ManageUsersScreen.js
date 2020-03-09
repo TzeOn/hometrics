@@ -196,10 +196,6 @@ export default class ManageUsersScreen extends React.Component {
             container: {
                 flex:1,
                 backgroundColor: '#E5FCFF',
-                // alignItems: 'center',
-                // flexDirection:'row',
-                // justifyContent:'flex-start',
-                // flexWrap:'wrap',
                 height: trueHeight,
             },
             textStyle: {
@@ -238,7 +234,7 @@ export default class ManageUsersScreen extends React.Component {
                 <View style={{flexDirection:'row', alignSelf:'center'}}>
                 <TouchableOpacity 
                     style={styles.tabs}
-                    onPress={() => this.props.navigation.navigate('Settings')}>
+                    onPress={() => this.props.navigation.navigate('UserInfo')}>
                         <Text style={styles.tabTextStyle}>User Details</Text>
                     </TouchableOpacity>
     

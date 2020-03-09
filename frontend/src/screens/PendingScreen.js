@@ -217,7 +217,7 @@ export default class PendingUsers extends React.Component {
                 <View style={{flexDirection:'row', alignSelf:'center'}}>
                 <TouchableOpacity 
                     style={styles.tabs}
-                    onPress={() => this.props.navigation.navigate('Settings')}>
+                    onPress={() => this.props.navigation.navigate('UserInfo')}>
                         <Text style={styles.tabTextStyle}>User Details</Text>
                     </TouchableOpacity>
     
