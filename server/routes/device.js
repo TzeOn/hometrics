@@ -106,27 +106,7 @@ router.post("/userEnergyBreakdown", (request, response) => {
 
 
 
-// router.post("/scoreboard", (request, response) => {
-    
-//     let userQuery = database.query(`SELECT emailAddress FROM user`);
 
-//     result = '{"users":[';
-
-//     for(u=0; u<userQuery.length ; u++){
-//         let user = userQuery[u].emailAddress;
-//         let energyQuery = database.query(`SELECT energyPerHour,id FROM device`);
-//         let timeQuery = database.query(`SELECT startTime,endTime,device FROM deviceActivity WHERE user = "${user}"`);
-//         timeQuery = limitTimeFrame1(timeQuery, request.body.timeFrame);
-//         result = result.concat('{"user":"',user,'", "usage":',calculateEnergy(energyQuery, timeQuery),'},');
-//     }
-//         result = result.substring(0,result.length-1);
-//         result = result.concat(']}');
-//         result = JSON.parse(result);
-
-    
-//         response.json(result);
-    
-// });
 
 
 
@@ -179,6 +159,67 @@ router.post("/scoreboard", (request, response) => {
     
 });
 
+
+
+
+router.post("/comparison", (request, response) => {
+    let user = request.body.emailAddress,
+    
+
+    result = '{"weekly":[';
+
+    let energyQuery = database.query(`SELECT energyPerHour,id FROM device`);
+    let timeQuery = database.query(`SELECT startTime,endTime,device FROM deviceActivity`);
+    timeQuery = limitTimeFrame1(timeQuery, 'week');
+    let homeUse = calculateEnergy(energyQuery, timeQuery);
+
+    energyQuery = database.query(`SELECT energyPerHour,id FROM device`),
+    timeQuery = database.query(`SELECT startTime,endTime,device FROM deviceActivity WHERE user = "${user}"`);
+    timeQuery = limitTimeFrame1(timeQuery, 'week');
+    userUse = calculateEnergy(energyQuery, timeQuery);
+
+    homeUse -= userUse;
+
+    result = result.concat('{"house": ',homeUse, ', "user": ',userUse, '}],"monthly":[');
+
+
+    energyQuery = database.query(`SELECT energyPerHour,id FROM device`);
+    timeQuery = database.query(`SELECT startTime,endTime,device FROM deviceActivity`);
+    timeQuery = limitTimeFrame1(timeQuery, 'month');
+    homeUse = calculateEnergy(energyQuery, timeQuery);
+
+    energyQuery = database.query(`SELECT energyPerHour,id FROM device`),
+    timeQuery = database.query(`SELECT startTime,endTime,device FROM deviceActivity WHERE user = "${user}"`);
+    timeQuery = limitTimeFrame1(timeQuery, 'month');
+    userUse = calculateEnergy(energyQuery, timeQuery);
+
+    homeUse -= userUse;
+    
+
+    
+    result = result.concat('{"house": ',homeUse, ', "user": ',userUse, '}],"yearly":[');
+
+    
+    energyQuery = database.query(`SELECT energyPerHour,id FROM device`);
+    timeQuery = database.query(`SELECT startTime,endTime,device FROM deviceActivity`);
+    timeQuery = limitTimeFrame1(timeQuery, 'year');
+    homeUse = calculateEnergy(energyQuery, timeQuery);
+
+    energyQuery = database.query(`SELECT energyPerHour,id FROM device`),
+    timeQuery = database.query(`SELECT startTime,endTime,device FROM deviceActivity WHERE user = "${user}"`);
+    timeQuery = limitTimeFrame1(timeQuery, 'year');
+    userUse = calculateEnergy(energyQuery, timeQuery);
+
+    homeUse -= userUse;
+    
+    result = result.concat('{"house": ',homeUse, ', "user": ',userUse, '}]}');
+
+
+    result = JSON.parse(result);
+    
+    response.json(result);
+    
+});
 
 
 //get the total energy use for the house
