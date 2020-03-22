@@ -13,8 +13,12 @@ export default class EnergyScreen extends Component {
             weekly: [],
             monthly: [],
             yearly: [],
-            scoreboard: null, 
-            comparison: [],
+            scoreboardWeekly: [],
+            scoreboardMonthly: [],
+            scoreboardYearly: [], 
+            comparisonWeekly: [],
+            comparisonMonthly: [],
+            comparisonYearly: [],
             filterLabel: "Weekly"
         }
     }
@@ -22,6 +26,7 @@ export default class EnergyScreen extends Component {
     getData() { 
 
         var emailAddress; 
+        //get data for line graph
     AsyncStorage.getItem("credentials").then(credentials => {
       emailAddress = JSON.parse(credentials).emailAddress; 
       fetch(`${api}/device/userEnergyBreakdown` /*THIS IS WHERE THE API URL GOES*/, {
@@ -38,8 +43,8 @@ export default class EnergyScreen extends Component {
 
 
        this.setState({
-           monthly: response.weekly, 
-           weekly: response.monthly, 
+           weekly: response.weekly, 
+           monthly: response.monthly, 
            yearly: response.yearly
        })
 
@@ -50,26 +55,71 @@ export default class EnergyScreen extends Component {
         console.log(this.state);
     }); 
 })
+
+//get data for bar graph
+AsyncStorage.getItem("credentials").then(credentials => {
+    emailAddress = JSON.parse(credentials).emailAddress; 
+    fetch(`${api}/device/scoreboard` /*THIS IS WHERE THE API URL GOES*/, {
+      method: "POST", 
+      "headers": {
+        Accept: "application/json", 
+        "Content-Type": "application/json"
+      }, 
+      body: JSON.stringify({
+        "emailAddress": emailAddress
+      })
+
+  }).then(response => response.json()).then(response => {
+      console.log(response)
+
+
+     this.setState({
+         scoreboardWeekly: response.weekly,
+         scoreboardMonthly: response.monthly,
+         scoreboardYearly: response.yearly
+     })
+
+
+
+  }).then(() => {
+      console.log("sate");
+      console.log(this.state);
+  }); 
+})
+
+
+//get data for pie graph
+AsyncStorage.getItem("credentials").then(credentials => {
+    emailAddress = JSON.parse(credentials).emailAddress; 
+    fetch(`${api}/device/comparison` /*THIS IS WHERE THE API URL GOES*/, {
+      method: "POST", 
+      "headers": {
+        Accept: "application/json", 
+        "Content-Type": "application/json"
+      }, 
+      body: JSON.stringify({
+        "emailAddress": emailAddress
+      })
+
+  }).then(response => response.json()).then(response => {
+      console.log(response)
+
+
+     this.setState({
+         comparisonWeekly: response.weekly,
+         comparisonMonthly: response.monthly,
+         comparisonYearly: response.yearly
+     })
+
+
+
+  }).then(() => {
+      console.log("sate");
+      console.log(this.state);
+  }); 
+})
         
-        this.state.scoreboard = [
-            {x: "Yaseen", y: 1}, 
-            {x: "Lee", y: 2}, 
-            {x: "Eoghann", y: 3},
-            {x: "Ram", y:4},
-            {x: "Mike", y:5}
-        ];
-        this.state.comparison = [
-            {
-                value: 50,
-                label: 'House',
-                color: 'blue',
-            },
-            {
-                value: 25,
-                label: 'You',
-                color: 'orange'
-            }
-        ]
+       
         this.state.filter = this.state.weekly;
     }
 
@@ -106,13 +156,13 @@ export default class EnergyScreen extends Component {
                         onValueChange={(itemValue, itemIndex) => {
                             switch(itemValue) { 
                                 case "weekly": 
-                                    this.setState({time: itemValue, filter: this.state.weekly});
+                                    this.setState({time: itemValue, filter: this.state.weekly, filter2: this.state.scoreboardWeekly});
                                     break; 
                                 case "monthly": 
-                                    this.setState({time: itemValue, filter: this.state.monthly});
+                                    this.setState({time: itemValue, filter: this.state.monthly, filter2: this.state.scoreboardMonthly});
                                     break;
                                 case "yearly": 
-                                    this.setState({time: itemValue, filter: this.state.yearly});
+                                    this.setState({time: itemValue, filter: this.state.yearly, filter2: this.state.scoreboardYearly});
                                     break;  
                             }
                         }
@@ -135,7 +185,7 @@ export default class EnergyScreen extends Component {
 
                     <Text style={styles.textStyle}>Scoreboard</Text>
                     <View>
-                        <PureChart data={this.state.scoreboard}
+                        <PureChart data={this.state.scoreboardWeekly}
                         backgroundColor={"#E5FCFF"}
                         type={"bar"}
                         height = {200}

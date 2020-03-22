@@ -40,7 +40,7 @@ const navigator = createStackNavigator({
     Settings: SettingsScreen
   },
   {
-    initialRouteName: 'Landing',
+    initialRouteName: 'Home',
     defaultNavigationOptions: {
       title: 'Hometrics',
       headerStyle: {
