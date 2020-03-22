@@ -55,7 +55,7 @@ export default class DeviceManagement extends Component {
 
     render() { 
         return (
-            <ScrollView contentContainerStyle={{backgroundColor:'#E5FCFF'}}>
+            <ScrollView style={{backgroundColor:'#E5FCFF'}}>
                 <View style={{flex: 1, height: trueHeight, backgroundColor:'#E5FCFF'}}>
                 <View>
                     <Text style={{fontSize: 40, color: 'black', textAlign: 'center'}}>Rooms</Text>
