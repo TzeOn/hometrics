@@ -47,30 +47,70 @@ router.post("/allActivity", (request, response) => {
     response.json({deviceActivity: timeline});
 });
 
-/* 
- * Gets the amount of energy a single user has consumed. 
- * body: emailAddress, timeFrame 
- * Returns a JSON containing the user's email address and their total energy consumption value.
- */
-router.post("/totalUserEnergy", (request, response) => {
-    let user = request.body.emailAddress,
-        energyQuery = database.query(`SELECT energyPerHour,id FROM device`),
-        timeQuery = database.query(`SELECT startTime,endTime,device FROM deviceActivity WHERE user = "${user}"`);
-        result = 0,
-        timeQuery = limitTimeFrame1(timeQuery, request.body.timeFrame),
-        result = calculateEnergy(energyQuery, timeQuery);
-    if (result) 
-        response.json({"user":user,"usage":result});
-    else if (result === 0)
-        response.json({"user":user,"usage":"no usage"});
-    else 
-        response.json({"message":"error"});
+const getUserTotalEnergy = (emailAddress) => {
+    var sql = `select device.energyPerHour, deviceActivity.startTime, deviceActivity.endTime from deviceActivity inner join device on device.id = deviceActivity.device where deviceActivity.user = "${emailAddress}" `;
+    var result = database.query(sql);
+    var total = 0 ;
+    for (var i=0; i<result.length; i++) {
+        let duration = new Date(result[i].endTime) - new Date(result[i].startTime);
+        duration = ((duration / (1000*60*60)) % 24); // ms to hrs.
+        total += duration * result[i].energyPerHour;
+    }
+    return total;
+};
+
+router.post("/scoreboard", (request, res) => {
+    let sql = `select emailAddress from user where hub = (select hub from user where emailAddress = "${request.body.emailAddress}")`;
+    let result = database.query(sql);
+    var response = [];
+    for (var i=0; i<result.length; i++) {
+        let ooh = getUserTotalEnergy(result[i].emailAddress);
+        response.push({
+            x: result[i].emailAddress,
+            y: ooh,
+            color: "orange"
+        });
+    }
+    response.sort((a, b) => {return a.y - b.y});
+    res.json({"scoreboard": response})
 });
 
-/* 
+router.post("/comparison", (request, response) => {
+    let sql = `select emailAddress from user where hub = (select hub from user where emailAddress = "${request.body.emailAddress}")`;
+    let result = database.query(sql);
+
+    // get total house excluding emailAddress
+    var house = 0;
+    var person = 0;
+    for (var i=0; i<result.length; i++) {
+        if (result[i].emailAddress !== request.body.emailAddress) {
+            let ooh = getUserTotalEnergy(result[i].emailAddress);
+            house = house + ooh;
+        } else {
+            person = getUserTotalEnergy(result[i].emailAddress);
+        }
+    }
+    response.json({"comparison": [
+            {
+                value: person,
+                label: "You",
+                color: "green"
+            },
+            {
+                value: house,
+                label: "House",
+                color: "orange"
+            }
+        ]});
+});
+
+
+
+/*
+ * KEEP THIS FUNCTION, IT WORKS.
  * Body: emailAddress
- * Returns an array breaking down energy usage. 
- */ 
+ * Returns an array breaking down energy usage.
+ */
 router.post("/userEnergyBreakdown", (request, response) => {
     let user = request.body.emailAddress,
         energyQuery = database.query(`SELECT energyPerHour,id FROM device`),
@@ -91,7 +131,7 @@ router.post("/userEnergyBreakdown", (request, response) => {
     }
     result = result.substring(0,result.length-1);
     result = result.concat('],"yearly":[');
-    
+
      for(y=11 ; y>=0 ; y--){
          time = limitTimeFrame2(timeQuery, currentTime-(MONTH*y), currentTime-(MONTH*(y-1)));
          result = result.concat('{"x":"',monthToString((new Date(currentTime-(MONTH*y))).getMonth()),'", "y":',calculateEnergy(energyQuery, time), '},');
@@ -99,64 +139,9 @@ router.post("/userEnergyBreakdown", (request, response) => {
      result = result.substring(0,result.length-1);
     result = result.concat(']}');
     result = JSON.parse(result);
-    
+
 
    response.json(result);
-});
-
-
-
-
-
-
-
-router.post("/scoreboard", (request, response) => {
-    
-    let userQuery = database.query(`SELECT emailAddress FROM user`);
-
-    result = '{"weekly":[';
-
-    for(u=0; u<userQuery.length ; u++){
-        let user = userQuery[u].emailAddress;
-        let energyQuery = database.query(`SELECT energyPerHour,id FROM device`);
-        let timeQuery = database.query(`SELECT startTime,endTime,device FROM deviceActivity WHERE user = "${user}"`);
-        timeQuery = limitTimeFrame1(timeQuery, 'week');
-        result = result.concat('{"user":"',user,'", "usage":',calculateEnergy(energyQuery, timeQuery),'},');
-    }
-
-    result = result.substring(0,result.length-1);
-    result = result.concat('],"monthly":[');
-
-    for(u=0; u<userQuery.length ; u++){
-        let user = userQuery[u].emailAddress;
-        let energyQuery = database.query(`SELECT energyPerHour,id FROM device`);
-        let timeQuery = database.query(`SELECT startTime,endTime,device FROM deviceActivity WHERE user = "${user}"`);
-        timeQuery = limitTimeFrame1(timeQuery, 'month');
-        result = result.concat('{"user":"',user,'", "usage":',calculateEnergy(energyQuery, timeQuery),'},');
-    }
-
-    result = result.substring(0,result.length-1);
-    result = result.concat('],"yearly":[');
-
-    for(u=0; u<userQuery.length ; u++){
-        let user = userQuery[u].emailAddress;
-        let energyQuery = database.query(`SELECT energyPerHour,id FROM device`);
-        let timeQuery = database.query(`SELECT startTime,endTime,device FROM deviceActivity WHERE user = "${user}"`);
-        timeQuery = limitTimeFrame1(timeQuery, 'year');
-        result = result.concat('{"user":"',user,'", "usage":',calculateEnergy(energyQuery, timeQuery),'},');
-    }
-
-    result = result.substring(0,result.length-1);
-    result = result.concat(']}');
-
-
-    result = JSON.parse(result);
-    result.weekly.sort((a, b) => a.usage - b.usage)
-    result.monthly.sort((a, b) => a.usage - b.usage)
-    result.yearly.sort((a, b) => a.usage - b.usage)
-    
-    response.json(result);
-    
 });
 
 
