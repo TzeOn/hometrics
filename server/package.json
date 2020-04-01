@@ -1,7 +1,7 @@
 {
   "name": "hometrics",
   "version": "1.0.0",
-  "description": "A user control system for Esteem's smart house design",
+  "description": "A user control system for Esteem's smart home",
   "main": "main.js",
   "scripts": {
     "test": "mocha"

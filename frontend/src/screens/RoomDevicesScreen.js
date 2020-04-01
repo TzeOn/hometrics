@@ -1,6 +1,6 @@
 import { Card } from "react-native-elements"; 
 import React, { Component } from "react";
-import { ActivityIndicator, Button, Text, View, StyleSheet, Modal, TouchableHighlight } from "react-native";
+import { TextInput, ActivityIndicator, Button, Text, View, StyleSheet, Modal, TouchableHighlight } from "react-native";
 import { ScrollView, Switch } from "react-native-gesture-handler";
 const api = require("../api").url; 
 
@@ -103,24 +103,60 @@ export default class RoomDevicesScreen extends Component {
                     <View>
                         <Card containerStyle={{backgroundColor: "#8EE4AF", borderColor:'gray'}}>
                             
-                            <Button color={"#8EE4AF"} title="+" style={{fontSize: 20, color: "black", textAlign:'center'}} onPress={() => {
-                                var copy = this.state.data; 
-                                fetch(`${api}/deviceManagement/add`, {
-                                    method: "POST", 
-                                    "headers": {
-                                        Accept: "application/json", 
-                                        "Content-Type": "application/json"
-                                    }, 
-                                    body: JSON.stringify({
-                                        "plugId": device.plugId
-                                       
-                                    })
-                                }).then(response => response.json()).then(response => {
-                                    delete copy[i]; 
-                                    this.setState({data: copy}); 
-                                }).catch(error => console.error(error));
+                        <TextInput
+       
+        placeholder="Device Name"
 
-                            }}/>
+        onChangeText={(value) => {
+
+            this.state.data[i].addDeviceName = value;  
+
+
+            }}
+        value={this.state.data[i].addDeviceName}
+    />
+    <Button title="Add Device" onPress={() => {
+        // console.log(this.state.data[i].addDeviceName);
+
+        fetch(`${api}/deviceManagement/add`, {
+            method: "POST", 
+            "headers": {
+                Accept: "application/json", 
+                "Content-Type": "application/json"
+            }, 
+            body: JSON.stringify({
+                "device": {
+                    "name": this.state.data[i].addDeviceName
+                }, 
+                "plugId": this.state.data[i].plugId
+
+               
+            })
+        }).then(response => response.json()).then(response => {
+           
+            
+
+            var copy = this.state.data; 
+
+            copy[i]  = response; 
+
+            this.setState({data: copy});
+            
+        }).catch(error => console.error(error)); 
+
+
+
+
+
+
+
+    }}/>
+     
+
+
+ 
+
+                
                         </Card>
                     </View>
                 )   
