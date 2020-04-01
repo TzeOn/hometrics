@@ -66,12 +66,11 @@ router.post("/scoreboard", (request, res) => {
     for (var i=0; i<result.length; i++) {
         let ooh = getUserTotalEnergy(result[i].emailAddress);
         response.push({
-            x: result[i].emailAddress,
-            y: ooh,
-            color: "orange"
+            "emailAddress": result[i].emailAddress,
+            "value": ooh
         });
     }
-    response.sort((a, b) => {return a.y - b.y});
+    response.sort((a, b) => {return a.value - b.value});
     res.json({"scoreboard": response})
 });
 

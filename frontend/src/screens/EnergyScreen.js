@@ -1,6 +1,7 @@
 import React, { useState, Component } from 'react';
 import {ActivityIndicator, View, TouchableOpacity, Text, StyleSheet, Image, Button , Picker, AsyncStorage, Dimensions} from 'react-native';
 import PureChart from 'react-native-pure-chart'; 
+import { Card, ListItem } from "react-native-elements";
 import { ScrollView } from 'react-native-gesture-handler';
 const api = require("../api").url;
 const trueHeight = Dimensions.get('window').height * 1.5;
@@ -98,6 +99,8 @@ export default class EnergyScreen extends Component {
         
     }
 
+   
+
     render() {
         const styles = StyleSheet.create({
             container: {
@@ -117,7 +120,7 @@ export default class EnergyScreen extends Component {
          
 
         return (
-            <ScrollView >
+          
                 <View>
 
                     {this.state.loading && 
@@ -156,12 +159,31 @@ export default class EnergyScreen extends Component {
         <Picker.Item label="Yearly" value="yearly" />
       </Picker>
 
-                        <PureChart data={this.state.filter} type="line"/>
+                        <PureChart 
+                        data={this.state.filter} 
+                        backgroundColor={"#E5FCFF"}
+                        primaryColor={"green"}
+                        height={200}
+                        type="line"/>
 
 
-                        <Text>Scoreboard</Text>
-                        <PureChart data={this.state.scoreboard} type="bar" backgroundColor={"#E5FCFF"} 
-                    primaryColor = {"black"}/>
+                      
+
+                    <Card title="Scoreboard">
+                    {
+    this.state.scoreboard.map((item, i) => (
+      <ListItem
+ 
+     
+        title={item.emailAddress + " #"+(i+1)}
+        subtitle={item.value + "Units of energy"}
+        bottomDivider
+        chevron
+ 
+      />
+    ))
+  }
+                    </Card>
 
 
 
@@ -180,7 +202,7 @@ export default class EnergyScreen extends Component {
 
                
                 </View>
-            </ScrollView>
+           
         )
     }
 } 
