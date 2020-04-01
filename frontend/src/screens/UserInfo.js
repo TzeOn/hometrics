@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity, Text, StyleSheet, Image, Button , Picker, AsyncStorage, Dimensions, ActivityIndicator, Alert} from 'react-native';
+import { View, TouchableOpacity, Text, StyleSheet, Platform, Button , Picker, AsyncStorage, Dimensions, ActivityIndicator, Alert} from 'react-native';
 import PureChart from 'react-native-pure-chart'; 
 import { ScrollView } from 'react-native-gesture-handler';
 const api = require("../api").url;
@@ -12,12 +12,9 @@ export default class UserInfo extends React.Component {
     constructor(props) { 
         super(props);
         this.state = {
-            loading: true
-
+            loading: true,
 
         }
-        
-    
     }
 
     getData() { 
@@ -81,7 +78,7 @@ export default class UserInfo extends React.Component {
         }
       });
         return ( 
-            <ScrollView contentContainerStyle={styles.container}>
+            <ScrollView style={styles.container}>
                <View style={{flexDirection:'row', alignSelf:'center'}}>
                 <TouchableOpacity 
                     style={styles.tabs}
@@ -104,8 +101,7 @@ export default class UserInfo extends React.Component {
               <View style={{flex:1}}>
                 {
                     this.state.loading && 
-                    <ActivityIndicator size="large" />
-                    
+                    <ActivityIndicator size="large" />                  
                 }
 
                 {
@@ -137,10 +133,21 @@ export default class UserInfo extends React.Component {
                           })
                         }).then(response => response.json()).then(response => {
                             
-                            //
-                            /// vincent
-                            // put popup here. 
-                            // "recorded data deleted"
+                            if(Platform.OS==='Android' || 'iOS'){
+                            Alert.alert(
+                              'User Data',
+                              'Your recorded data has been deleted',
+                              [
+                                {text: 'Ok', onPress: () => console.log('ok pressed')}
+                              ],
+                              {cancelable: false},
+                            );
+                            }
+                            
+                            if(Platform.OS==='web'){
+                              alert('Your recorded data has been deleted');
+                            }
+                            
                     
                         }); 
                       })
@@ -165,10 +172,20 @@ export default class UserInfo extends React.Component {
                           })
                         }).then(response => response.json()).then(response => {
                             
-                            //
-                            /// vincent
-                            // put popup here. 
-                            // data emailed to "whatever their email address is"
+                          if(Platform.OS==='Android' || 'iOS'){
+                            Alert.alert(
+                              'Download Data',
+                              'Recorded data has been sent to your email',
+                              [
+                                {text: 'Ok', onPress: () => console.log('ok pressed')}
+                              ],
+                              {cancelable: false},
+                            );
+                            }
+                            
+                            if(Platform.OS==='web'){
+                              alert('Recorded data has been sent to your email');
+                            }
                         }); 
                       })
                 }}>
