@@ -1,6 +1,6 @@
 import { Card } from "react-native-elements"; 
 import React, { Component } from "react";
-import { TextInput, ActivityIndicator, Button, Text, View, StyleSheet, Modal, TouchableHighlight } from "react-native";
+import { TextInput, ActivityIndicator, Button, Text, View, StyleSheet, Modal, TouchableOpacity } from "react-native";
 import { ScrollView, Switch } from "react-native-gesture-handler";
 const api = require("../api").url; 
 
@@ -100,12 +100,12 @@ export default class RoomDevicesScreen extends Component {
                 )   
             } else {
                 devices.push(
-                    <View>
-                        <Card containerStyle={{backgroundColor: "#8EE4AF", borderColor:'gray'}}>
+                    <View style={{}}>
+                        <Card title='Add another device' titleStyle={{color:'black'}} containerStyle={{backgroundColor: "#ccfaff", borderColor:'gray', }}>
                             
-                        <TextInput
+                        <TextInput style={{ padding:5, color:'black', fontSize:15, fontWeight:'400', alignSelf: 'center', textAlign:'center'}}
        
-        placeholder="Device Name"
+        placeholder="Enter Device Name"
 
         onChangeText={(value) => {
 
@@ -115,7 +115,10 @@ export default class RoomDevicesScreen extends Component {
             }}
         value={this.state.data[i].addDeviceName}
     />
-    <Button title="Add Device" onPress={() => {
+    <Button
+        title='Add Device'
+        color='#41B3A3'
+        onPress={() => {
         // console.log(this.state.data[i].addDeviceName);
 
         fetch(`${api}/deviceManagement/add`, {
@@ -134,8 +137,6 @@ export default class RoomDevicesScreen extends Component {
             })
         }).then(response => response.json()).then(response => {
            
-            
-
             var copy = this.state.data; 
 
             copy[i]  = response; 
@@ -144,19 +145,7 @@ export default class RoomDevicesScreen extends Component {
             
         }).catch(error => console.error(error)); 
 
-
-
-
-
-
-
-    }}/>
-     
-
-
- 
-
-                
+        }}/>          
                         </Card>
                     </View>
                 )   
