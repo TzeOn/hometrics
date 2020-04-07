@@ -28,7 +28,7 @@ export default class EnergyScreen extends Component {
 
         emailAddress = JSON.parse(credentials).emailAddress; 
 
-        fetch(`http://localhost:5000/device/userEnergyBreakdown`, {
+        fetch(`${api}/device/userEnergyBreakdown`, {
             method: "POST", 
             "headers": {
               Accept: "application/json", 
@@ -47,7 +47,7 @@ export default class EnergyScreen extends Component {
             })}).then(() => {
                 
 
-                fetch(`http://localhost:5000/device/scoreboard`, {
+                fetch(`${api}/device/scoreboard`, {
                     method: "POST", 
                     "headers": {
                       Accept: "application/json", 
@@ -59,7 +59,7 @@ export default class EnergyScreen extends Component {
                   }).then(response => response.json()).then(response => { this.setState({scoreboard: response.scoreboard})}).then(() => {
 
 
-                    fetch(`http://localhost:5000/device/comparison`, {
+                    fetch(`${api}/device/comparison`, {
                         method: "POST", 
                         "headers": {
                           Accept: "application/json", 
@@ -121,7 +121,7 @@ export default class EnergyScreen extends Component {
 
         return (
           
-                <View>
+                <ScrollView style={styles}>
 
                     {this.state.loading && 
 
@@ -201,7 +201,7 @@ export default class EnergyScreen extends Component {
                     }
 
                
-                </View>
+                </ScrollView>
            
         )
     }

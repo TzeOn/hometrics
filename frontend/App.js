@@ -46,15 +46,13 @@ const navigator = createStackNavigator({
       headerStyle: {
       backgroundColor: '#41B3A3',
       height: headerHeight,
-      
       },
       headerTitleStyle: {
         color: '#ffffff',
         textAlign: 'center',
         flex:1,
         fontSize: 35,
-        alignSelf: 'center',
-         
+        alignSelf: 'center',  
       },
       headerTintColor: '#ffffff',
       headerRight: (      
