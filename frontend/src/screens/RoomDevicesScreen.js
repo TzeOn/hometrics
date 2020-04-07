@@ -46,6 +46,7 @@ export default class RoomDevicesScreen extends Component {
        let devices = [], device;
        for (let i=0; i<this.state.data.length; i++) {
            
+           
            device = this.state.data[i]; 
            console.log(device); 
             if (device && device.deviceName) {
@@ -106,14 +107,17 @@ export default class RoomDevicesScreen extends Component {
                         <TextInput style={{ padding:5, color:'black', fontSize:15, fontWeight:'400', alignSelf: 'center', textAlign:'center'}}
        
         placeholder="Enter Device Name"
-
+                    
         onChangeText={(value) => {
+       
+            if (this.state.data[i] != undefined)
+            this.state.data[i].addDeviceName = value;
+            
 
-            this.state.data[i].addDeviceName = value;  
 
 
             }}
-        value={this.state.data[i].addDeviceName}
+        //value={this.state.data[i].addDeviceName}
     />
     <Button
         title='Add Device'
