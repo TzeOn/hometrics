@@ -138,7 +138,7 @@ export default class ManageUsersScreen extends React.Component {
 
                 } else { 
                     what = (
-                        <Text>I'm just a kid lol</Text>
+                        <Text></Text>
                     )
                 }
 

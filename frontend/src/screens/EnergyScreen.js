@@ -99,6 +99,7 @@ export default class EnergyScreen extends Component {
          });       
 
         return (         
+                <ScrollView>
                 <View style={styles.container}>
 
                     {this.state.loading && 
@@ -163,7 +164,9 @@ export default class EnergyScreen extends Component {
                         <PureChart data={this.state.comparison} type='pie'/>
                     </View>                   
                     }             
-                </View>         
+                </View> 
+                </ScrollView>
+                    
         )
     }
 } 

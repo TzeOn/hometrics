@@ -99,6 +99,14 @@ export default class LandingScreen extends Component {
                 </Card>
                 </TouchableOpacity>
 
+                <TouchableOpacity onPress={() => this.props.navigation.navigate("Home")}>
+                <Card 
+                title='Logout'
+                titleStyle={{color:'#E27D60', fontSize:30, fontWeight:'500', textAlign:'center'}}
+                containerStyle={styles.cardStyle}>           
+                </Card>
+                </TouchableOpacity>
+
                 </ScrollView>
             </View>
         );
