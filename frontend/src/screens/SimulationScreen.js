@@ -9,9 +9,6 @@ const data = [
   const numColumns = 3;
 const bottomHeight = Dimensions.get('window').height * 0.32;
 const topHeight = Dimensions.get('window').height * 0.6;
-var intTemperature = 23.23434;
-var intAirQuality = 535;
-var intHumidity = 51.23434;
 
 export default class Simulation extends React.Component {
     constructor(props) {
@@ -25,15 +22,34 @@ export default class Simulation extends React.Component {
         extHumidity: null,  
         extLightLevel: null,
         deviceRoom: '',
+        devicesS: [],
         devices: [],
+        loading: true,
       };
     }
     
     componentDidMount(){
         this.getWeather();
-        //this.getRoomDevices();
-        this.timer = setInterval(()=> this.getWeather(), 60000)
-       // this.timer = setInterval(()=> this.getRoomDevices(), 60000)
+
+        this.getbedroomDevices();
+        this.getlivingRoomDevices();
+        this.getoBedRoomDevices();
+        this.getKitchenDevices();
+        this.getBathroomDevices();
+        this.getGarageDevices();
+        this.getcollonadeDevices();
+        this.getCorridorDevices();
+
+        this.timer = setInterval(()=> this.getWeather(), 1000)
+
+        this.timer = setInterval(()=> this.getbedroomDevices(), 1000)
+        this.timer = setInterval(()=> this.getlivingRoomDevices(), 1000)
+        this.timer = setInterval(()=> this.getoBedRoomDevices(), 1000)
+        this.timer = setInterval(()=> this.getKitchenDevices(), 1000)
+        this.timer = setInterval(()=> this.getBathroomDevices(), 1000)
+        this.timer = setInterval(()=> this.getGarageDevices(), 1000)
+        this.timer = setInterval(()=> this.getcollonadeDevices(), 1000)
+        this.timer = setInterval(()=> this.getCorridorDevices(), 1000)
        }
        async getWeather(){
       
@@ -42,29 +58,21 @@ export default class Simulation extends React.Component {
          .then((response) =>
          {
             console.log(response);
-            console.log("meow"); 
              this.setState({
                  "extTemperature": response.temperature,   
                  "extAirQuality": response.airQuality,  
                  "extHumidity": response.humidity,  
                  "extLightLevel": response.lighting
              })
-              
-           //set your data here
             
          })
          .catch((error) => {
              console.error(error);
          });
 
-        
-
-
-         
-       
        }
 
-       getRoomDevices(roomName) { 
+       async getbedroomDevices() { 
            fetch(`${api}/deviceManagement/roomDevices`, {
                method: "POST", 
                headers: {
@@ -72,24 +80,155 @@ export default class Simulation extends React.Component {
                    "Content-Type": "application/json"
                }, 
                body: JSON.stringify({
-                   roomName: roomName
-                 // roomName: "livingRoom"
+                   "roomName": "bedroom"
                })
            }).then(response => response.json()).then(response => {
-            var roomDevices = response.roomDevices; 
-            console.log(roomDevices); 
+            console.log(response); 
             this.setState({
-                "devices": roomDevices
+                "devices": response.roomDevices
             })
 
            })
+           
        }
+       async getlivingRoomDevices() { 
+        fetch(`${api}/deviceManagement/roomDevices`, {
+            method: "POST", 
+            headers: {
+                Accept: "application/json", 
+                "Content-Type": "application/json"
+            }, 
+            body: JSON.stringify({
+                "roomName": "livingRoom"
+            })
+        }).then(response => response.json()).then(response => {
+         console.log(response); 
+         this.setState({
+             "devices": response.roomDevices
+         })
+
+        })
+        
+    }
+    async getoBedRoomDevices() { 
+        fetch(`${api}/deviceManagement/roomDevices`, {
+            method: "POST", 
+            headers: {
+                Accept: "application/json", 
+                "Content-Type": "application/json"
+            }, 
+            body: JSON.stringify({
+                "roomName": "otherBedroom"
+            })
+        }).then(response => response.json()).then(response => {
+         console.log(response); 
+         this.setState({
+             "devices": response.roomDevices
+         })
+
+        })
+        
+    }
+    async getKitchenDevices() { 
+        fetch(`${api}/deviceManagement/roomDevices`, {
+            method: "POST", 
+            headers: {
+                Accept: "application/json", 
+                "Content-Type": "application/json"
+            }, 
+            body: JSON.stringify({
+                "roomName": "kitchen"
+            })
+        }).then(response => response.json()).then(response => {
+         console.log(response); 
+         this.setState({
+             "devices": response.roomDevices
+         })
+
+        })
+        
+    }
+    async getBathroomDevices() { 
+        fetch(`${api}/deviceManagement/roomDevices`, {
+            method: "POST", 
+            headers: {
+                Accept: "application/json", 
+                "Content-Type": "application/json"
+            }, 
+            body: JSON.stringify({
+                "roomName": "bathroom"
+            })
+        }).then(response => response.json()).then(response => {
+         console.log(response); 
+         this.setState({
+             "devices": response.roomDevices
+         })
+
+        })
+        
+    }
+    async getGarageDevices() { 
+        fetch(`${api}/deviceManagement/roomDevices`, {
+            method: "POST", 
+            headers: {
+                Accept: "application/json", 
+                "Content-Type": "application/json"
+            }, 
+            body: JSON.stringify({
+                "roomName": "garage"
+            })
+        }).then(response => response.json()).then(response => {
+         console.log(response); 
+         this.setState({
+             "devices": response.roomDevices
+         })
+
+        })
+        
+    }
+    async getcollonadeDevices() { 
+        fetch(`${api}/deviceManagement/roomDevices`, {
+            method: "POST", 
+            headers: {
+                Accept: "application/json", 
+                "Content-Type": "application/json"
+            }, 
+            body: JSON.stringify({
+                "roomName": "collonade"
+            })
+        }).then(response => response.json()).then(response => {
+         console.log(response); 
+         this.setState({
+             "devices": response.roomDevices
+         })
+
+        })
+        
+    }
+    async getCorridorDevices() { 
+        fetch(`${api}/deviceManagement/roomDevices`, {
+            method: "POST", 
+            headers: {
+                Accept: "application/json", 
+                "Content-Type": "application/json"
+            }, 
+            body: JSON.stringify({
+                "roomName": "corridor"
+            })
+        }).then(response => response.json()).then(response => {
+         console.log(response); 
+         this.setState({
+             "devices": response.roomDevices
+         })
+
+        })
+        
+    }
 
 
        showDevices() { 
 
-       let devices = [];
-       let device; 
+       let devices = [], device; 
        
        for (let i=0; i<this.state.devices.length; i++) {
            device = this.state.devices[i]; 
@@ -97,24 +236,26 @@ export default class Simulation extends React.Component {
         if (device.deviceName) {
 
             devices.push(
-                <Card 
-                containerStyle={{backgroundColor:'black'}}
-                titleStyle={{color:'white'}}
-                title={device.deviceName}>
-                    <View style={{alignItems:'center', justifyContent:'center', flex:1, paddingBottom:20}}>
+                //<View>
+                //title={device.deviceName}>
+                    //<View style={{alignItems:'center', justifyContent:'center', flex:1, paddingBottom:20}}>
+                   <View>
+                   <Text> {device.deviceName} </Text>
                     <Switch
                     value={device.onOff}                    
                     ></Switch>
-                    </View>
+                  </View>
 
-                </Card>
+                //</View>
             )
                 } else {
                 }
 
 
        }
+       this.setState({devicesS: devices})
        return devices; 
+       
     }
 
 
@@ -207,12 +348,14 @@ export default class Simulation extends React.Component {
                         <View style={styles.modalContent}>
                             <Text style={styles.modalHeader}>{this.state.roomText}</Text>
                             
+                           {this.state.devicesS}
                             <Text>Temperature:</Text>
                             <Text>{this.state.extTemperature}c</Text>
                             <Text>Air Quality</Text>
                             <Text>{this.state.extAirQuality} ppm</Text>
                             <Text>Humidity</Text>
                             <Text>{this.state.extHumidity}%</Text>
+                            
                             <Button
                             color="#FF9800"
                             title="Close"
